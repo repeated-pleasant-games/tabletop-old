@@ -1,0 +1,43 @@
+{
+  "name": "tabletop",
+  "version": "0.0.0-alpha.1",
+  "author": {
+    "name": "Joseph R Miles",
+    "email": "me@josephrmiles.com",
+    "url": "https://josephrmiles.com"
+  },
+  "homepage": "https://github.com/joebobmiles/TableTop",
+  "license": "ISC",
+  "description": "A virtual tabletop (VTT) for tabeltop roleplaying games (TTRPG).",
+  "keywords": [
+    "VTT",
+    "TTRPG",
+    "RPG",
+    "virtual-tabletop",
+    "tabletop"
+  ],
+  "main": "src/index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack",
+    "serve": "./node_modules/.bin/webpack-dev-server --open"
+  },
+  "dependencies": {
+    "react": "^16.13.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.3",
+    "@types/react": "^16.8.24",
+    "@types/react-dom": "^16.0.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "style-loader": "^1.1.3",
+    "css-loader": "^3.4.2",
+    "sass-loader": "^8.0.2",
+    "sass": "^1.26.2"
+  }
+}

@@ -1,0 +1,58 @@
+const path = require('path')
+
+
+module.exports = {
+    mode: "development",
+    devtool: "source-map",
+    devServer: {
+        compress: true,
+        port: 80,
+        contentBase: "./public"
+    },
+
+    entry: "./src/index.tsx",
+
+    output: {
+        filename: "app.js",
+        path: path.resolve(__dirname, "dist", "js")
+    },
+
+    resolve: {
+        extensions: [".ts", ".tsx", ".js"]
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
+                    "ts-loader"
+                ]
+            },
+            {
+                test: /\.s[ac]ss$/,
+                exclude: /node_modules/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            implementation: require("sass"),
+                            sassOptions: {
+                                indentWidth: 2,
+                                sourceMap: true
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+        ]
+    }
+}
