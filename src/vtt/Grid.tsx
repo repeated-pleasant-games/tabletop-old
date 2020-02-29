@@ -1,15 +1,72 @@
 import * as React from "react"
 
+
 interface GridProperties {
-    gridDimension: number
+    cellDimension: number
     gridSubDivisions: number
+
+    vttTransform: number[]
+    updateVttTransform: (newTransform: number[]) => void
 }
 
-export class Grid extends React.Component<GridProperties, {}> {
+
+interface GridState {
+    pointerDown: boolean
+}
+
+
+export class Grid extends React.Component<GridProperties, GridState> {
+
+    constructor(props: GridProperties) {
+        super(props)
+
+        this.state = {
+            pointerDown: false
+        }
+
+        // NOTE: JavaScript is a horrible language.
+        // MORE SERIOUS NOTE: Apparently this is how we get around the issue
+        // of mapping a member function to an event hanlder and the even
+        // handler subsequently complaining that `this` is undefined. It binds
+        // the `this` keyword to the value of `bind()`'s parameter. This is
+        // because `this` has arcane and cursed properties that drive mortals
+        // to insanity.
+        this.handlePointerMove = this.handlePointerMove.bind(this)
+        this.handleWheel = this.handleWheel.bind(this)
+    }
+
+    private handlePointerMove(event: React.PointerEvent) {
+        if (this.state.pointerDown) {
+            // TODO
+            // Translate VTT transform
+
+            let newTransform = this.props.vttTransform
+
+            newTransform[4] += event.movementX
+            newTransform[5] += event.movementY
+
+            this.props.updateVttTransform(newTransform)
+        }
+    }
+
+    private handleWheel(event: React.WheelEvent) {
+        let newTransform = this.props.vttTransform
+
+        const zoom = 1 - (event.deltaY / 100)
+
+        for (let i = 0; i < newTransform.length; i++)
+            newTransform[i] *= zoom
+
+        newTransform[4] += event.clientX * (1 - zoom)
+        newTransform[5] += event.clientY * (1 - zoom)
+
+        this.props.updateVttTransform(newTransform)
+    }
+
     public render() {
 
-        const gridDimension = this.props.gridDimension
-        const subgridDimension = gridDimension / this.props.gridSubDivisions
+        const subgridDimension = this.props.cellDimension
+        const gridDimension = subgridDimension * this.props.gridSubDivisions
 
         return <g id="grid">
             <defs>
@@ -24,7 +81,7 @@ export class Grid extends React.Component<GridProperties, {}> {
                             L 0 0 0 ${subgridDimension}`}
                         fill="none"
                         stroke="grey"
-                        stroke-width="0.5"
+                        strokeWidth="0.5"
                         />
                 </pattern>
 
@@ -33,6 +90,8 @@ export class Grid extends React.Component<GridProperties, {}> {
                     width={gridDimension}
                     height={gridDimension}
                     patternUnits="userSpaceOnUse"
+
+                    patternTransform={`matrix(${this.props.vttTransform.join(" ")})`}
                     >
                     <rect
                         width={gridDimension}
@@ -44,7 +103,7 @@ export class Grid extends React.Component<GridProperties, {}> {
                             L 0 0 0 ${gridDimension}`}
                         fill="none"
                         stroke="grey"
-                        stroke-width="1"
+                        strokeWidth="1"
                         />
                 </pattern>
             </defs>
@@ -53,7 +112,23 @@ export class Grid extends React.Component<GridProperties, {}> {
                 width="100%"
                 height="100%"
                 fill="url(#pattern-grid)"
+
+                onPointerDown={(e) => {
+                    (e.target as Element).setPointerCapture(e.pointerId)
+
+                    this.setState({ pointerDown: (e.button === 0) })
+                }}
+
+                onPointerUp={(e) => {
+                    (e.target as Element).releasePointerCapture(e.pointerId)
+                    
+                    this.setState({ pointerDown: (e.button !== 0) })
+                }}
+
+                onPointerMoveCapture={this.handlePointerMove}
+                onWheelCapture={this.handleWheel}
                 />
         </g>
     }
+
 }

@@ -4,6 +4,6 @@ import { VTT } from "./vtt/VTT"
 
 export class App extends React.Component<{}, {}> {
     public render () {
-        return <VTT />
+        return <VTT cellSize={24} />
     }
 }
