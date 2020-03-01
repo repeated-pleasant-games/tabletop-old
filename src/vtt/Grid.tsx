@@ -37,9 +37,6 @@ export class Grid extends React.Component<GridProperties, GridState> {
 
     private handlePointerMove(event: React.PointerEvent) {
         if (this.state.pointerDown) {
-            // TODO
-            // Translate VTT transform
-
             let newTransform = this.props.vttTransform
 
             newTransform[4] += event.movementX
@@ -122,7 +119,7 @@ export class Grid extends React.Component<GridProperties, GridState> {
                 onPointerUp={(e) => {
                     (e.target as Element).releasePointerCapture(e.pointerId)
                     
-                    this.setState({ pointerDown: (e.button !== 0) })
+                    this.setState({ pointerDown: false })
                 }}
 
                 onPointerMoveCapture={this.handlePointerMove}

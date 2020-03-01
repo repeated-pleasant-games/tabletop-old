@@ -49,6 +49,7 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     />
 
                 <Token
+                    x={0} y={0}
                     cellDimension={cellDimension}
                     vttTransform={this.state.transform}
                     />
