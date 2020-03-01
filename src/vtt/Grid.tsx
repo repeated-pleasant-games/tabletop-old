@@ -47,6 +47,9 @@ export class Grid extends React.Component<GridProperties, GridState> {
     }
 
     private handleWheel(event: React.WheelEvent) {
+        event.preventDefault()
+        event.stopPropagation()
+
         let newTransform = this.props.vttTransform
 
         const zoom = 1 - (event.deltaY / 100)
