@@ -2,6 +2,7 @@ import * as React from "react"
 
 
 import { Grid } from "./Grid"
+import { Token } from "./Token"
 
 
 interface VTTProperties {
@@ -47,11 +48,10 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     updateVttTransform={this.updateTransform}
                     />
 
-                <rect
-                    width={cellDimension}
-                    height={cellDimension}
-                    transform={`matrix(${this.state.transform.join(" ")})`}/>
-
+                <Token
+                    cellDimension={cellDimension}
+                    vttTransform={this.state.transform}
+                    />
             </svg>
         </div>
     }
