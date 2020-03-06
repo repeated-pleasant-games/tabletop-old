@@ -48,8 +48,8 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
 
             // Map client coordinates to world coordinates
-            let x = ((event.clientX + xOffset) - xTranslation) / xScale
-            let y = ((event.clientY + yOffset) - yTranslation) / yScale
+            let x = ((event.clientX + xOffset) / xScale) - xTranslation
+            let y = ((event.clientY + yOffset) / yScale) - yTranslation
 
 
             if (this.props.snapToGrid) {
