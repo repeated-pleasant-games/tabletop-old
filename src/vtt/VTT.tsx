@@ -7,6 +7,7 @@ import { Token } from "./Token"
 
 interface VTTProperties {
     cellSize: number
+    tokensSnapToGrid: boolean
 }
 
 
@@ -52,6 +53,7 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     x={0} y={0}
                     cellDimension={cellDimension}
                     vttTransform={this.state.transform}
+                    snapToGrid={this.props.tokensSnapToGrid}
                     />
             </svg>
         </div>
