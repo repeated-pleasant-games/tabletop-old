@@ -1,9 +1,10 @@
 import * as React from "react"
 
+import { Actor } from "../game/Actor"
+
 
 interface TokenProps {
-    x: number
-    y: number
+    actor: Actor
     cellDimension: number
     vttTransform: number[]
     snapToGrid: boolean
@@ -24,8 +25,8 @@ export class Token extends React.Component<TokenProps, TokenState> {
         super(props)
 
         this.state = {
-            x: props.x,
-            y: props.y,
+            x: props.actor.x,
+            y: props.actor.y,
             pointerDown: false,
             pointerOffset: { dX: 0, dY: 0 }
         }
@@ -82,14 +83,17 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
     public render() {
 
-        const cellDimension = this.props.cellDimension
+        const tokenRadius = this.props.cellDimension / 2
 
-        return <rect
-                    x={this.state.x} y={this.state.y}
-                    width={cellDimension}
-                    height={cellDimension}
+        return <circle
+                    id={`token-${this.props.actor.name.replace(" ", "_")}`}
+
+                    cx={tokenRadius + this.state.x}
+                    cy={tokenRadius + this.state.y}
+                    r={tokenRadius}
+
                     transform={`matrix(${this.props.vttTransform.join(" ")})`}
-                    
+
                     onPointerDown={(e) => {
                         (e.target as Element).setPointerCapture(e.pointerId)
 

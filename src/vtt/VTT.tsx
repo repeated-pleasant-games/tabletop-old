@@ -52,8 +52,7 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
             <Token
                 key={index}
 
-                x={actor.x}
-                y={actor.y}
+                actor={actor}
                 
                 cellDimension={cellDimension}
                 vttTransform={this.state.transform}
