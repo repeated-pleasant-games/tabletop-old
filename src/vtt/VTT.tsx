@@ -3,16 +3,17 @@ import * as React from "react"
 
 import { Grid } from "./Grid"
 import { Token } from "./Token"
+import { VTTControlPanel } from "./VTTControlPanel"
 
 
 interface VTTProperties {
     cellSize: number
-    tokensSnapToGrid: boolean
 }
 
 
 interface VTTState {
     transform: number[]
+    tokensSnapToGrid: boolean
 }
 
 
@@ -22,13 +23,19 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
         super(props)
 
         this.state = {
-            transform: [ 1, 0, 0, 1, 0, 0 ]
+            transform: [ 1, 0, 0, 1, 0, 0 ],
+            tokensSnapToGrid: false
         }
 
+        this.updateState = this.updateState.bind(this)
         this.updateTransform = this.updateTransform.bind(this)
     }
 
-    private updateTransform(newTransform: number[]) {
+    private updateState(newState: object): void {
+        this.setState(newState)
+    }
+
+    private updateTransform(newTransform: number[]): void {
         this.setState({
             transform: newTransform
         })
@@ -39,8 +46,10 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
         const cellDimension = this.props.cellSize
 
         return <div id="vtt">
-            <svg>
+            <VTTControlPanel
+                updateVTTState={this.updateState}/>
 
+            <svg>
                 <Grid
                     cellDimension={cellDimension}
                     gridSubDivisions={5}
@@ -53,7 +62,7 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     x={0} y={0}
                     cellDimension={cellDimension}
                     vttTransform={this.state.transform}
-                    snapToGrid={this.props.tokensSnapToGrid}
+                    snapToGrid={this.state.tokensSnapToGrid}
                     />
             </svg>
         </div>
