@@ -3,7 +3,8 @@ import * as React from "react"
 
 import { Grid } from "./Grid"
 import { Token } from "./Token"
-import { VTTControlPanel } from "./VTTControlPanel"
+import { ControlPanel } from "./ControlPanel"
+import { Actor } from "../game/Actor"
 
 
 interface VTTProperties {
@@ -14,6 +15,7 @@ interface VTTProperties {
 interface VTTState {
     transform: number[]
     tokensSnapToGrid: boolean
+    actors: Actor[]
 }
 
 
@@ -24,7 +26,8 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
 
         this.state = {
             transform: [ 1, 0, 0, 1, 0, 0 ],
-            tokensSnapToGrid: false
+            tokensSnapToGrid: false,
+            actors: [ new Actor("Actor 1") ]
         }
 
         this.updateState = this.updateState.bind(this)
@@ -45,9 +48,34 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
 
         const cellDimension = this.props.cellSize
 
+        const tokens = this.state.actors.map((actor, index) => 
+            <Token
+                key={index}
+
+                x={actor.x}
+                y={actor.y}
+                
+                cellDimension={cellDimension}
+                vttTransform={this.state.transform}
+                snapToGrid={this.state.tokensSnapToGrid}
+                />
+        )
+
+        console.log(tokens)
+
         return <div id="vtt">
-            <VTTControlPanel
-                updateVTTState={this.updateState}/>
+            <ControlPanel
+                setSnapToGrid={(snapToGrid: boolean) =>
+                    this.setState({tokensSnapToGrid: snapToGrid})}
+
+                addActorToVTT={() => {
+                    let actors = this.state.actors
+
+                    actors.push(new Actor(`Actor ${actors.length + 1}`))
+
+                    this.setState({ actors })
+                }}
+                />
 
             <svg>
                 <Grid
@@ -58,12 +86,7 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     updateVttTransform={this.updateTransform}
                     />
 
-                <Token
-                    x={0} y={0}
-                    cellDimension={cellDimension}
-                    vttTransform={this.state.transform}
-                    snapToGrid={this.state.tokensSnapToGrid}
-                    />
+                {tokens}
             </svg>
         </div>
     }

@@ -3,7 +3,6 @@
   margin: 0
   box-sizing: border-box
 
-body
   font-family: "Consolas", monospace, system-ui, sans-serif
   font-size: 11pt
 
@@ -29,5 +28,25 @@ body
     margin: 8px
     padding: 8px
 
+    .form-field
+      margin-bottom: 8px
+
+      &:last-child
+        margin-bottom: 0px
+
     input[type=checkbox]
       margin-right: 8px
+
+    button
+      background: black
+      color: white
+
+      border: none
+
+      padding: 8px
+
+      &:hover
+        background: hsl(0,0,20%)
+
+      &:active
+        background: hsl(0,0,80%)
