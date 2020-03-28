@@ -30,54 +30,6 @@ export class Token extends React.Component<TokenProps, TokenState> {
             pointerDown: false,
             pointerOffset: { dX: 0, dY: 0 }
         }
-
-        this.handlePointerMove = this.handlePointerMove.bind(this)
-    }
-
-    private handlePointerMove(event: React.PointerEvent) {
-
-        if (this.state.pointerDown) {
-
-            const xTranslation = this.props.vttTransform[4]
-            const yTranslation = this.props.vttTransform[5]
-
-            const xScale = this.props.vttTransform[0]
-            const yScale = this.props.vttTransform[3]
-
-            const xOffset = this.state.pointerOffset.dX
-            const yOffset = this.state.pointerOffset.dY
-
-
-            // Map client coordinates to world coordinates
-            let x = ((event.clientX + xOffset) / xScale) - xTranslation
-            let y = ((event.clientY + yOffset) / yScale) - yTranslation
-
-
-            if (this.props.snapToGrid) {
-
-                const cellDimension = this.props.cellDimension
-
-                // Map world coordinates to grid coordinates
-                const gridX = Math.floor(x / cellDimension) * cellDimension
-                const gridY = Math.floor(y / cellDimension) * cellDimension
-
-
-                // MAGIC: This is a decent snapping threshold, for no explicable
-                // reason other than it feels good
-                const snapThreshold = 8
-
-                // Detect if our mouse is close enough to a grid line to snap.
-                if (Math.abs(x - gridX) < snapThreshold)
-                    x = gridX
-
-                if (Math.abs(y - gridY) < snapThreshold)
-                    y = gridY
-
-            }
-
-            this.props.dispatchMoveActor(this.props.actorId, x, y)
-        }
-
     }
 
     public render() {
@@ -123,8 +75,50 @@ export class Token extends React.Component<TokenProps, TokenState> {
                         this.setState({ pointerDown: false })
                     }}
 
-                    onPointerMoveCapture={this.handlePointerMove}
-                    />
+                    onPointerMoveCapture={(event) => {
+                        if (this.state.pointerDown) {
+
+                            const xTranslation = this.props.vttTransform[4]
+                            const yTranslation = this.props.vttTransform[5]
+
+                            const xScale = this.props.vttTransform[0]
+                            const yScale = this.props.vttTransform[3]
+
+                            const xOffset = this.state.pointerOffset.dX
+                            const yOffset = this.state.pointerOffset.dY
+
+
+                            // Map client coordinates to world coordinates
+                            let x = ((event.clientX + xOffset) / xScale) - xTranslation
+                            let y = ((event.clientY + yOffset) / yScale) - yTranslation
+
+
+                            if (this.props.snapToGrid) {
+
+                                const cellDimension = this.props.cellDimension
+
+                                // Map world coordinates to grid coordinates
+                                const gridX = Math.floor(x / cellDimension) * cellDimension
+                                const gridY = Math.floor(y / cellDimension) * cellDimension
+
+
+                                // MAGIC: This is a decent snapping threshold, for no explicable
+                                // reason other than it feels good
+                                const snapThreshold = 8
+
+                                // Detect if our mouse is close enough to a grid line to snap.
+                                if (Math.abs(x - gridX) < snapThreshold)
+                                    x = gridX
+
+                                if (Math.abs(y - gridY) < snapThreshold)
+                                    y = gridY
+
+                            }
+
+                            this.props.dispatchMoveActor(this.props.actorId, x, y)
+                        }
+                    }}
+                />
     }
 
 }
