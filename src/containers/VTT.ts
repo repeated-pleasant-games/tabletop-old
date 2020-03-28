@@ -2,7 +2,7 @@ import { connect } from "react-redux"
 
 import { AppState } from "../reducers/reducers"
 
-import { VTT } from "../components/vtt/VTT"
+import VTT from "../components/vtt/VTT"
 
 
 const mapStateToProps = ({ actors, vttTransform }: AppState) => (

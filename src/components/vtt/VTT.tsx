@@ -7,51 +7,34 @@ import { ControlPanel } from "./ControlPanel"
 import { Actor } from "../../core/Actor"
 
 
-interface VTTProperties {
+type VTTProps = {
     cellSize: number
+
+    // Handled by container component
     actors?: Actor[]
-    transform: number[]
 }
 
 
-export class VTT extends React.Component<VTTProperties, {}> {
-    
-    constructor(props: VTTProperties) {
-        super(props)
+export default ({ cellSize, actors }: VTTProps) => (
+    <div id="vtt">
+        <ControlPanel />
 
-        this.updateState = this.updateState.bind(this)
-    }
+        <svg>
+            <Grid
+                cellDimension={cellSize}
+                gridSubDivisions={5}
+            />
+            
+            {actors.map((actor, index) => 
+                <Token
+                    key={index}
 
-    private updateState(newState: object): void {
-        this.setState(newState)
-    }
-
-    public render() {
-
-        const cellDimension = this.props.cellSize
-
-        return <div id="vtt">
-            <ControlPanel />
-
-            <svg>
-                <Grid
-                    cellDimension={cellDimension}
-                    gridSubDivisions={5}
+                    actorId={index}
+                    actor={actor}
+                    
+                    cellDimension={cellSize}
                     />
-
-                {this.props.actors.map((actor, index) => 
-                    <Token
-                        key={index}
-
-                        actorId={index}
-                        actor={actor}
-                        
-                        cellDimension={cellDimension}
-                        vttTransform={this.props.transform}
-                        />
-                )}
-            </svg>
-        </div>
-    }
-
-}
+            )}
+        </svg>
+    </div>
+)

@@ -6,8 +6,8 @@ import { AppState } from "../reducers/reducers"
 import { Token } from "../components/vtt/Token"
 
 
-const mapStateToProps = ({ gridSnap }: AppState) => (
-    { snapToGrid: gridSnap }
+const mapStateToProps = ({ gridSnap, vttTransform }: AppState) => (
+    { snapToGrid: gridSnap, vttTransform }
 )
 
 

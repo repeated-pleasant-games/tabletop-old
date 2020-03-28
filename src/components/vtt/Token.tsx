@@ -7,11 +7,11 @@ export type TokenProps = {
     actorId: number
     actor: Actor
     cellDimension: number
-    vttTransform: number[]
     
     // Handled by Token container
     snapToGrid?: boolean
     dispatchMoveActor?: (id: number, x: number, y: number) => void
+    vttTransform?: number[]
 }
 
 
