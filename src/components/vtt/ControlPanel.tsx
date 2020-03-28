@@ -4,19 +4,15 @@ import GridSnapCheckbox from "../../containers/GridSnapCheckbox"
 import AddActorButton from "../../containers/AddActorButton"
 
 
-export class ControlPanel extends React.Component<{}, {}> {
-    public render() {
-        return (
-            <div className="vtt-control-panel">
-                <GridSnapCheckbox
-                    name="snap-to-grid"
-                    label="Toggle Snap to Grid"
-                />
+export default () => (
+    <div className="vtt-control-panel">
+        <GridSnapCheckbox
+            name="snap-to-grid"
+            label="Toggle Snap to Grid"
+        />
 
-                <AddActorButton
-                    label="Add Actor"
-                />
-            </div>
-        )
-    }
-}
+        <AddActorButton
+            label="Add Actor"
+        />
+    </div>
+)

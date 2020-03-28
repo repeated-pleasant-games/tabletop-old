@@ -3,7 +3,7 @@ import * as React from "react"
 
 import Grid from "../../containers/Grid"
 import Token from "../../containers/Token"
-import { ControlPanel } from "./ControlPanel"
+import ControlPanel from "./ControlPanel"
 import { Actor } from "../../core/Actor"
 
 
