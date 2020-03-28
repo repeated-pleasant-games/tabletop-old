@@ -1,19 +1,21 @@
 import * as React from "react"
 
-import { Actor } from "../game/Actor"
+import { Actor } from "../../core/Actor"
 
 
-interface TokenProps {
+export type TokenProps = {
+    actorId: number
     actor: Actor
     cellDimension: number
     vttTransform: number[]
-    snapToGrid: boolean
+    
+    // Handled by Token container
+    snapToGrid?: boolean
+    dispatchMoveActor?: (id: number, x: number, y: number) => void
 }
 
 
 interface TokenState {
-    x: number
-    y: number
     pointerDown: boolean
     pointerOffset: { dX: number, dY: number }
 }
@@ -25,8 +27,6 @@ export class Token extends React.Component<TokenProps, TokenState> {
         super(props)
 
         this.state = {
-            x: props.actor.x,
-            y: props.actor.y,
             pointerDown: false,
             pointerOffset: { dX: 0, dY: 0 }
         }
@@ -75,8 +75,7 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
             }
 
-            this.setState({ x, y })
-
+            this.props.dispatchMoveActor(this.props.actorId, x, y)
         }
 
     }
@@ -88,8 +87,8 @@ export class Token extends React.Component<TokenProps, TokenState> {
         return <circle
                     id={`token-${this.props.actor.name.replace(" ", "_")}`}
 
-                    cx={tokenRadius + this.state.x}
-                    cy={tokenRadius + this.state.y}
+                    cx={tokenRadius + this.props.actor.x}
+                    cy={tokenRadius + this.props.actor.y}
                     r={tokenRadius}
 
                     transform={`matrix(${this.props.vttTransform.join(" ")})`}
@@ -105,8 +104,8 @@ export class Token extends React.Component<TokenProps, TokenState> {
                         const yScale = this.props.vttTransform[3]
 
                         // Compute this elements client coordinates
-                        const thisClientX = (this.state.x + xTranslation) * xScale
-                        const thisClientY = (this.state.y + yTranslation) * yScale
+                        const thisClientX = (this.props.actor.x + xTranslation) * xScale
+                        const thisClientY = (this.props.actor.y + yTranslation) * yScale
 
 
                         this.setState({

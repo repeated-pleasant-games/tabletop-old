@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { VTT } from "./vtt/VTT"
+import VTT from "./containers/VTT"
 
 export class App extends React.Component<{}, {}> {
     public render () {

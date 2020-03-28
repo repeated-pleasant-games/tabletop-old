@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
 
-import appState from "./reducers"
+import appState from "./reducers/reducers"
 
 import { App } from "./App"
 

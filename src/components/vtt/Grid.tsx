@@ -5,8 +5,9 @@ interface GridProperties {
     cellDimension: number
     gridSubDivisions: number
 
-    vttTransform: number[]
-    updateVttTransform: (newTransform: number[]) => void
+    // Handled by container component
+    vttTransform?: number[]
+    updateVttTransform?: (scale: number, x: number, y: number) => void
 }
 
 
@@ -37,12 +38,12 @@ export class Grid extends React.Component<GridProperties, GridState> {
 
     private handlePointerMove(event: React.PointerEvent) {
         if (this.state.pointerDown) {
-            let newTransform = this.props.vttTransform
+            const [ scale,,,,x,y ] = this.props.vttTransform
 
-            newTransform[4] += event.movementX
-            newTransform[5] += event.movementY
+            const newX = event.movementX + x
+            const newY = event.movementY + y
 
-            this.props.updateVttTransform(newTransform)
+            this.props.updateVttTransform(scale, newX, newY)
         }
     }
 
@@ -50,17 +51,15 @@ export class Grid extends React.Component<GridProperties, GridState> {
         event.preventDefault()
         event.stopPropagation()
 
-        let newTransform = this.props.vttTransform
+        const [scale,,,,x,y ] = this.props.vttTransform
 
         const zoom = 1 - (event.deltaY / 100)
 
-        for (let i = 0; i < newTransform.length; i++)
-            newTransform[i] *= zoom
+        const newScale = scale * zoom
+        const newX = (x * zoom) + (event.clientX * (1 - zoom))
+        const newY = (y * zoom) + (event.clientY * (1 - zoom))
 
-        newTransform[4] += event.clientX * (1 - zoom)
-        newTransform[5] += event.clientY * (1 - zoom)
-
-        this.props.updateVttTransform(newTransform)
+        this.props.updateVttTransform(newScale, newX, newY)
     }
 
     public render() {
