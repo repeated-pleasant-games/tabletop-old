@@ -48,20 +48,6 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
 
         const cellDimension = this.props.cellSize
 
-        const tokens = this.state.actors.map((actor, index) => 
-            <Token
-                key={index}
-
-                actor={actor}
-                
-                cellDimension={cellDimension}
-                vttTransform={this.state.transform}
-                snapToGrid={this.state.tokensSnapToGrid}
-                />
-        )
-
-        console.log(tokens)
-
         return <div id="vtt">
             <ControlPanel
                 setSnapToGrid={(snapToGrid: boolean) =>
@@ -85,7 +71,17 @@ export class VTT extends React.Component<VTTProperties, VTTState> {
                     updateVttTransform={this.updateTransform}
                     />
 
-                {tokens}
+                {this.state.actors.map((actor, index) => 
+                    <Token
+                        key={index}
+
+                        actor={actor}
+                        
+                        cellDimension={cellDimension}
+                        vttTransform={this.state.transform}
+                        snapToGrid={this.state.tokensSnapToGrid}
+                        />
+                )}
             </svg>
         </div>
     }
