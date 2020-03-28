@@ -1,11 +1,11 @@
 import { connect } from "react-redux"
 
-import { AppState } from "../reducers/reducers"
+import { VttState } from "../reducers/vtt"
 
 import VTT from "../components/vtt/VTT"
 
 
-const mapStateToProps = ({ actors, vttTransform }: AppState) => (
+const mapStateToProps = ({ actors, vttTransform }: VttState) => (
     { actors, transform: vttTransform }
 )
 

@@ -1,3 +1,5 @@
+import { combineReducers } from "redux"
+
 import {
     PayloadSetGridSnap,
     PayloadAddActor,
@@ -67,3 +69,14 @@ export const actors = (
             return state
     }
 }
+
+
+const vttReducer = combineReducers({
+    actors,
+    vttTransform,
+    gridSnap
+})
+
+
+export default vttReducer
+export type VttState = ReturnType<typeof vttReducer>

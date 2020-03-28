@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
 
-import appState from "./reducers/reducers"
+import vttReducer from "./reducers/vtt"
 
 import { App } from "./App"
 
@@ -11,7 +11,7 @@ import "./styles/style.sass"
 
 
 ReactDOM.render(
-    <Provider store={createStore(appState)}>
+    <Provider store={createStore(vttReducer)}>
         <App />
     </Provider>,
     document.getElementById("app")

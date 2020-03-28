@@ -1,12 +1,12 @@
 import { connect } from "react-redux"
 
 import { setVttTransform } from "../actions/vtt"
-import { AppState } from "../reducers/reducers"
+import { VttState } from "../reducers/vtt"
 
 import { Grid } from "../components/vtt/Grid"
 
 
-const mapStateToProps = ({ vttTransform }: AppState) => (
+const mapStateToProps = ({ vttTransform }: VttState) => (
     { vttTransform }
 )
 
