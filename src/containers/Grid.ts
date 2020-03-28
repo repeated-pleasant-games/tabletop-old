@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 
-import { setVttTransform } from "../actions/actions"
+import { setVttTransform } from "../actions/vtt"
 import { AppState } from "../reducers/reducers"
 
 import { Grid } from "../components/vtt/Grid"

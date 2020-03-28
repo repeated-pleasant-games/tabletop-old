@@ -1,9 +1,12 @@
 import {
     PayloadSetGridSnap,
     PayloadAddActor,
-    PayloadMoveActor,
     PayloadSetVttTransform
-} from "../actions/actions"
+} from "../actions/vtt"
+
+import {
+    PayloadMoveActor,
+} from "../actions/actor"
 
 import { Actor } from "../core/Actor"
 

@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 
-import { addActor } from "../actions/actions"
+import { addActor } from "../actions/vtt"
 
 import Button from "../components/util/Button"
 

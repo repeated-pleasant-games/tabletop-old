@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 
-import { moveActor } from "../actions/actions"
+import { moveActor } from "../actions/actor"
 import { AppState } from "../reducers/reducers"
 
 import { Token } from "../components/vtt/Token"

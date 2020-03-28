@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { setGridSnap } from "../actions/actions"
+import { setGridSnap } from "../actions/vtt"
 import { AppState } from "../reducers/reducers"
 
 import Checkbox from "../components/util/Checkbox"
