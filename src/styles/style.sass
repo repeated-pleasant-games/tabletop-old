@@ -18,16 +18,20 @@
     width: 100%
     height: 100%
 
-.vtt-control-panel
+.control-container
   position: absolute
   top: 0px
   right: 0px
 
-  // width: 20vw
-
-  background: white
-
   margin: 8px
+
+  background: hsla(0,0,0,0)
+
+  & > *:not(:first-child)
+    margin-top: 8px
+
+.control-panel
+  background: white
   padding: 8px
 
   .form-field
@@ -54,19 +58,15 @@
       background: hsl(0,0,80%)
 
 .turn-tracker
-  position: absolute
-
-  bottom: 0px
-  right: 0px
-
   background: white
-  
-  margin: 8px
   padding: 8px
 
   list-style: none
 
   li
     display: block
+    padding: 8px 0px
 
-    padding: 8px
+    span
+      color: hsl(0,0,80%)
+      padding-left: 16px

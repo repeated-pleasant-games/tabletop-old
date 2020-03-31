@@ -9,7 +9,8 @@ type TurnCardProps = {
 
 
 export default ({ actor }: TurnCardProps) => (
-    <li>
+    <li draggable="true">
         {actor.name}
+        <span>{actor.initiative}</span>
     </li>
 )

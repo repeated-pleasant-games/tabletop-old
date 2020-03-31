@@ -12,6 +12,7 @@ export class Actor {
         this.name = name
         this.x = x
         this.y = y
+        this.initiative = Math.floor(Math.random() * 20) + 1
     }
 
 }

@@ -18,9 +18,10 @@ type VTTProps = {
 
 export default ({ cellSize, actors }: VTTProps) => (
     <div id="vtt">
-        <ControlPanel />
-
-        <TurnTracker />
+        <div className="control-container">
+            <ControlPanel />
+            <TurnTracker />
+        </div>
 
         <svg>
             <Grid

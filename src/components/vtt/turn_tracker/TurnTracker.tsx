@@ -12,8 +12,9 @@ type TurnTrackerProps = {
 
 export default ({ actors }: TurnTrackerProps) => (
     <ul className="turn-tracker">
-        {actors
-            .sort((f, s) => f.initiative - s.initiative)
+        {[ ...actors ]
+            // Sort by descending order
+            .sort((a, b) => b.initiative - a.initiative)
             .map((actor, index) => (
                 <TurnCard
                     key={index}

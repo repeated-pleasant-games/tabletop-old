@@ -5,7 +5,7 @@ import AddActorButton from "../../containers/AddActorButton"
 
 
 export default () => (
-    <div className="vtt-control-panel">
+    <div className="control-panel">
         <GridSnapCheckbox
             name="snap-to-grid"
             label="Toggle Snap to Grid"

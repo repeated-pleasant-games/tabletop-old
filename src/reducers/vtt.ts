@@ -60,7 +60,7 @@ export const actors = (
 
             return state.map((actor: Actor, i: number) => (
                 i === id
-                ? new Actor(actor.name, x, y)
+                ? <Actor>{ ...actor, x, y }
                 : actor
             ))
         }
