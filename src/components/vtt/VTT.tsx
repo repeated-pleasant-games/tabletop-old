@@ -11,16 +11,27 @@ import { Actor } from "../../core/Actor"
 type VTTProps = {
     cellSize: number
 
+    width: number
+    height: number
+
     // Handled by container component
     actors?: Actor[]
 }
 
 
-export default ({ cellSize, actors }: VTTProps) => (
+export default ({ cellSize, actors, width, height }: VTTProps) => (
     <div id="vtt">
         <div className="control-container">
             <ControlPanel />
-            <TurnTracker />
+            <TurnTracker
+                cellSize={cellSize}
+                vttWidth={width}
+                vttHeight={height}
+            />
+
+            <div style={{ background: "white", padding: "8px" }}>
+                {width} &times; {height}
+            </div>
         </div>
 
         <svg>

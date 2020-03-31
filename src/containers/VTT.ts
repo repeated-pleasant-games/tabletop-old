@@ -5,8 +5,13 @@ import { VttState } from "../reducers/vtt"
 import VTT from "../components/vtt/VTT"
 
 
-const mapStateToProps = ({ actors, vttTransform }: VttState) => (
-    { actors, transform: vttTransform }
+const mapStateToProps = (
+    { actors, vttTransform }: VttState
+) => (
+    {
+        actors,
+        transform: vttTransform
+    }
 )
 
 

@@ -6,12 +6,18 @@ import TurnCard from "./TurnCard"
 
 
 type TurnTrackerProps = {
+    cellSize: number
+    vttWidth: number
+    vttHeight: number
+
     actors?: Actor[]
     setVttTransform?: (scale: number, x: number, y: number) => void
 }
 
 
-export default ({ actors, setVttTransform }: TurnTrackerProps) => (
+export default (
+    { actors, setVttTransform, cellSize, vttWidth, vttHeight }: TurnTrackerProps
+) => (
     <ul className="turn-tracker">
         {[ ...actors ]
             // Sort by descending order
@@ -20,7 +26,11 @@ export default ({ actors, setVttTransform }: TurnTrackerProps) => (
                 <TurnCard
                     key={index}
                     actor={actor}
-                    setVttTransform={setVttTransform}
+                    onClick={(e: React.MouseEvent) => {
+                        setVttTransform(1,
+                                        (vttWidth / 2) - actor.x,
+                                        (vttHeight / 2) - actor.y)
+                    }}
                 />
             )
         )}
