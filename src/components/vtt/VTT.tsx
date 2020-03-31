@@ -4,6 +4,7 @@ import * as React from "react"
 import Grid from "../../containers/Grid"
 import Token from "../../containers/Token"
 import ControlPanel from "./ControlPanel"
+import TurnTracker from "../../containers/TurnTracker"
 import { Actor } from "../../core/Actor"
 
 
@@ -18,6 +19,8 @@ type VTTProps = {
 export default ({ cellSize, actors }: VTTProps) => (
     <div id="vtt">
         <ControlPanel />
+
+        <TurnTracker />
 
         <svg>
             <Grid

@@ -6,6 +6,8 @@ export class Actor {
     public x: number
     public y: number
 
+    public initiative: number
+
     public constructor(name: string, x: number = 0, y: number = 0) {
         this.name = name
         this.x = x
