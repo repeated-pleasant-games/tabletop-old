@@ -37,7 +37,7 @@ export default ({ cellSize, actors }: VTTProps) => (
                     actor={actor}
                     
                     cellDimension={cellSize}
-                    />
+                />
             )}
         </svg>
     </div>

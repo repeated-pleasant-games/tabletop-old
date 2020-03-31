@@ -7,10 +7,11 @@ import TurnCard from "./TurnCard"
 
 type TurnTrackerProps = {
     actors?: Actor[]
+    setVttTransform?: (scale: number, x: number, y: number) => void
 }
 
 
-export default ({ actors }: TurnTrackerProps) => (
+export default ({ actors, setVttTransform }: TurnTrackerProps) => (
     <ul className="turn-tracker">
         {[ ...actors ]
             // Sort by descending order
@@ -19,6 +20,7 @@ export default ({ actors }: TurnTrackerProps) => (
                 <TurnCard
                     key={index}
                     actor={actor}
+                    setVttTransform={setVttTransform}
                 />
             )
         )}

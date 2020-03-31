@@ -126,7 +126,16 @@ export class Grid extends React.Component<GridProperties, GridState> {
 
                 onPointerMoveCapture={this.handlePointerMove}
                 onWheelCapture={this.handleWheel}
-                />
+            />
+
+            <circle
+                r="3"
+                cx="0"
+                cy="0"
+                fill="red"
+
+                transform={`translate(${this.props.vttTransform.slice(4).join(" ")})`}
+            />
         </g>
     }
 
