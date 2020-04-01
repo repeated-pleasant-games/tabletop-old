@@ -11,45 +11,59 @@ import { Actor } from "../../core/Actor"
 type VTTProps = {
     cellSize: number
 
-    width: number
-    height: number
-
     // Handled by container component
     actors?: Actor[]
 }
 
+/**
+ * Should we wrap this in a context that provides a load of things to
+ * its children???
+ */
+export default ({ cellSize, actors }: VTTProps) => {
 
-export default ({ cellSize, actors, width, height }: VTTProps) => (
-    <div id="vtt">
-        <div className="control-container">
-            <ControlPanel />
-            <TurnTracker
-                cellSize={cellSize}
-                vttWidth={width}
-                vttHeight={height}
-            />
+    const vttRef = React.useRef(null)
 
-            <div style={{ background: "white", padding: "8px" }}>
-                {width} &times; {height}
-            </div>
-        </div>
+    const [ size, setSize ] = React.useState({ width: 0, height: 0 })
 
-        <svg>
-            <Grid
-                cellDimension={cellSize}
-                gridSubDivisions={5}
-            />
-            
-            {actors.map((actor, index) => 
-                <Token
-                    key={index}
+    React.useEffect(() => {
+        setSize({
+            width: vttRef.current.offsetWidth,
+            height: vttRef.current.offsetHeight
+        })
+    }, [])
 
-                    actorId={index}
-                    actor={actor}
-                    
-                    cellDimension={cellSize}
+    return (
+        <div id="vtt" ref={vttRef}>
+            <div className="control-container">
+                <ControlPanel />
+                <TurnTracker
+                    cellSize={cellSize}
+                    vttWidth={size.width}
+                    vttHeight={size.height}
                 />
-            )}
-        </svg>
-    </div>
-)
+
+                <div style={{ background: "white", padding: "8px" }}>
+                    {size.width} &times; {size.height}
+                </div>
+            </div>
+
+            <svg>
+                <Grid
+                    cellDimension={cellSize}
+                    gridSubDivisions={5}
+                />
+                
+                {actors.map((actor, index) => 
+                    <Token
+                        key={index}
+
+                        actorId={index}
+                        actor={actor}
+                        
+                        cellDimension={cellSize}
+                    />
+                )}
+            </svg>
+        </div>
+    )
+}
