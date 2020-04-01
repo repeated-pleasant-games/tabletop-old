@@ -1,4 +1,5 @@
 import * as React from "react"
+import ResizeObserver from "resize-observer-polyfill"
 
 
 import Grid from "../../containers/Grid"
@@ -23,6 +24,7 @@ export default ({ cellSize, actors }: VTTProps) => {
 
     const vttRef = React.useRef(null)
 
+
     const [ size, setSize ] = React.useState({ width: 0, height: 0 })
 
     React.useEffect(() => {
@@ -31,6 +33,21 @@ export default ({ cellSize, actors }: VTTProps) => {
             height: vttRef.current.offsetHeight
         })
     }, [])
+
+
+    const [ resizeObserver, setResizeObserver ] = React.useState(
+        new ResizeObserver((entries) => {
+            const { width, height } = entries[0].contentRect
+            setSize({ width, height })
+        })
+    )
+
+    React.useEffect(() => {
+        resizeObserver.observe(vttRef.current)
+
+        return () => resizeObserver.disconnect()
+    }, [])
+
 
     return (
         <div id="vtt" ref={vttRef}>
