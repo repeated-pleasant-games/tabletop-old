@@ -28,8 +28,8 @@ export default (
                     actor={actor}
                     onClick={(e: React.MouseEvent) => {
                         setVttTransform(1,
-                                        (vttWidth / 2) - actor.x,
-                                        (vttHeight / 2) - actor.y)
+                                        (vttWidth / 2) - actor.x - (cellSize/2),
+                                        (vttHeight / 2) - actor.y - (cellSize/2))
                     }}
                 />
             )
