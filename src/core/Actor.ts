@@ -1,6 +1,8 @@
 
 
 export class Actor {
+
+    public id: number
     
     public name: string
     public x: number
@@ -8,7 +10,8 @@ export class Actor {
 
     public initiative: number
 
-    public constructor(name: string, x: number = 0, y: number = 0) {
+    public constructor(id: number, name: string, x: number = 0, y: number = 0) {
+        this.id = id
         this.name = name
         this.x = x
         this.y = y

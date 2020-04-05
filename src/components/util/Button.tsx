@@ -1,16 +1,17 @@
 import React from "react"
 
 
-type ButtonProps = {
+export type ButtonProps = {
     label: string
     onClick?: (e: React.MouseEvent) => void
 }
 
-
-export default ({ label, onClick }: ButtonProps) => (
+const Button = ({ label, onClick }: ButtonProps) => (
     <div className="form-field">
         <button onClick={onClick}>
             {label}
         </button>
     </div>
 )
+
+export default Button

@@ -4,7 +4,6 @@ import { Actor } from "../../core/Actor"
 
 
 export type TokenProps = {
-    actorId: number
     actor: Actor
     cellDimension: number
     
@@ -115,7 +114,7 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
                             }
 
-                            this.props.dispatchMoveActor(this.props.actorId, x, y)
+                            this.props.dispatchMoveActor(this.props.actor.id, x, y)
                         }
                     }}
                 />

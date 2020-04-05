@@ -1,3 +1,4 @@
+import { Actor } from "../core/Actor"
 
 /* --- Action Types --- */
 
@@ -21,13 +22,13 @@ export type PayloadSetVttTransform = ActionPayload<{
     x: number
     y: number
 }>
-export type PayloadAddActor = ActionPayload<{}>
+export type PayloadAddActor = ActionPayload<{ actor: Actor }>
 
 
 /* --- Action Creators --- */
 
-export const addActor = () =>
-    <PayloadAddActor>{ type: "ADD_ACTOR" }
+export const addActor = (actor: Actor) =>
+    <PayloadAddActor>{ type: "ADD_ACTOR", actor }
 
 export const setVttTransform = (scale: number, x: number, y: number) =>
     <PayloadSetVttTransform>{

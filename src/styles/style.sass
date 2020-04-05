@@ -64,13 +64,24 @@
   list-style: none
 
   li
-    display: block
+    display: grid
+    grid-template-columns: 2fr 1fr
+    grid-template-rows: 1fr
+
+    align-content: center
+
     padding: 8px
 
     &:hover
-      outline: 1px solid black
+      outline: 1px solid lightgrey
       cursor: pointer
 
-    span
-      color: hsl(0,0,80%)
-      padding-left: 16px
+    &:active
+      outline-color: black
+
+    input
+      // border: none
+      width: 5ch
+      text-align: center
+
+    

@@ -8,9 +8,11 @@ import {
 
 import {
     PayloadMoveActor,
+    PayloadSetActorInitiative
 } from "../actions/actor"
 
 import { Actor } from "../core/Actor"
+import TurnEntry from "../core/TurnEntry"
 
 
 export const gridSnap = (
@@ -46,21 +48,31 @@ export const vttTransform = (
 
 export const actors = (
     state: Actor[] = [],
-    action: PayloadAddActor | PayloadMoveActor
+    action: (PayloadAddActor | PayloadMoveActor & PayloadSetActorInitiative)
 ) => {
     switch (action.type) {
         case "ADD_ACTOR":
             return [
                 ...state,
-                new Actor(`Actor ${state.length + 1}`)
+                action.actor
             ]
 
         case "MOVE_ACTOR": {
             const { id, x, y } = action
 
-            return state.map((actor: Actor, i: number) => (
-                i === id
+            return state.map((actor: Actor) => (
+                actor.id === id
                 ? <Actor>{ ...actor, x, y }
+                : actor
+            ))
+        }
+
+        case "SET_ACTOR_INITIATIVE": {
+            const { id, initiative } = action
+
+            return state.map((actor: Actor) => (
+                actor.id === id
+                ? <Actor>{ ...actor, initiative }
                 : actor
             ))
         }
@@ -71,10 +83,28 @@ export const actors = (
 }
 
 
+export const turnOrder = (
+    state: TurnEntry[] = [],
+    action: (PayloadAddActor)
+) => {
+    switch (action.type) {
+        case "ADD_ACTOR":
+            return [
+                ...state,
+                new TurnEntry(action.actor)
+            ]
+
+        default:
+            return state
+    }
+}
+
+
 const vttReducer = combineReducers({
     actors,
     vttTransform,
-    gridSnap
+    gridSnap,
+    turnOrder
 })
 
 

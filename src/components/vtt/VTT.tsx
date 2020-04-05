@@ -73,10 +73,7 @@ export default ({ cellSize, actors }: VTTProps) => {
                 {actors.map((actor, index) => 
                     <Token
                         key={index}
-
-                        actorId={index}
                         actor={actor}
-                        
                         cellDimension={cellSize}
                     />
                 )}
