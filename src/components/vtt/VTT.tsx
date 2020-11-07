@@ -1,12 +1,13 @@
 import * as React from "react"
+import { connect } from "react-redux"
 import ResizeObserver from "resize-observer-polyfill"
-
 
 import Grid from "~/containers/Grid"
 import Token from "~/containers/Token"
 import ControlPanel from "./ControlPanel"
 import TurnTracker from "~/containers/TurnTracker"
 import { Actor } from "~/core/Actor"
+import { VttState } from "~/reducers/vtt"
 
 
 type VTTProps = {
@@ -20,7 +21,7 @@ type VTTProps = {
  * Should we wrap this in a context that provides a load of things to
  * its children???
  */
-export default ({ cellSize, actors }: VTTProps) => {
+export const VTT = ({ cellSize, actors }: VTTProps) => {
 
     const vttRef = React.useRef(null)
 
@@ -81,3 +82,15 @@ export default ({ cellSize, actors }: VTTProps) => {
         </div>
     )
 }
+
+const mapStateToProps = (
+    { actors, vttTransform }: VttState
+) => (
+    {
+        actors,
+        transform: vttTransform
+    }
+)
+
+
+export default connect(mapStateToProps, null)(VTT)
