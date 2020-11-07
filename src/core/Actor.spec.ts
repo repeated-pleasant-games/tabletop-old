@@ -10,7 +10,7 @@ describe(
 
     it("Creates an Actor with the given name.", () => {
       const actor = new Actor(1, "Tom");
-      expect(actor.id).toBe("Tom");
+      expect(actor.name).toBe("Tom");
     });
   }
 );
