@@ -16,7 +16,6 @@
     "virtual-tabletop",
     "tabletop"
   ],
-  "main": "src/index.tsx",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
