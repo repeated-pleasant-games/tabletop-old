@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import ResizeObserver from "resize-observer-polyfill"
 
 import Grid from "~/containers/Grid"
-import Token from "~/containers/Token"
+import Token from "~/components/vtt/Token"
 import ControlPanel from "./ControlPanel"
 import TurnTracker from "~/components/vtt/turn_tracker/TurnTracker"
 import { Actor } from "~/core/Actor"
