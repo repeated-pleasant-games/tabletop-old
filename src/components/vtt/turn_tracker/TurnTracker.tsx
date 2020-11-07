@@ -1,4 +1,9 @@
 import React from "react"
+import { connect } from "react-redux"
+
+import { setVttTransform } from "~/actions/vtt"
+import { setActorInitiative } from "~/actions/actor"
+import { VttState } from "~/reducers/vtt"
 
 import TurnEntry from "~/core/TurnEntry"
 import { Actor } from "~/core/Actor"
@@ -18,7 +23,7 @@ type TurnTrackerProps = {
 }
 
 
-export default (
+export const TurnTracker = (
     {
         actors,
         turnOrder,
@@ -54,3 +59,19 @@ export default (
         </ul>
     )
 }
+
+const mapStateToProps = ({ actors, turnOrder }: VttState) => (
+    { actors, turnOrder }
+)
+
+const mapDispatchToProps = (dispatch: any) => (
+    {
+        setVttTransform: (scale: number, x: number, y: number) =>
+            dispatch(setVttTransform(scale, x, y)),
+
+        setInitiative: (id: number, initiative: number) =>
+            dispatch(setActorInitiative(id, initiative))
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TurnTracker);

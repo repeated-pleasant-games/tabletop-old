@@ -5,7 +5,7 @@ import ResizeObserver from "resize-observer-polyfill"
 import Grid from "~/containers/Grid"
 import Token from "~/containers/Token"
 import ControlPanel from "./ControlPanel"
-import TurnTracker from "~/containers/TurnTracker"
+import TurnTracker from "~/components/vtt/turn_tracker/TurnTracker"
 import { Actor } from "~/core/Actor"
 import { VttState } from "~/reducers/vtt"
 
