@@ -1,11 +1,11 @@
 import { connect } from "react-redux"
 
-import { addActor } from "../actions/vtt"
-import { VttState } from "../reducers/vtt"
+import { addActor } from "~/actions/vtt"
+import { VttState } from "~/reducers/vtt"
 
-import { Actor } from "../core/Actor"
+import { Actor } from "~/core/Actor"
 
-import Button, { ButtonProps } from "../components/util/Button"
+import Button, { ButtonProps } from "~/components/util/Button"
 
 
 const mapStateToProps = ({ actors }: VttState) => (

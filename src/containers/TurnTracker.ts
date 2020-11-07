@@ -1,10 +1,10 @@
 import { connect } from "react-redux"
 
-import { setVttTransform } from "../actions/vtt"
-import { setActorInitiative } from "../actions/actor"
-import { VttState } from "../reducers/vtt"
+import { setVttTransform } from "~/actions/vtt"
+import { setActorInitiative } from "~/actions/actor"
+import { VttState } from "~/reducers/vtt"
 
-import TurnTracker from "../components/vtt/turn_tracker/TurnTracker"
+import TurnTracker from "~/components/vtt/turn_tracker/TurnTracker"
 
 
 const mapStateToProps = ({ actors, turnOrder }: VttState) => (

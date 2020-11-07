@@ -2,11 +2,11 @@ import * as React from "react"
 import ResizeObserver from "resize-observer-polyfill"
 
 
-import Grid from "../../containers/Grid"
-import Token from "../../containers/Token"
+import Grid from "~/containers/Grid"
+import Token from "~/containers/Token"
 import ControlPanel from "./ControlPanel"
-import TurnTracker from "../../containers/TurnTracker"
-import { Actor } from "../../core/Actor"
+import TurnTracker from "~/containers/TurnTracker"
+import { Actor } from "~/core/Actor"
 
 
 type VTTProps = {

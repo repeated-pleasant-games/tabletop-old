@@ -1,7 +1,7 @@
 import * as React from "react"
 
-import GridSnapCheckbox from "../../containers/GridSnapCheckbox"
-import AddActorButton from "../../containers/AddActorButton"
+import GridSnapCheckbox from "~/containers/GridSnapCheckbox"
+import AddActorButton from "~/containers/AddActorButton"
 
 
 export default () => (

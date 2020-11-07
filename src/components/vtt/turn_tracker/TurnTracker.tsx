@@ -1,7 +1,7 @@
 import React from "react"
 
-import TurnEntry from "../../../core/TurnEntry"
-import { Actor } from "../../../core/Actor"
+import TurnEntry from "~/core/TurnEntry"
+import { Actor } from "~/core/Actor"
 
 import TurnCard from "./TurnCard"
 

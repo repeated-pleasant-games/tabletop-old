@@ -1,4 +1,4 @@
-import { Actor } from "../core/Actor"
+import { Actor } from "~/core/Actor"
 
 /* --- Action Types --- */
 

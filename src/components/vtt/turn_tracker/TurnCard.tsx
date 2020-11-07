@@ -3,10 +3,10 @@ import { Dispatch } from "redux"
 
 import { connect } from "react-redux"
 
-import { Actor } from "../../../core/Actor"
+import { Actor } from "~/core/Actor"
 
-import { VttState } from "../../../reducers/vtt"
-import { setActorInitiative as setInitiative } from "../../../actions/actor"
+import { VttState } from "~/reducers/vtt"
+import { setActorInitiative as setInitiative } from "~/actions/actor"
 
 
 /* --- Component --- */

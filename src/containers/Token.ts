@@ -1,9 +1,9 @@
 import { connect } from "react-redux"
 
-import { moveActor } from "../actions/actor"
-import { VttState } from "../reducers/vtt"
+import { moveActor } from "~/actions/actor"
+import { VttState } from "~/reducers/vtt"
 
-import { Token } from "../components/vtt/Token"
+import { Token } from "~/components/vtt/Token"
 
 
 const mapStateToProps = ({ gridSnap, vttTransform }: VttState) => (

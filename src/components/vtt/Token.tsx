@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { Actor } from "../../core/Actor"
+import { Actor } from "~/core/Actor"
 
 
 export type TokenProps = {

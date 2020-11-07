@@ -1,8 +1,8 @@
 import { connect } from "react-redux"
 
-import { VttState } from "../reducers/vtt"
+import { VttState } from "~/reducers/vtt"
 
-import VTT from "../components/vtt/VTT"
+import VTT from "~/components/vtt/VTT"
 
 
 const mapStateToProps = (

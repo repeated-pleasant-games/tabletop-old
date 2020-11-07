@@ -4,15 +4,15 @@ import {
     PayloadSetGridSnap,
     PayloadAddActor,
     PayloadSetVttTransform
-} from "../actions/vtt"
+} from "~/actions/vtt"
 
 import {
     PayloadMoveActor,
     PayloadSetActorInitiative
-} from "../actions/actor"
+} from "~/actions/actor"
 
-import { Actor } from "../core/Actor"
-import TurnEntry from "../core/TurnEntry"
+import { Actor } from "~/core/Actor"
+import TurnEntry from "~/core/TurnEntry"
 
 
 export const gridSnap = (
