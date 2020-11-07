@@ -7,7 +7,7 @@
     "url": "https://jrm.dev"
   },
   "homepage": "https://github.com/joebobmiles/TableTop",
-  "license": "ISC",
+  "license": "AGPL",
   "description": "A virtual tabletop (VTT) for tabeltop roleplaying games (TTRPG).",
   "keywords": [
     "VTT",
