@@ -1,4 +1,8 @@
 import * as React from "react"
+import { connect } from "react-redux"
+
+import { setVttTransform } from "~/actions/vtt"
+import { VttState } from "~/reducers/vtt"
 
 
 interface GridProperties {
@@ -140,3 +144,16 @@ export class Grid extends React.Component<GridProperties, GridState> {
     }
 
 }
+
+const mapStateToProps = ({ vttTransform }: VttState) => (
+    { vttTransform }
+)
+
+const mapDispatchToProps = (dispatch: any) => (
+    {
+        updateVttTransform: (scale: number, x: number, y: number) =>
+            dispatch(setVttTransform(scale, x, y))
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Grid)
