@@ -1,21 +1,26 @@
 
 
-export class Actor {
-
+export class Actor
+{
     public id: number
     
     public name: string
+    public initiative: number
+
     public x: number
     public y: number
 
-    public initiative: number
-
-    public constructor(id: number, name: string, x: number = 0, y: number = 0) {
-        this.id = id
-        this.name = name
-        this.x = x
-        this.y = y
-        this.initiative = Math.floor(Math.random() * 20) + 1
+    public constructor(
+      id: number,
+      name: string,
+      initiative: number,
+      x: number = 0,
+      y: number = 0)
+    {
+        this.id = id;
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.initiative = initiative;
     }
-
 }
