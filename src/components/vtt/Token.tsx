@@ -10,11 +10,11 @@ import { Actor } from "~/core/Actor"
 export type TokenProps = {
     actor: Actor
     cellDimension: number
+    vttTransform: number[]
     
     // Handled by Token container
     snapToGrid?: boolean
     dispatchMoveActor?: (id: number, x: number, y: number) => void
-    vttTransform?: number[]
 }
 
 
@@ -39,11 +39,13 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
         const tokenRadius = this.props.cellDimension / 2
 
-        return <circle
-                    id={`token-${this.props.actor.name.replace(" ", "_")}`}
+        const actor = this.props.actor ?? { id: -1, name: "", x: 0, y: 0 };
 
-                    cx={tokenRadius + this.props.actor.x}
-                    cy={tokenRadius + this.props.actor.y}
+        return <circle
+                    id={`token-${actor.name.replace(" ", "_")}`}
+
+                    cx={tokenRadius + actor.x}
+                    cy={tokenRadius + actor.y}
                     r={tokenRadius}
 
                     transform={`matrix(${this.props.vttTransform.join(" ")})`}
@@ -59,8 +61,8 @@ export class Token extends React.Component<TokenProps, TokenState> {
                         const yScale = this.props.vttTransform[3]
 
                         // Compute this elements client coordinates
-                        const thisClientX = (this.props.actor.x + xTranslation) * xScale
-                        const thisClientY = (this.props.actor.y + yTranslation) * yScale
+                        const thisClientX = (actor.x + xTranslation) * xScale
+                        const thisClientY = (actor.y + yTranslation) * yScale
 
 
                         this.setState({
@@ -118,7 +120,7 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
                             }
 
-                            this.props.dispatchMoveActor(this.props.actor.id, x, y)
+                            this.props.dispatchMoveActor(actor.id, x, y)
                         }
                     }}
                 />

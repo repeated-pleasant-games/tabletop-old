@@ -17,7 +17,7 @@
     "tabletop"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --env=jsdom",
     "coverage": "jest --coverage",
     "build": "webpack",
     "serve": "webpack-dev-server --open"
