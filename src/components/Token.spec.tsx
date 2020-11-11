@@ -9,15 +9,18 @@ describe(
   () =>{
     it("Is a circle", () => {
       const { container } = render(
-        <svg>
           <Token
             actor={null}
             cellDimension={25}
             vttTransform={[1,0,0,1,0,0]}
-          />
-        </svg>);
+          />,
+          {
+            container:
+              document.body.appendChild(
+                document.createElementNS("http://www.w3.org/2000/svg", "svg")),
+          });
 
-      expect(container.firstChild.firstChild.nodeName).toBe("circle");
+      expect(container.firstChild.nodeName).toBe("circle");
     })
   }
 );
