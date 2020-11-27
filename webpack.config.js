@@ -7,7 +7,8 @@ module.exports = {
     devServer: {
         compress: true,
         port: 80,
-        contentBase: "./dist"
+        contentBase: "./dist",
+        writeToDisk: true,
     },
 
     entry: "./src/index.tsx",
