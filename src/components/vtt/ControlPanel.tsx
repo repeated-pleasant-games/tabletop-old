@@ -36,7 +36,11 @@ type NextIdProps = ReturnType<typeof mapNextIdToProps>
 const mapAddActorDispatchToProps = (dispatch: any) => (
     {
         addActor: (id: number) =>
-            dispatch(addActor(new Actor(id, `Actor ${id}`)))
+            dispatch(
+              addActor(new Actor(
+                id,
+                `Actor ${id}`,
+                Math.floor(Math.random() * 20) + 1)))
     }
 )
 
