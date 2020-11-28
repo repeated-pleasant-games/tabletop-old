@@ -2,7 +2,7 @@ import * as React from "react";
 
 type TabletopProps = React.HTMLAttributes<{}> &
 {
-  grid: JSX.Element
+  grid: React.ReactElement,
 };
 
 export const Tabletop = ({ grid }: TabletopProps) =>
