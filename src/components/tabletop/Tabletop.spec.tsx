@@ -4,18 +4,18 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { Tabletop } from "~/components/tabletop/Tabletop";
 
-describe("TableTop component", () =>
+describe("Tabletop component", () =>
 {
   it("Renders an SVG component.", () =>
   {
-    const { container } = render(<Tabletop gridComponent={null} />);
+    const { container } = render(<Tabletop grid={null} />);
 
     expect(container.firstChild.nodeName).toBe("svg");
   });
 
   it("Has an id of 'tabletop'.", () =>
   {
-    const { container } = render(<Tabletop gridComponent={null} />);
+    const { container } = render(<Tabletop grid={null} />);
 
     expect(container.firstChild).toHaveAttribute("id", "tabletop");
   });
@@ -24,7 +24,7 @@ describe("TableTop component", () =>
   {
     const Grid = () => (<rect data-testid="grid" />);
 
-    const { getByTestId } = render(<Tabletop gridComponent={<Grid />} />);
+    const { getByTestId } = render(<Tabletop grid={<Grid />} />);
 
     expect(getByTestId("grid")).toBeInTheDocument();
   });

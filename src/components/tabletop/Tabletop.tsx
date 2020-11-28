@@ -2,11 +2,12 @@ import * as React from "react";
 
 type TabletopProps = React.HTMLAttributes<{}> &
 {
-  gridComponent: JSX.Element
+  grid: JSX.Element
 };
 
-export const Tabletop = ({ gridComponent }: TabletopProps) => (
+export const Tabletop = ({ grid }: TabletopProps) =>
+(
   <svg id="tabletop">
-    {gridComponent}
+    {grid}
   </svg>
 );
