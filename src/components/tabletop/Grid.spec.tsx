@@ -31,4 +31,11 @@ describe("Grid component", () =>
       "fill",
       "url(#some-pattern-id)");
   });
+
+  it("Has fill 'none' when patternId is null.", () =>
+  {
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
+
+    expect(getByTestId(gridTestId)).toHaveAttribute("fill", "none");
+  })
 });

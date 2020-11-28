@@ -12,6 +12,6 @@ export const Grid = ({ patternId }: GridProps) => (
     data-testid={gridTestId}
     width="100%"
     height="100%"
-    fill={`url(#${patternId})`}
+    fill={ patternId === null ? "none" : `url(#${patternId})`}
   />
 );
