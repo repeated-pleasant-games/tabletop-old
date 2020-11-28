@@ -19,10 +19,19 @@ const renderSVG = (
 
 describe("Grid component", () =>
 { 
-  it("Has an SVG rect.", () =>
+  it("Has a SVG rect.", () =>
   {
-    const { getByTestId } = renderSVG(<Grid />);
+    const { getByTestId } = renderSVG(<Grid pattern={null} />);
 
     expect(getByTestId("grid-rect").nodeName).toBe("rect");
+  });
+
+  it("Renders the pattern passed to it.", () =>
+  {
+    const Pattern = () => (<defs data-testid="pattern"></defs>);
+
+    const { getByTestId } = renderSVG(<Grid pattern={<Pattern />} />);
+
+    expect(getByTestId("pattern")).toBeInTheDocument();
   });
 });
