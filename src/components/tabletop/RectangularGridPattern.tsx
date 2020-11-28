@@ -20,6 +20,12 @@ export const RectangularGridPattern = (
       height={cellSize}
       patternUnits="userSpaceOnUse"
     >
+      <path
+        d={`M ${cellSize} 0 L 0 0 0 ${cellSize}`}
+        fill="none"
+        stroke="grey"
+        strokeWidth="0.5"
+      />
     </pattern>
   </defs>
 );
