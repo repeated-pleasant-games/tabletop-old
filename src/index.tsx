@@ -7,7 +7,7 @@ import vttReducer from "./reducers/vtt"
 
 import { App } from "./App"
 
-import "./styles/style.sass"
+import "./styles/style.css"
 
 
 ReactDOM.render(
