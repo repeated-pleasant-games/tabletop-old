@@ -8,6 +8,6 @@ type GridProps = React.HTMLAttributes<{}> &
 export const Grid = ({ pattern }: GridProps) => (
   <>
     {pattern}
-    <rect data-testid="grid-rect" />
+    <rect data-testid="grid-rect" width="100%" height="100%" />
   </>
 );

@@ -26,6 +26,16 @@ describe("Grid component", () =>
     expect(getByTestId("grid-rect").nodeName).toBe("rect");
   });
 
+  it("Spans the full height and width of the Tabletop", () => 
+  {
+    const { getByTestId } = renderSVG(<Grid pattern={null} />);
+
+    const gridRect = getByTestId("grid-rect");
+
+    expect(gridRect).toHaveAttribute("width", "100%");
+    expect(gridRect).toHaveAttribute("height", "100%");
+  });
+
   it("Renders the pattern passed to it.", () =>
   {
     const Pattern = () => (<defs data-testid="pattern"></defs>);
