@@ -1,7 +1,11 @@
 import * as React from "react";
 
 import { Grid } from "./Grid";
+import { RectangularGridPattern } from "./RectangularGridPattern";
 
 export const RectangularGrid = () => (
-  <Grid patternId={null} />
+  <>
+    <RectangularGridPattern />
+    <Grid patternId={null} />
+  </>
 );
