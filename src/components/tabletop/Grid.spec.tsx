@@ -2,7 +2,7 @@ import * as React from "react";
 import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
-import { Grid } from "./Grid";
+import { Grid, gridTestId } from "./Grid";
 
 describe("Grid component", () =>
 { 
@@ -10,14 +10,14 @@ describe("Grid component", () =>
   {
     const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
-    expect(getByTestId("grid-rect").nodeName).toBe("rect");
+    expect(getByTestId(gridTestId).nodeName).toBe("rect");
   });
 
   it("Spans the full height and width of the Tabletop", () => 
   {
     const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
-    const gridRect = getByTestId("grid-rect");
+    const gridRect = getByTestId(gridTestId);
 
     expect(gridRect).toHaveAttribute("width", "100%");
     expect(gridRect).toHaveAttribute("height", "100%");
@@ -27,7 +27,7 @@ describe("Grid component", () =>
   {
     const { getByTestId } = renderSVG(<Grid patternId="some-pattern-id" />);
 
-    expect(getByTestId("grid-rect")).toHaveAttribute(
+    expect(getByTestId(gridTestId)).toHaveAttribute(
       "fill",
       "url(#some-pattern-id)");
   });
