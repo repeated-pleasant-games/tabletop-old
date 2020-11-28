@@ -18,6 +18,7 @@ export const RectangularGridPattern = (
       id={id}
       width={cellSize}
       height={cellSize}
+      patternUnits="userSpaceOnUse"
     >
     </pattern>
   </defs>

@@ -36,4 +36,14 @@ describe("RectangularGridPattern component", () =>
     expect(getByTestId(patternTestId)).toHaveAttribute("width", "16");
     expect(getByTestId(patternTestId)).toHaveAttribute("height", "16");
   });
+
+  it("<pattern> has a patternUnits set to 'userSpaceOnUse'.", () =>
+  {
+    const { getByTestId } = renderSVG(
+      <RectangularGridPattern id={null} cellSize={16} />
+    );
+
+    expect(getByTestId(patternTestId)).toHaveAttribute(
+      "patternUnits", "userSpaceOnUse");
+  });
 });
