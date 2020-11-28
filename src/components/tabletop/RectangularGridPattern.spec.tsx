@@ -9,7 +9,7 @@ describe("RectangularGridPattern component", () =>
   it("Has a <defs> tag at the top-level.", () =>
   {
     const { container } = renderSVG(
-      <RectangularGridPattern patternId={null} />
+      <RectangularGridPattern id={null} />
     );
 
     expect(container.firstChild.nodeName).toBe("defs");
@@ -18,7 +18,7 @@ describe("RectangularGridPattern component", () =>
   it("Has a <pattern> with id equal to 'patternId'.", () =>
   {
     const { getByTestId } = renderSVG(
-      <RectangularGridPattern patternId="rectangular-grid" />
+      <RectangularGridPattern id="rectangular-grid" />
     );
 
     expect(getByTestId(patternTestId).nodeName).toBe("pattern");
