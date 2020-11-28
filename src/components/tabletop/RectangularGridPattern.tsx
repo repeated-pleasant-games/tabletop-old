@@ -3,13 +3,22 @@ import * as React from "react";
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
 
-type RectangularGridPatternProps = React.HTMLAttributes<{}>;
+type RectangularGridPatternProps = React.HTMLAttributes<{}> &
+{
+  cellSize: number
+};
 
 export const RectangularGridPattern = (
-  { id }: RectangularGridPatternProps
+  { id, cellSize }: RectangularGridPatternProps
 ) =>
 (
   <defs data-testid={rectangularPatternTestId}>
-    <pattern data-testid={patternTestId} id={id}></pattern>
+    <pattern
+      data-testid={patternTestId}
+      id={id}
+      width={cellSize}
+      height={cellSize}
+    >
+    </pattern>
   </defs>
 );

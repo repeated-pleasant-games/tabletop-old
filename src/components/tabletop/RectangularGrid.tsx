@@ -7,7 +7,7 @@ const patternId = "rectangular-grid-pattern";
 
 export const RectangularGrid = () => (
   <>
-    <RectangularGridPattern id={patternId} />
+    <RectangularGridPattern id={patternId} cellSize={16} />
     <Grid patternId={patternId} />
   </>
 );
