@@ -1,12 +1,13 @@
 const path = require('path')
 
+const onWindows = process.platform === "win32";
 
 module.exports = {
     mode: "development",
     devtool: "source-map",
     devServer: {
         compress: true,
-        port: 80,
+        port: onWindows ? 80 : 8080,
         contentBase: "./dist",
         writeToDisk: true,
     },
