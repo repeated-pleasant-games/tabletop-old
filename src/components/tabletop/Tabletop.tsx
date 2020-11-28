@@ -1,5 +1,12 @@
 import * as React from "react";
 
-export const Tabletop = () => (
-  <svg id="tabletop"></svg>
+type TabletopProps = React.HTMLAttributes<{}> &
+{
+  gridComponent: JSX.Element
+};
+
+export const Tabletop = ({ gridComponent }: TabletopProps) => (
+  <svg id="tabletop">
+    {gridComponent}
+  </svg>
 );
