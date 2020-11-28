@@ -21,14 +21,14 @@ describe("Grid component", () =>
 { 
   it("Has a SVG rect.", () =>
   {
-    const { getByTestId } = renderSVG(<Grid pattern={null} />);
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     expect(getByTestId("grid-rect").nodeName).toBe("rect");
   });
 
   it("Spans the full height and width of the Tabletop", () => 
   {
-    const { getByTestId } = renderSVG(<Grid pattern={null} />);
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const gridRect = getByTestId("grid-rect");
 
@@ -36,12 +36,12 @@ describe("Grid component", () =>
     expect(gridRect).toHaveAttribute("height", "100%");
   });
 
-  it("Renders the pattern passed to it.", () =>
+  it("Filled with the pattern set by patternId.", () =>
   {
-    const Pattern = () => (<defs data-testid="pattern"></defs>);
+    const { getByTestId } = renderSVG(<Grid patternId="some-pattern-id" />);
 
-    const { getByTestId } = renderSVG(<Grid pattern={<Pattern />} />);
-
-    expect(getByTestId("pattern")).toBeInTheDocument();
+    expect(getByTestId("grid-rect")).toHaveAttribute(
+      "fill",
+      "url(#some-pattern-id)");
   });
 });
