@@ -37,5 +37,5 @@ describe("Grid component", () =>
     const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     expect(getByTestId(gridTestId)).toHaveAttribute("fill", "none");
-  })
+  });
 });
