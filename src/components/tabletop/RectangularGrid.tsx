@@ -3,9 +3,11 @@ import * as React from "react";
 import { Grid } from "./Grid";
 import { RectangularGridPattern } from "./RectangularGridPattern";
 
+const patternId = "rectangular-grid-pattern";
+
 export const RectangularGrid = () => (
   <>
-    <RectangularGridPattern />
-    <Grid patternId={null} />
+    <RectangularGridPattern id={patternId} />
+    <Grid patternId={patternId} />
   </>
 );
