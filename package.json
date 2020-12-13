@@ -1,20 +1,22 @@
 {
-  "name": "tabletop",
+  "name": "@rpg/tabletop",
   "version": "0.0.0-alpha.1",
   "author": {
     "name": "Joseph R Miles",
-    "email": "joe@jrm.dev",
-    "url": "https://jrm.dev"
+    "email": "joe@repeatedpleasant.games"
   },
-  "homepage": "https://github.com/joebobmiles/TableTop",
+  "homepage": "https://github.com/repeated-pleasant-games/tabletop",
   "license": "AGPL",
-  "description": "A virtual tabletop (VTT) for tabeltop roleplaying games (TTRPG).",
+  "description": "A virtual tabletop (VTT) for tabletop roleplaying games (TTRPG).",
   "keywords": [
-    "VTT",
-    "TTRPG",
-    "RPG",
+    "vtt",
+    "ttrpg",
+    "rpg",
     "virtual-tabletop",
-    "tabletop"
+    "tabletop",
+    "dnd",
+    "tabletop-gaming",
+    "tabletop-rpg"
   ],
   "scripts": {
     "test": "jest --env=jsdom",
