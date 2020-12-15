@@ -1,5 +1,5 @@
 
-type SetViewTransformPayload = {
+export type SetViewTransformPayload = {
   type: "set view transform",
   viewTransform: number[]
 };
