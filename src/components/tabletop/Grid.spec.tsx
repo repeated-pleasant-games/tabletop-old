@@ -48,7 +48,7 @@ if (!global.PointerEvent)
   global.PointerEvent = PointerEvent as any;
 }
 
-describe("Stateless Grid component", () =>
+describe("Disconnected Grid component", () =>
 { 
   it("Has a SVG rect.", () =>
   {
