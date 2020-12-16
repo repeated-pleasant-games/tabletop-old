@@ -1,15 +1,17 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
 
 type RectangularGridPatternProps = React.HTMLAttributes<{}> &
 {
-  cellSize: number
+  cellSize: number,
+  viewTransform?: number[]
 };
 
 export const RectangularGridPattern = (
-  { id, cellSize }: RectangularGridPatternProps
+  { id, cellSize, viewTransform }: RectangularGridPatternProps
 ) =>
 (
   <defs data-testid={rectangularPatternTestId}>
@@ -19,6 +21,7 @@ export const RectangularGridPattern = (
       width={cellSize}
       height={cellSize}
       patternUnits="userSpaceOnUse"
+      patternTransform={`matrix(${viewTransform?.join(",")})`}
     >
       <path
         d={`M ${cellSize} 0 L 0 0 0 ${cellSize}`}
@@ -29,3 +32,10 @@ export const RectangularGridPattern = (
     </pattern>
   </defs>
 );
+
+const stateToProps = ({ viewTransform }: { viewTransform: number[] }) =>
+({
+  viewTransform
+});
+
+export default connect(stateToProps)(RectangularGridPattern);
