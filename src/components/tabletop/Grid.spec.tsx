@@ -90,7 +90,7 @@ describe("Connected Grid component", () =>
 {
   it("Changes view transform when users clicks and drags.", () =>
   {
-    const deltaX = 10, deltaY = 13;
+    const clientX = 10, clientY = 13, pointerId = 0;
 
     const store = createStore(combineReducers({ viewTransform }));
 
@@ -102,16 +102,33 @@ describe("Connected Grid component", () =>
 
     const grid = getByTestId(gridTestId);
 
-    act(() =>
-    {
-      fireEvent.pointerDown(grid);
+    fireEvent.pointerDown(grid, { pointerId });
 
-      fireEvent.pointerMove(
-        grid,
-        { clientX: deltaX, clientY: deltaY });
-    });
+    fireEvent.pointerMove(
+      grid,
+      { clientX, clientY, pointerId });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, deltaX, deltaY ]);
+      .toStrictEqual([ 1, 0, 0, 1, clientX, clientY ]);
+  });
+
+  it("Does not change view transform when user only drags.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.pointerMove(
+      grid,
+      { clientX: 10, clientY: 13 });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([ 1, 0, 0, 1, 0, 0 ]);
   });
 });
