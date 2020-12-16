@@ -22,16 +22,16 @@ export const Grid = ({ patternId, setViewTransform }: GridProps) =>
       height="100%"
       fill={ patternId === null ? "none" : `url(#${patternId})` }
 
-      onPointerDown={
-        ({ pointerId }) => setPrevPointerId(pointerId)
-      }
+      onPointerDown={({ pointerId }) => setPrevPointerId(pointerId)}
 
       onPointerMove={
         ({ clientX, clientY, pointerId }) =>
           pointerId === prevPointerId
           ? setViewTransform(clientX, clientY)
           : null
-        }
+      }
+
+      onPointerUp={() => setPrevPointerId(-1)}
     />
   );
 };

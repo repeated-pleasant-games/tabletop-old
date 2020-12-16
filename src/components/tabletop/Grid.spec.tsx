@@ -131,4 +131,25 @@ describe("Connected Grid component", () =>
     expect(store.getState().viewTransform)
       .toStrictEqual([ 1, 0, 0, 1, 0, 0 ]);
   });
+
+  it("Does not change the view transform after the user releases the mouse", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.pointerDown(grid, { pointerId: 0 });
+    fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
+    fireEvent.pointerUp(grid);
+    fireEvent.pointerMove(grid, { pointerId: 0, clientX: 0, clientY: 0 });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([ 1, 0, 0, 1, 10, 10 ]);
+  });
 });
