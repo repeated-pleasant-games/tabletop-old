@@ -173,4 +173,24 @@ describe("Connected Grid component", () =>
     expect(store.getState().viewTransform)
       .toStrictEqual([ 1, 0, 0, 1, 20, 20 ]);
   });
+
+  it("Only follows first pointer that goes down.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.pointerDown(grid, { pointerId: 0 });
+    fireEvent.pointerDown(grid, { pointerId: 1 })
+    fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([ 1, 0, 0, 1, 10, 10 ]);
+  });
 });
