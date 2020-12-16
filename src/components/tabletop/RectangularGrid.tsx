@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Grid } from "./Grid";
-import { RectangularGridPattern } from "./RectangularGridPattern";
+import Grid from "./Grid";
+import RectangularGridPattern from "./RectangularGridPattern";
 
 const patternId = "rectangular-grid-pattern";
 
