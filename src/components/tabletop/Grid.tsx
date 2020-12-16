@@ -31,7 +31,12 @@ export const Grid = ({ patternId, setViewTransform }: GridProps) =>
           : null
       }
 
-      onPointerUp={() => setPrevPointerId(-1)}
+      onPointerUp={
+        ({ pointerId }) =>
+          pointerId === prevPointerId
+          ? setPrevPointerId(-1)
+          : null
+      }
     />
   );
 };

@@ -146,10 +146,31 @@ describe("Connected Grid component", () =>
 
     fireEvent.pointerDown(grid, { pointerId: 0 });
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
-    fireEvent.pointerUp(grid);
+    fireEvent.pointerUp(grid, { pointerId: 0 });
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 0, clientY: 0 });
 
     expect(store.getState().viewTransform)
       .toStrictEqual([ 1, 0, 0, 1, 10, 10 ]);
+  });
+
+  it("Does not stop updating view transform when another pointer goes up.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.pointerDown(grid, { pointerId: 0 });
+    fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
+    fireEvent.pointerUp(grid, { pointerId: 1 });
+    fireEvent.pointerMove(grid, { pointerId: 0, clientX: 20, clientY: 20 });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([ 1, 0, 0, 1, 20, 20 ]);
   });
 });
