@@ -24,10 +24,9 @@ export const RectangularGridPattern = (
       patternTransform={`matrix(${viewTransform?.join(",")})`}
     >
       <path
-        d={`M ${cellSize} 0 L 0 0 0 ${cellSize}`}
-        fill="none"
-        stroke="grey"
-        strokeWidth="0.5"
+        className="day grid-pattern"
+        d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
+        strokeWidth="1"
       />
     </pattern>
   </defs>
