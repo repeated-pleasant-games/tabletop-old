@@ -40,6 +40,11 @@
   box-sizing: border-box;
 }
 
+html {
+  color: var(--color-fg);
+  background: var(--color-bg);
+}
+
 #tabletop {
   position: absolute;
   width: 100vw;
