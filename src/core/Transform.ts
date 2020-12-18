@@ -34,6 +34,31 @@ export const transformX =
     ),
 };
 
+export const transformY =
+{
+  get: (
+      [
+        [  ,  ,   ],
+        [  ,  , y ],
+        [  ,  ,   ]
+      ]: Transform
+    ) => y,
+  set: (
+      [
+        firstRow,
+        [ c, d, y ],
+        lastRow
+      ]: Transform,
+      newY: number
+    ): Transform => (
+      [
+        firstRow,
+        [ c, d, newY ],
+        lastRow
+      ]
+    ),
+};
+
 export const transformToSvgString = (
   [
     [ a, b, x ],

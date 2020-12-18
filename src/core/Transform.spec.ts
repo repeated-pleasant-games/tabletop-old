@@ -1,4 +1,4 @@
-import { identityTransform, transformToSvgString, transformX } from "./Transform";
+import { identityTransform, transformToSvgString, transformX, transformY } from "./Transform";
 
 describe("identityTransform", () =>
 {
@@ -27,7 +27,7 @@ describe("transformToSvgString", () =>
   });
 });
 
-describe("x lens", () =>
+describe("transformX lens", () =>
 {
   it("Retrieves x value from transform.", () =>
   {
@@ -40,7 +40,7 @@ describe("x lens", () =>
       .toBe(3);
   });
 
-  it("Replaces x value from transform with new X.", () =>
+  it("Replaces x value from transform with new x.", () =>
   {
     expect(
       transformX.set([
@@ -52,6 +52,36 @@ describe("x lens", () =>
       .toStrictEqual([
         [ 1, 2, 10 ],
         [ 4, 5, 6 ],
+        [ 7, 8, 9 ]
+      ]);
+  });
+});
+
+describe("transformY lens", () =>
+{
+  it("Retrieves y value from transform.", () =>
+  {
+    expect(
+      transformY.get([
+          [ 1, 2, 3 ],
+          [ 4, 5, 6 ],
+          [ 7, 8, 9 ]
+        ]))
+      .toBe(6);
+  });
+
+  it("Replaces y value from transform with new y.", () =>
+  {
+    expect(
+      transformY.set([
+          [ 1, 2, 3 ],
+          [ 4, 5, 6 ],
+          [ 7, 8, 9 ]
+        ],
+        10))
+      .toStrictEqual([
+        [ 1, 2, 3 ],
+        [ 4, 5, 10 ],
         [ 7, 8, 9 ]
       ]);
   });
