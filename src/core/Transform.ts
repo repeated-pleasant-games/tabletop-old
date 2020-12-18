@@ -12,6 +12,15 @@ export const identityTransform = (): Transform =>
   [ 0, 0, 1 ],
 ]);
 
+export const transformToSvgString = (
+  [
+    [ a, b, x ],
+    [ c, d, y ],
+    [  ,  ,   ]
+  ]: Transform
+): string =>
+  `matrix(${a},${b},${c},${d},${x},${y})`;
+
 export const transformX =
 {
   get: (
@@ -58,12 +67,3 @@ export const transformY =
       ]
     ),
 };
-
-export const transformToSvgString = (
-  [
-    [ a, b, x ],
-    [ c, d, y ],
-    [  ,  ,   ]
-  ]: Transform
-): string =>
-  `matrix(${a},${b},${c},${d},${x},${y})`;
