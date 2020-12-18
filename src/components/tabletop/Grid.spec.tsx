@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
-import { act, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
+import { SetViewTransformPayload } from "~/actions/tabletop";
 
 if (!global.PointerEvent)
 {
@@ -88,10 +89,8 @@ describe("Disconnected Grid component", () =>
 
 describe("Connected Grid component", () =>
 {
-  it("Changes view transform when users clicks and drags.", () =>
+  it("Translates the view transform when users clicks and drags.", () =>
   {
-    const clientX = 10, clientY = 13, pointerId = 0;
-
     const store = createStore(combineReducers({ viewTransform }));
 
     const { getByTestId } = renderSVG(
@@ -101,15 +100,42 @@ describe("Connected Grid component", () =>
     );
 
     const grid = getByTestId(gridTestId);
+    const pointerId = 0;
 
-    fireEvent.pointerDown(grid, { pointerId });
-
+    fireEvent.pointerDown(grid, { pointerId, clientX: 0, clientY: 0 });
     fireEvent.pointerMove(
       grid,
-      { clientX, clientY, pointerId });
+      { pointerId, clientX: 10, clientY: 13 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, clientX, clientY ]);
+      .toStrictEqual([ 1, 0, 0, 1, 10, 13 ]);
+  });
+
+  it("Translates the view relative to the current transform.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+    const pointerId = 0;
+
+    store.dispatch({
+      type: "set view transform",
+      viewTransform: [ 1, 0, 0, 1, 2, 2 ],
+    } as SetViewTransformPayload);
+
+    fireEvent.pointerDown(grid, { pointerId });
+    fireEvent.pointerMove(
+      grid,
+      { pointerId, clientX: 10, clientY: 13 });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([ 1, 0, 0, 1, 12, 15 ]);
   });
 
   it("Does not change view transform when user only drags.", () =>

@@ -6,16 +6,23 @@ import { setViewTransform } from "~/actions/tabletop";
 type GridProps = React.HTMLAttributes<{}> &
 {
   patternId: string,
-  setViewTransform?: (x: number, y: number) => void
+  viewTransform?: number[],
+  setViewTransform?: (x: number, y: number) => void,
 };
 
 export const gridTestId = "grid-rect";
 
-export const Grid = ({ patternId, setViewTransform }: GridProps) =>
+export const Grid = ({
+  patternId,
+  viewTransform,
+  setViewTransform
+}: GridProps) =>
 {
   const [ focusedPointerId, setFocusedPointerId ] = React.useState(-1);
-
   const resetFocusedPointerId = () => setFocusedPointerId(-1);
+
+  const [ lastPointerPosition, setPrevPointerPosition ] =
+    React.useState<[ number, number ]>([ 0, 0 ]);
 
   return (
     <rect
@@ -25,17 +32,29 @@ export const Grid = ({ patternId, setViewTransform }: GridProps) =>
       fill={ patternId === null ? "none" : `url(#${patternId})` }
 
       onPointerDown={
-        ({ pointerId }) =>
-          focusedPointerId === -1
-          ? setFocusedPointerId(pointerId)
-          : null
+        ({ pointerId, clientX, clientY }) => {
+          if (focusedPointerId === -1)
+          {
+            setFocusedPointerId(pointerId);
+            setPrevPointerPosition([ clientX, clientY ])
+          }
+        }
       }
 
       onPointerMove={
-        ({ clientX, clientY, pointerId }) =>
-          pointerId === focusedPointerId
-          ? setViewTransform(clientX, clientY)
-          : null
+        ({ pointerId, clientX, clientY }) =>
+        {
+          if (pointerId === focusedPointerId)
+          {
+            const [ , , , , curX, curY ] = viewTransform;
+
+            setViewTransform(
+              curX + (clientX - lastPointerPosition[0]),
+              curY + (clientY - lastPointerPosition[1]));
+
+            setPrevPointerPosition([ clientX, clientY ]);
+          }
+        }
       }
 
       onPointerUp={
