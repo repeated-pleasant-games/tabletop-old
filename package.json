@@ -5,8 +5,12 @@
     "name": "Joseph R Miles",
     "email": "joe@repeatedpleasant.games"
   },
-  "homepage": "https://github.com/repeated-pleasant-games/tabletop",
-  "license": "AGPL",
+  "homepage": "https://tabletop.repeatedpleasant.games",
+  "repository": {
+    "url": "git+https://github.com/repeated-pleasant-games/tabletop",
+    "type": "git"
+  },
+  "license": "AGPL-3.0-only",
   "description": "A virtual tabletop (VTT) for tabletop roleplaying games (TTRPG).",
   "keywords": [
     "vtt",
