@@ -1,4 +1,4 @@
-import { identityTransform, transformToSvgString, transformX, transformY } from "./Transform";
+import { identityTransform, Transform, transformToSvgString, transformTranslation, transformX, transformY, translateBy } from "./Transform";
 
 describe("identityTransform", () =>
 {
@@ -116,9 +116,31 @@ describe("transformTranslation lens", () =>
         ]);
   });
 });
+
+describe("translateBy", () =>
 {
-  it("Only adjusts x and y values.", () =>
+  it("Increments translation by given dx and dy pair", () =>
   {
-    // TODO
+    const original: Transform = [
+      [ 1, 0, 0 ],
+      [ 0, 1, 0 ],
+      [ 0, 0, 1 ],
+    ];
+
+    const firstTranslation: Transform = translateBy(original, [ 10, 20 ]);
+
+    expect(firstTranslation).toStrictEqual([
+        [ 1, 0, 10 ],
+        [ 0, 1, 20 ],
+        [ 0, 0,  1 ],
+      ]);
+
+    const secondTranslation: Transform = translateBy(firstTranslation, [ 4, 5 ]);
+
+    expect(secondTranslation).toStrictEqual([
+        [ 1, 0, 14 ],
+        [ 0, 1, 25 ],
+        [ 0, 0,  1 ],
+    ])
   });
 });

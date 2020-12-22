@@ -16,7 +16,7 @@ export const transformToSvgString = (
   [
     [ a, b, x ],
     [ c, d, y ],
-    [  ,  ,   ]
+
   ]: Transform
 ): string =>
   `matrix(${a},${b},${c},${d},${x},${y})`;
@@ -26,12 +26,13 @@ export const transformX =
   get: (
       [
         [  ,  , x ],
-        ...rest
+        [  ,  ,   ],
+        [  ,  ,   ]
       ]: Transform
     ) => x,
   set: (
       [
-        [ a, b, _ ],
+        [ a, b,   ],
         ...rest
       ]: Transform,
       newX: number
@@ -55,7 +56,7 @@ export const transformY =
   set: (
       [
         firstRow,
-        [ c, d, y ],
+        [ c, d,   ],
         lastRow
       ]: Transform,
       newY: number
@@ -94,3 +95,15 @@ export const transformTranslation =
       ]
     ),
 };
+
+export const translateBy = (
+  transform: Transform,
+  [ dx, dy ]: [ number, number ]
+) =>
+{
+  const [ x, y ] = transformTranslation.get(transform);
+
+  return transformTranslation.set(
+    transform,
+    [ x + dx, y + dy ]);
+}
