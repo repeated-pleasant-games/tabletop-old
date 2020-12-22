@@ -143,6 +143,11 @@
             "headerCorrespondence": [
               "type",
               "subject"
+            ],
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
             ]
           },
           "releaseRules": [
