@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Commitlint
-        run: npx commitlint --from HEAD~1 --to HEAD --verbose
+        run: 'npx commitlint --from HEAD~1 --to HEAD --verbose'
 
   test:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v2

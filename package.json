@@ -278,7 +278,11 @@
           ]
         }
       }],
-      "@semantic-release/github",
+      ["@semantic-release/github",
+      {
+        "assets": [],
+        "successComments": ":postal_horn: Huzzah! This "
+      }],
       "@semantic-release/git"
     ]
   }
