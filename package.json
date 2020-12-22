@@ -123,41 +123,120 @@
   "release": {
     "branches": [
       "master",
-      { "name": "beta", "channel": "beta", "prerelease": "beta" },
-      { "name": "alpha", "channel": "alpha", "prerelease": "alpha" }
-    ],
-    "plugins": [ 
-      ["@semantic-release/commit-analyzer",
       {
-        "parserOpts": {
-          "headerPattern": "^(:\\w+:)?\\s(.*)$",
-          "headerCorrespondence": [ "type", "subject" ]
-        },
-        "releaseRules": [
-          { "type": ":arrow_down:", "release": false },
-          { "type": ":arrow_up:", "release": false },
-          { "type": ":art:", "release": false },
-          { "type": ":boom:", "release": "major" },
-          { "type": ":bug:", "release": "patch" },
-          { "type": ":bulb:", "release": false },
-          { "type": ":construction_worker:", "release": false },
-          { "type": ":hammer:", "release": false },
-          { "type": ":heavy_minus_sign:", "release": false },
-          { "type": ":heavy_plus_sign:", "release": false },
-          { "type": ":label:", "release": "patch" },
-          { "type": ":lipstick:", "release": false },
-          { "type": ":memo:", "release": false },
-          { "type": ":pencil2:", "release": false },
-          { "type": ":recycle:", "release": false },
-          { "type": ":rewind:", "release": false },
-          { "type": ":sparkles:", "release": "minor" },
-          { "type": ":tada:", "release": false },
-          { "type": ":twisted_rightward_arrows:", "release": false },
-          { "type": ":white_check_mark:", "release": false },
-          { "type": ":wrench:", "release": false },
-          { "type": ":zap:", "release": "patch" }
-        ]
-      }],
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      },
+      {
+        "name": "alpha",
+        "channel": "alpha",
+        "prerelease": "alpha"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "parserOpts": {
+            "headerPattern": "^(:\\w+:)?\\s(.*)$",
+            "headerCorrespondence": [
+              "type",
+              "subject"
+            ]
+          },
+          "releaseRules": [
+            {
+              "type": ":arrow_down:",
+              "release": false
+            },
+            {
+              "type": ":arrow_up:",
+              "release": false
+            },
+            {
+              "type": ":art:",
+              "release": false
+            },
+            {
+              "type": ":boom:",
+              "release": "major"
+            },
+            {
+              "type": ":bug:",
+              "release": "patch"
+            },
+            {
+              "type": ":bulb:",
+              "release": false
+            },
+            {
+              "type": ":construction_worker:",
+              "release": false
+            },
+            {
+              "type": ":hammer:",
+              "release": false
+            },
+            {
+              "type": ":heavy_minus_sign:",
+              "release": false
+            },
+            {
+              "type": ":heavy_plus_sign:",
+              "release": false
+            },
+            {
+              "type": ":label:",
+              "release": "patch"
+            },
+            {
+              "type": ":lipstick:",
+              "release": false
+            },
+            {
+              "type": ":memo:",
+              "release": false
+            },
+            {
+              "type": ":pencil2:",
+              "release": false
+            },
+            {
+              "type": ":recycle:",
+              "release": false
+            },
+            {
+              "type": ":rewind:",
+              "release": false
+            },
+            {
+              "type": ":sparkles:",
+              "release": "minor"
+            },
+            {
+              "type": ":tada:",
+              "release": false
+            },
+            {
+              "type": ":twisted_rightward_arrows:",
+              "release": false
+            },
+            {
+              "type": ":white_check_mark:",
+              "release": false
+            },
+            {
+              "type": ":wrench:",
+              "release": false
+            },
+            {
+              "type": ":zap:",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
       "@semantic-release/release-notes-generator",
       "@semantic-release/github",
       "@semantic-release/git"
