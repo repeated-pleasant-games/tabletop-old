@@ -147,6 +147,14 @@
           },
           "releaseRules": [
             {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
               "type": ":arrow_down:",
               "release": false
             },
