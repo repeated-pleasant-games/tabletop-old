@@ -2,11 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { setViewTransform } from "~/actions/tabletop";
+import { Transform, transformTranslation } from "~/core/Transform";
 
 type GridProps = React.HTMLAttributes<{}> &
 {
   patternId: string,
-  viewTransform?: number[],
+  viewTransform?: Transform,
   setViewTransform?: (x: number, y: number) => void,
 };
 
@@ -46,7 +47,7 @@ export const Grid = ({
         {
           if (pointerId === focusedPointerId)
           {
-            const [ , , , , curX, curY ] = viewTransform;
+            const [ curX, curY ] = transformTranslation.get(viewTransform);
 
             setViewTransform(
               curX + (clientX - lastPointerPosition[0]),
@@ -67,7 +68,7 @@ export const Grid = ({
   );
 };
 
-const stateToProps = ({ viewTransform }: { viewTransform: number[] }) =>
+const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
 ({
   viewTransform,
 });

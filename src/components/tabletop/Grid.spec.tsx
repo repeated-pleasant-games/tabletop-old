@@ -8,6 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
 import { SetViewTransformPayload } from "~/actions/tabletop";
+import { identityTransform, transformTranslation } from "~/core/Transform";
 
 if (!global.PointerEvent)
 {
@@ -108,7 +109,11 @@ describe("Connected Grid component", () =>
       { pointerId, clientX: 10, clientY: 13 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 10, 13 ]);
+      .toStrictEqual([
+        [ 1, 0, 10 ],
+        [ 0, 1, 13 ],
+        [ 0, 0,  1 ]
+      ]);
   });
 
   it("Translates the view relative to the current transform.", () =>
@@ -126,7 +131,7 @@ describe("Connected Grid component", () =>
 
     store.dispatch({
       type: "set view transform",
-      viewTransform: [ 1, 0, 0, 1, 2, 2 ],
+      viewTransform: transformTranslation.set(identityTransform(), [ 2, 2 ]),
     } as SetViewTransformPayload);
 
     fireEvent.pointerDown(grid, { pointerId });
@@ -135,7 +140,12 @@ describe("Connected Grid component", () =>
       { pointerId, clientX: 10, clientY: 13 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 12, 15 ]);
+      .toStrictEqual(
+        [
+          [ 1, 0, 12 ],
+          [ 0, 1, 15 ],
+          [ 0, 0,  1 ]
+        ]);
   });
 
   it("Does not change view transform when user only drags.", () =>
@@ -155,7 +165,11 @@ describe("Connected Grid component", () =>
       { clientX: 10, clientY: 13 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 0, 0 ]);
+      .toStrictEqual([
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ]);
   });
 
   it("Does not change the view transform after the user releases the mouse", () =>
@@ -176,7 +190,11 @@ describe("Connected Grid component", () =>
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 0, clientY: 0 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 10, 10 ]);
+      .toStrictEqual([
+        [ 1, 0, 10 ],
+        [ 0, 1, 10 ],
+        [ 0, 0,  1 ],
+      ]);
   });
 
   it("Does not stop updating view transform when another pointer goes up.", () =>
@@ -197,7 +215,11 @@ describe("Connected Grid component", () =>
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 20, clientY: 20 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 20, 20 ]);
+      .toStrictEqual([
+        [ 1, 0, 20 ], 
+        [ 0, 1, 20 ],
+        [ 0, 0,  1 ]
+      ]);
   });
 
   it("Only follows first pointer that goes down.", () =>
@@ -217,6 +239,10 @@ describe("Connected Grid component", () =>
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
 
     expect(store.getState().viewTransform)
-      .toStrictEqual([ 1, 0, 0, 1, 10, 10 ]);
+      .toStrictEqual([
+        [ 1, 0, 10 ],
+        [ 0, 1, 10 ],
+        [ 0, 0,  1 ]
+      ]);
   });
 });
