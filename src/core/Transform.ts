@@ -106,4 +106,4 @@ export const translateBy = (
   return transformTranslation.set(
     transform,
     [ x + dx, y + dy ]);
-}
+};
