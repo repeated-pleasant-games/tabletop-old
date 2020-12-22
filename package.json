@@ -292,8 +292,8 @@
         {
           "assets": [],
           "successComments": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue' is resolved in ${nextRelease.version}!",
-          "failTitle": ":crossed_swords: To arms! The automated release has failed!",
-          "failComment": "This release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
+          "failTitle": ":crossed_swords: To arms! The automated release calls for aid!",
+          "failComment": "The release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
           "labels": [
             "release"
           ],
