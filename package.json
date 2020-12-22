@@ -52,5 +52,38 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "commitlint": {
+    "parserPreset": "./commitlint-parser-config",
+    "rules": {
+      "subject-max-length": [1, "always", 75],
+      "subject-min-length": [2, "always", 1],
+      "subject-case": [1, "always", "sentence-case"],
+      "type-enum": [ 2, "always",
+        [
+          ":sparkles:",
+          ":construction_worker:",
+          ":pencil2:",
+          ":art:",
+          ":zap:",
+          ":bug:",
+          ":tada:",
+          ":heavy_plus_sign:",
+          ":heavy_minus_sign:",
+          ":recycle:",
+          ":arrow_up:",
+          ":arrow_down:",
+          ":wrench:",
+          ":hammer:",
+          ":boom:",
+          ":twisted_rightward_arrows:",
+          ":rewind:",
+          ":bulb:",
+          ":label:",
+          ":memo:",
+          ":white_check_mark:"
+        ]
+      ]
+    }
   }
 }
