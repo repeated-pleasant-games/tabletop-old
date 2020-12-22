@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Transform, transformToSvgString } from "~/core/Transform";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -7,7 +8,7 @@ export const patternTestId = "grid-pattern";
 type RectangularGridPatternProps = React.HTMLAttributes<{}> &
 {
   cellSize: number,
-  viewTransform?: number[]
+  viewTransform?: Transform
 };
 
 export const RectangularGridPattern = (
@@ -21,7 +22,10 @@ export const RectangularGridPattern = (
       width={cellSize}
       height={cellSize}
       patternUnits="userSpaceOnUse"
-      patternTransform={`matrix(${viewTransform?.join(",")})`}
+      patternTransform={
+        viewTransform
+        ? transformToSvgString(viewTransform)
+        : ""}
     >
       <path
         className="day grid-pattern"
@@ -32,7 +36,7 @@ export const RectangularGridPattern = (
   </defs>
 );
 
-const stateToProps = ({ viewTransform }: { viewTransform: number[] }) =>
+const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
 ({
   viewTransform
 });
