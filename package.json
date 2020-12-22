@@ -256,39 +256,49 @@
           ]
         }
       ],
-      ["@semantic-release/release-notes-generator",
-      {
-        "parserOpts": {
-          "headerPattern": "^(:\\w+:)?\\s(.*)$",
-          "headerCorrespondence": [
-            "type",
-            "subject"
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "parserOpts": {
+            "headerPattern": "^(:\\w+:)?\\s(.*)$",
+            "headerCorrespondence": [
+              "type",
+              "subject"
+            ],
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "date": "mediumDate",
+            "groupBy": "type",
+            "commitsSort": [
+              "subject",
+              "type"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [],
+          "successComments": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue' is resolved in ${nextRelease.version}!",
+          "failTitle": ":crossed_swords: To arms! The automated release has failed!",
+          "failComment": "This release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
+          "labels": [
+            "release"
           ],
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "BREAKING"
-          ]
-        },
-        "writerOpts": {
-          "date": "mediumDate",
-          "groupBy": "type",
-          "commitsSort": [
-            "subject",
-            "type"
+          "assignees": [
+            "joebobmiles"
+          ],
+          "releasedLabels": [
+            "${nextRelease.version}${brance.preRelease ? '-${branch.preRelease}' : ''}"
           ]
         }
-      }],
-      ["@semantic-release/github",
-      {
-        "assets": [],
-        "successComments": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue' is resolved in ${nextRelease.version}!",
-        "failTitle": ":crossed_swords: To arms! The automated release has failed!",
-        "failComment": "This release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
-        "labels": [ "release" ],
-        "assignees": [ "joebobmiles" ],
-        "releasedLabels": [ "${nextRelease.version}${brance.preRelease ? '-${branch.preRelease}' : ''}" ]
-      }],
+      ],
       "@semantic-release/git"
     ]
   }
