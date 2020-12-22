@@ -6,18 +6,34 @@ describe("viewTransform reducer", () =>
   it("Returns the default state when state is undefined and action is null.", () =>
   {
     expect(viewTransform(undefined, <SetViewTransformPayload>{}))
-      .toEqual([ 1, 0, 0, 1, 0, 0 ]);
+      .toStrictEqual([
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ]
+      ]);
   });
 
   it("Returns the transform that was passed when state is defined.", () =>
   {
     expect(viewTransform(
-      [ 1, 0, 0, 1, 0, 0 ],
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
       {
         type: "set view transform",
-        viewTransform: [ 1, 0, 0, 1, 2, 3 ],
+        viewTransform: [
+          [ 1, 0, 2 ],
+          [ 0, 1, 3 ],
+          [ 0, 0, 1 ]
+        ],
       }))
-      .toEqual([ 1, 0, 0, 1, 2, 3 ]);
+      .toStrictEqual([
+        [ 1, 0, 2 ],
+        [ 0, 1, 3 ],
+        [ 0, 0, 1 ]
+      ]);
   });
 
   it("Returns the transform that was passed when state is undefined.", () =>
@@ -26,8 +42,16 @@ describe("viewTransform reducer", () =>
       undefined,
       {
         type: "set view transform",
-        viewTransform: [ 1, 0, 0, 1, 2, 3 ],
+        viewTransform: [
+          [ 1, 0, 2 ],
+          [ 0, 1, 3 ],
+          [ 0, 0, 1 ]
+        ],
       }))
-      .toEqual([ 1, 0, 0, 1, 2, 3 ]);
+      .toStrictEqual([
+        [ 1, 0, 2 ],
+        [ 0, 1, 3 ],
+        [ 0, 0, 1 ]
+      ]);
   });
 });
