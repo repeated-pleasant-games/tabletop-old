@@ -1,7 +1,12 @@
 import { SetViewTransformPayload } from "~/actions/tabletop";
+import { Transform } from "~/core/Transform";
 
 export const viewTransform = (
-  state: number[] = [ 1, 0, 0, 1, 0, 0 ],
+  state: Transform = [
+    [ 1, 0, 0 ], 
+    [ 0, 1, 0 ], 
+    [ 0, 0, 1 ], 
+  ],
   action: SetViewTransformPayload
 ) =>
 {
