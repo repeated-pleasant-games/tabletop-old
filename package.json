@@ -57,10 +57,24 @@
   "commitlint": {
     "parserPreset": "./commitlint-parser-config",
     "rules": {
-      "subject-max-length": [1, "always", 75],
-      "subject-min-length": [2, "always", 1],
-      "subject-case": [1, "always", "sentence-case"],
-      "type-enum": [ 2, "always",
+      "subject-max-length": [
+        1,
+        "always",
+        75
+      ],
+      "subject-min-length": [
+        2,
+        "always",
+        1
+      ],
+      "subject-case": [
+        1,
+        "always",
+        "sentence-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
         [
           ":sparkles:",
           ":construction_worker:",
