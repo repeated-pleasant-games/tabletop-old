@@ -100,5 +100,8 @@
         ]
       ]
     }
+  },
+  "husky": {
+    "commit-msg": "commitlint --from HEAD~1 --to HEAD --verbose"
   }
 }
