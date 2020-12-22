@@ -107,6 +107,7 @@
           ":recycle:",
           ":rewind:",
           ":sparkles:",
+          ":sunrise_over_mountains:",
           ":tada:",
           ":twisted_rightward_arrows:",
           ":white_check_mark:",
@@ -234,6 +235,10 @@
               "release": "minor"
             },
             {
+              "type": ":sunrise_over_mountains:",
+              "release": false
+            },
+            {
               "type": ":tada:",
               "release": false
             },
@@ -305,7 +310,17 @@
           ]
         }
       ],
-      "@semantic-release/git"
+      [
+        "@semantic-release/git",
+        {
+          "message": ":sunrise_over_mountains: Behold! ${nextRelease.version}! [skip ci]\n\n${nextRelease.notes}",
+          "assets": [
+            "package.json",
+            "package-lock.json",
+            "docs/CHANGELOG.md"
+          ]
+        }
+      ]
     ]
   }
 }
