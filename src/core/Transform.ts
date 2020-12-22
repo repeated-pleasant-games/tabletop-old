@@ -67,3 +67,30 @@ export const transformY =
       ]
     ),
 };
+
+export const transformTranslation =
+{
+  get: (
+      [
+        [  ,  , x ],
+        [  ,  , y ],
+        [  ,  ,   ]
+      ]: Transform
+    ): [ number, number ] =>
+      [ x, y ],
+  set: (
+      [
+        [ a, b,   ],
+        [ c, d,   ],
+        lastRow
+      ]: Transform,
+      [ newX, newY ]: [ number, number ]
+    ): Transform =>
+    (
+      [
+        [ a, b, newX ],
+        [ c, d, newY ],
+        lastRow
+      ]
+    ),
+};

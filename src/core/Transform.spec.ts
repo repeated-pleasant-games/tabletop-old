@@ -87,7 +87,35 @@ describe("transformY lens", () =>
   });
 });
 
-describe("translate", () =>
+describe("transformTranslation lens", () =>
+{
+  it("Retrieves x and y pair from transform.", () =>
+  {
+    expect(
+      transformTranslation.get([
+        [ 1, 2, 3 ],
+        [ 4, 5, 6 ],
+        [ 7, 8, 9 ],
+      ]))
+      .toStrictEqual([ 3, 6 ]);
+  });
+
+  it("Replaces x and y value pair with new x and y value pair.", () =>
+  {
+    expect(
+      transformTranslation.set([
+            [ 1, 2, 3 ],
+            [ 4, 5, 6 ],
+            [ 7, 8, 9 ]
+          ],
+          [ 10, 11 ]))
+        .toStrictEqual([
+            [ 1, 2, 10 ],
+            [ 4, 5, 11 ],
+            [ 7, 8,  9 ]
+        ]);
+  });
+});
 {
   it("Only adjusts x and y values.", () =>
   {
