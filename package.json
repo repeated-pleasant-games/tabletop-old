@@ -250,7 +250,29 @@
           ]
         }
       ],
-      "@semantic-release/release-notes-generator",
+      ["@semantic-release/release-notes-generator",
+      {
+        "parserOpts": {
+          "headerPattern": "^(:\\w+:)?\\s(.*)$",
+          "headerCorrespondence": [
+            "type",
+            "subject"
+          ],
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        },
+        "writerOpts": {
+          "date": "mediumDate",
+          "groupBy": "type",
+          "commitsSort": [
+            "subject",
+            "type"
+          ]
+        }
+      }],
       "@semantic-release/github",
       "@semantic-release/git"
     ]
