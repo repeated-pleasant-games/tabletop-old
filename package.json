@@ -95,6 +95,7 @@
           ":bug:",
           ":bulb:",
           ":construction_worker:",
+          ":green_heart:",
           ":hammer:",
           ":heavy_minus_sign:",
           ":heavy_plus_sign:",
@@ -185,6 +186,10 @@
             },
             {
               "type": ":construction_worker:",
+              "release": false
+            },
+            {
+              "type": ":green_heart:",
               "release": false
             },
             {
