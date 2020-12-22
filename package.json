@@ -57,7 +57,17 @@
   "commitlint": {
     "parserPreset": "./commitlint-parser-config",
     "rules": {
-      "subject-max-length": [
+      "body-max-line-length": [
+        1,
+        "always",
+        75
+      ],
+      "footer-max-line-length": [
+        1,
+        "always",
+        75
+      ],
+      "header-max-length": [
         1,
         "always",
         75
