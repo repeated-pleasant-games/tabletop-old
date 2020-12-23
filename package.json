@@ -100,6 +100,7 @@
           ":bug:",
           ":bulb:",
           ":construction_worker:",
+          ":fire:",
           ":green_heart:",
           ":hammer:",
           ":heavy_minus_sign:",
@@ -193,6 +194,10 @@
             {
               "type": ":construction_worker:",
               "release": false
+            },
+            {
+              "type": ":fire:",
+              "release": "patch"
             },
             {
               "type": ":green_heart:",
