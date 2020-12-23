@@ -3,7 +3,8 @@ import {
   identityTransform,
   Transform,
   toSvgMatrix,
-  translateBy
+  translateBy,
+  translation
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -58,6 +59,18 @@ describe("translateBy", () =>
         [ 0, 1, 25 ],
         [ 0, 0,  1 ],
     ])
+  });
+});
+
+describe("translation", () =>
+{
+  it("Creates a new transform matrix with the x and y fields set.", () =>
+  {
+    expect(translation(3, 5)).toStrictEqual([
+      [ 1, 0, 3 ],
+      [ 0, 1, 5 ],
+      [ 0, 0, 1 ],
+    ]);
   });
 });
 

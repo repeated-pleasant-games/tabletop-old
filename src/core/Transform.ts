@@ -26,12 +26,13 @@ export const translateBy = (
   transform: Transform
 ) =>
   apply(
-    [
-      [ 1, 0, dx ],
-      [ 0, 1, dy ],
-      [ 0, 0,  1 ]
-    ],
-    transform);
+
+export const translation = (dx: number, dy: number): Transform =>
+  ([
+    [ 1, 0, dx ],
+    [ 0, 1, dy ],
+    [ 0, 0,  1 ],
+  ]);
 
 /**
  * Applies the first transform to the second by performing matrix multiplication.
