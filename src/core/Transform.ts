@@ -22,8 +22,8 @@ export const toSvgMatrix = (
   `matrix(${a},${b},${c},${d},${x},${y})`;
 
 export const translateBy = (
-  transform: Transform,
-  [ dx, dy ]: [ number, number ]
+  [ dx, dy ]: [ number, number ],
+  transform: Transform
 ) =>
   apply(
     [

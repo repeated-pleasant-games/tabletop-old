@@ -49,11 +49,11 @@ export const Grid = ({
           {
             setViewTransform(
               translateBy(
-                viewTransform,
                 [
                   clientX - lastPointerPosition[0],
                   clientY - lastPointerPosition[1]
-                ]));
+                ],
+                viewTransform));
 
             setPrevPointerPosition([ clientX, clientY ]);
           }

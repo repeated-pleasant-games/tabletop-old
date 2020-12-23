@@ -43,7 +43,7 @@ describe("translateBy", () =>
       [ 0, 0, 1 ],
     ];
 
-    const firstTranslation: Transform = translateBy(original, [ 10, 20 ]);
+    const firstTranslation: Transform = translateBy([ 10, 20 ], original);
 
     expect(firstTranslation).toStrictEqual([
         [ 1, 0, 10 ],
@@ -51,7 +51,7 @@ describe("translateBy", () =>
         [ 0, 0,  1 ],
       ]);
 
-    const secondTranslation: Transform = translateBy(firstTranslation, [ 4, 5 ]);
+    const secondTranslation: Transform = translateBy([ 4, 5 ], firstTranslation);
 
     expect(secondTranslation).toStrictEqual([
         [ 1, 0, 14 ],
