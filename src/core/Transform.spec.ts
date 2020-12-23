@@ -1,4 +1,12 @@
-import { identityTransform, Transform, transformToSvgString, transformTranslation, transformX, transformY, translateBy } from "./Transform";
+import {
+  identityTransform,
+  Transform,
+  transformToSvgString,
+  transformTranslation,
+  transformX,
+  transformY,
+  translateBy
+} from "./Transform";
 
 describe("identityTransform", () =>
 {
