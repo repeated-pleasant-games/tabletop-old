@@ -1,4 +1,5 @@
 import {
+  apply,
   identityTransform,
   Transform,
   toSvgMatrix,
@@ -153,5 +154,30 @@ describe("translateBy", () =>
         [ 0, 1, 25 ],
         [ 0, 0,  1 ],
     ])
+  });
+});
+
+describe("apply", () =>
+{
+  it("Multiplies two transforms together", () =>
+  {
+    const transformOne: Transform = [
+      [ 1, 0, 5 ],
+      [ 0, 1, 5 ],
+      [ 0, 0, 1 ],
+    ];
+
+    const transformTwo: Transform = [
+      [ 1, 2, 3 ],
+      [ 4, 5, 6 ],
+      [ 7, 8, 1 ]
+    ];
+
+    expect(apply(transformOne, transformTwo))
+      .toStrictEqual([
+        [ 36, 42,  8 ],
+        [ 39, 45, 11 ],
+        [  7,  8,  1 ]
+      ])
   });
 });
