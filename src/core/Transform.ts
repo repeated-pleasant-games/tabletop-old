@@ -26,6 +26,8 @@ export const translateBy = (
   transform: Transform
 ) =>
   apply(
+    translation(dx, dy),
+    transform);
 
 export const translation = (dx: number, dy: number): Transform =>
   ([
