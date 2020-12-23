@@ -21,7 +21,7 @@ export const toSvgMatrix = (
 ): string =>
   `matrix(${a},${b},${c},${d},${x},${y})`;
 
-export const transformX =
+export const xOffset =
 {
   get: (
       [

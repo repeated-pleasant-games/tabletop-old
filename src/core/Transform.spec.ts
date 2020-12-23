@@ -3,7 +3,7 @@ import {
   Transform,
   toSvgMatrix,
   transformTranslation,
-  transformX,
+  xOffset,
   transformY,
   translateBy
 } from "./Transform";
@@ -40,7 +40,7 @@ describe("transformX lens", () =>
   it("Retrieves x value from transform.", () =>
   {
     expect(
-      transformX.get([
+      xOffset.get([
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
@@ -51,7 +51,7 @@ describe("transformX lens", () =>
   it("Replaces x value from transform with new x.", () =>
   {
     expect(
-      transformX.set([
+      xOffset.set([
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
