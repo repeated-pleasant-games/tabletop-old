@@ -178,6 +178,13 @@ describe("apply", () =>
         [ 36, 42,  8 ],
         [ 39, 45, 11 ],
         [  7,  8,  1 ]
+      ]);
+
+    expect(apply(transformTwo, transformOne))
+      .toStrictEqual([
+        [ 1, 2, 18 ],
+        [ 4, 5, 51 ],
+        [ 7, 8, 76 ]
       ])
   });
 });
