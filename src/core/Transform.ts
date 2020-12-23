@@ -44,7 +44,7 @@ export const xOffset =
     ),
 };
 
-export const transformY =
+export const yOffset =
 {
   get: (
       [

@@ -4,7 +4,7 @@ import {
   toSvgMatrix,
   transformTranslation,
   xOffset,
-  transformY,
+  yOffset,
   translateBy
 } from "./Transform";
 
@@ -70,7 +70,7 @@ describe("transformY lens", () =>
   it("Retrieves y value from transform.", () =>
   {
     expect(
-      transformY.get([
+      yOffset.get([
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
@@ -81,7 +81,7 @@ describe("transformY lens", () =>
   it("Replaces y value from transform with new y.", () =>
   {
     expect(
-      transformY.set([
+      yOffset.set([
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
