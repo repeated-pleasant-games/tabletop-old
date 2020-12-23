@@ -108,6 +108,11 @@ export const translateBy = (
     transform);
 };
 
+/**
+ * Applies the first transform to the second by performing matrix multiplication.
+ * @param a The transform to apply.
+ * @param b The transform to apply to.
+ */
 export const apply = (
   [
     [ a_11, a_12, a_13 ],
