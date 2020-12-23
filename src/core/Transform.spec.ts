@@ -3,7 +3,6 @@ import {
   identityTransform,
   Transform,
   toSvgMatrix,
-  xOffset,
   translateBy
 } from "./Transform";
 
@@ -31,37 +30,6 @@ describe("transformToSvgString", () =>
           [ 7, 8, 9 ]
         ]))
       .toBe("matrix(1,2,4,5,3,6)");
-  });
-});
-
-describe("transformX lens", () =>
-{
-  it("Retrieves x value from transform.", () =>
-  {
-    expect(
-      xOffset.get([
-          [ 1, 2, 3 ],
-          [ 4, 5, 6 ],
-          [ 7, 8, 9 ]
-        ]))
-      .toBe(3);
-  });
-
-  it("Replaces x value from transform with new x.", () =>
-  {
-    expect(
-      xOffset.set(
-        10,
-        [
-          [ 1, 2, 3 ],
-          [ 4, 5, 6 ],
-          [ 7, 8, 9 ]
-        ]))
-      .toStrictEqual([
-        [ 1, 2, 10 ],
-        [ 4, 5, 6 ],
-        [ 7, 8, 9 ]
-      ]);
   });
 });
 

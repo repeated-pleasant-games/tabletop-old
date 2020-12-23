@@ -21,29 +21,6 @@ export const toSvgMatrix = (
 ): string =>
   `matrix(${a},${b},${c},${d},${x},${y})`;
 
-export const xOffset =
-{
-  get: (
-      [
-        [  ,  , x ],
-        [  ,  ,   ],
-        [  ,  ,   ]
-      ]: Transform
-    ) => x,
-  set: (
-      newX: number,
-      [
-        [ a, b,   ],
-        ...rest
-      ]: Transform
-    ): Transform => (
-      [
-        [ a, b, newX ],
-        ...rest
-      ]
-    ),
-};
-
 export const translateBy = (
   transform: Transform,
   [ dx, dy ]: [ number, number ]
