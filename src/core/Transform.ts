@@ -100,13 +100,13 @@ export const translateBy = (
   transform: Transform,
   [ dx, dy ]: [ number, number ]
 ) =>
-{
-  const [ x, y ] = translation.get(transform);
-
-  return translation.set(
-    [ x + dx, y + dy ],
+  apply(
+    [
+      [ 1, 0, dx ],
+      [ 0, 1, dy ],
+      [ 0, 0,  1 ]
+    ],
     transform);
-};
 
 /**
  * Applies the first transform to the second by performing matrix multiplication.
