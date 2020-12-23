@@ -44,31 +44,6 @@ export const xOffset =
     ),
 };
 
-export const yOffset =
-{
-  get: (
-      [
-        [  ,  ,   ],
-        [  ,  , y ],
-        [  ,  ,   ]
-      ]: Transform
-    ) => y,
-  set: (
-      newY: number,
-      [
-        firstRow,
-        [ c, d,   ],
-        lastRow
-      ]: Transform
-    ): Transform => (
-      [
-        firstRow,
-        [ c, d, newY ],
-        lastRow
-      ]
-    ),
-};
-
 export const translateBy = (
   transform: Transform,
   [ dx, dy ]: [ number, number ]
