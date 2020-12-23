@@ -82,12 +82,13 @@ describe("transformY lens", () =>
   it("Replaces y value from transform with new y.", () =>
   {
     expect(
-      yOffset.set([
+      yOffset.set(
+        10,
+        [
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
-        ],
-        10))
+        ]))
       .toStrictEqual([
         [ 1, 2, 3 ],
         [ 4, 5, 10 ],

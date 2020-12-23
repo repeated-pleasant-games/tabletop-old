@@ -54,12 +54,12 @@ export const yOffset =
       ]: Transform
     ) => y,
   set: (
+      newY: number,
       [
         firstRow,
         [ c, d,   ],
         lastRow
-      ]: Transform,
-      newY: number
+      ]: Transform
     ): Transform => (
       [
         firstRow,
