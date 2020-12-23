@@ -7,5 +7,5 @@ export type SetViewTransformPayload = {
 export const setViewTransform = (x: number, y: number): SetViewTransformPayload =>
 ({
   type: "set view transform",
-  viewTransform: translation.set(identityTransform(), [ x, y ]),
+  viewTransform: translation.set([ x, y ], identityTransform()),
 });

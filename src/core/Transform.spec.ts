@@ -113,12 +113,13 @@ describe("transformTranslation lens", () =>
   it("Replaces x and y value pair with new x and y value pair.", () =>
   {
     expect(
-      translation.set([
+      translation.set(
+          [ 10, 11 ],
+          [
             [ 1, 2, 3 ],
             [ 4, 5, 6 ],
             [ 7, 8, 9 ]
-          ],
-          [ 10, 11 ]))
+          ]))
         .toStrictEqual([
             [ 1, 2, 10 ],
             [ 4, 5, 11 ],

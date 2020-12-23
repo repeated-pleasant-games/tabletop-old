@@ -80,12 +80,12 @@ export const translation =
     ): [ number, number ] =>
       [ x, y ],
   set: (
+      [ newX, newY ]: [ number, number ],
       [
         [ a, b,   ],
         [ c, d,   ],
         lastRow
-      ]: Transform,
-      [ newX, newY ]: [ number, number ]
+      ]: Transform
     ): Transform =>
     (
       [
@@ -104,6 +104,6 @@ export const translateBy = (
   const [ x, y ] = translation.get(transform);
 
   return translation.set(
-    transform,
-    [ x + dx, y + dy ]);
+    [ x + dx, y + dy ],
+    transform);
 };

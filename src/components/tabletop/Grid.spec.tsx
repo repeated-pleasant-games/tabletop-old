@@ -131,7 +131,7 @@ describe("Connected Grid component", () =>
 
     store.dispatch({
       type: "set view transform",
-      viewTransform: translation.set(identityTransform(), [ 2, 2 ]),
+      viewTransform: translation.set([ 2, 2 ], identityTransform()),
     } as SetViewTransformPayload);
 
     fireEvent.pointerDown(grid, { pointerId });
