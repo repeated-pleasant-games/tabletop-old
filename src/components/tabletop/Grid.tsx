@@ -62,9 +62,10 @@ export const Grid = ({
 
       onPointerUp={
         ({ pointerId }) =>
-          pointerId === focusedPointerId
-          ? resetFocusedPointerId()
-          : null
+        {
+          if (pointerId === focusedPointerId)
+            resetFocusedPointerId();
+        }
       }
     />
   );
