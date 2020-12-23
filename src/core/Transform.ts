@@ -70,3 +70,9 @@ export const apply = (
       (a_31 * b_13) + (a_32 * b_23) + (a_33 * b_33)
     ],
   ]);
+
+export type Transformer = (_: Transform) => Transform;
+
+export const transformerOf = (a: Transform): Transformer =>
+  (b: Transform) =>
+    apply(a, b);

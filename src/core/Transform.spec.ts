@@ -4,7 +4,8 @@ import {
   Transform,
   toSvgMatrix,
   translateBy,
-  translation
+  translation,
+  transformerOf
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -105,3 +106,28 @@ describe("apply", () =>
       ]);
   });
 });
+
+describe("transformerOf", () =>
+{
+  it("Creates a function that applies a transform to another transform", () =>
+  {
+    const transformOne: Transform = [
+      [ 1, 0, 5 ],
+      [ 0, 1, 5 ],
+      [ 0, 0, 1 ],
+    ];
+
+    const transformTwo: Transform = [
+      [ 1, 2, 3 ],
+      [ 4, 5, 6 ],
+      [ 7, 8, 1 ]
+    ];
+
+    expect(transformerOf(transformOne)(transformTwo))
+      .toStrictEqual([
+        [ 36, 42,  8 ],
+        [ 39, 45, 11 ],
+        [  7,  8,  1 ]
+      ]);
+  });
+})
