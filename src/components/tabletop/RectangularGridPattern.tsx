@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Transform, transformToSvgString } from "~/core/Transform";
+import { Transform, toSvgMatrix } from "~/core/Transform";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -24,7 +24,7 @@ export const RectangularGridPattern = (
       patternUnits="userSpaceOnUse"
       patternTransform={
         viewTransform
-        ? transformToSvgString(viewTransform)
+        ? toSvgMatrix(viewTransform)
         : ""}
     >
       <path

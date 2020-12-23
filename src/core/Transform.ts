@@ -12,7 +12,7 @@ export const identityTransform = (): Transform =>
   [ 0, 0, 1 ],
 ]);
 
-export const transformToSvgString = (
+export const toSvgMatrix = (
   [
     [ a, b, x ],
     [ c, d, y ],

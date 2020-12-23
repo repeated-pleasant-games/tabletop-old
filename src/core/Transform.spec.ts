@@ -1,7 +1,7 @@
 import {
   identityTransform,
   Transform,
-  transformToSvgString,
+  toSvgMatrix,
   transformTranslation,
   transformX,
   transformY,
@@ -26,7 +26,7 @@ describe("transformToSvgString", () =>
   it("Converts transform to SVG transform matrix", () =>
   {
     expect(
-      transformToSvgString([
+      toSvgMatrix([
           [ 1, 2, 3 ],
           [ 4, 5, 6 ],
           [ 7, 8, 9 ]
