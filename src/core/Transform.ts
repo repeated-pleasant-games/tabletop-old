@@ -69,33 +69,6 @@ export const yOffset =
     ),
 };
 
-export const translation =
-{
-  get: (
-      [
-        [  ,  , x ],
-        [  ,  , y ],
-        [  ,  ,   ]
-      ]: Transform
-    ): [ number, number ] =>
-      [ x, y ],
-  set: (
-      [ newX, newY ]: [ number, number ],
-      [
-        [ a, b,   ],
-        [ c, d,   ],
-        lastRow
-      ]: Transform
-    ): Transform =>
-    (
-      [
-        [ a, b, newX ],
-        [ c, d, newY ],
-        lastRow
-      ]
-    ),
-};
-
 export const translateBy = (
   transform: Transform,
   [ dx, dy ]: [ number, number ]

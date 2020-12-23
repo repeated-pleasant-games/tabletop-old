@@ -3,7 +3,6 @@ import {
   identityTransform,
   Transform,
   toSvgMatrix,
-  translation,
   xOffset,
   yOffset,
   translateBy
@@ -95,37 +94,6 @@ describe("transformY lens", () =>
         [ 4, 5, 10 ],
         [ 7, 8, 9 ]
       ]);
-  });
-});
-
-describe("transformTranslation lens", () =>
-{
-  it("Retrieves x and y pair from transform.", () =>
-  {
-    expect(
-      translation.get([
-        [ 1, 2, 3 ],
-        [ 4, 5, 6 ],
-        [ 7, 8, 9 ],
-      ]))
-      .toStrictEqual([ 3, 6 ]);
-  });
-
-  it("Replaces x and y value pair with new x and y value pair.", () =>
-  {
-    expect(
-      translation.set(
-          [ 10, 11 ],
-          [
-            [ 1, 2, 3 ],
-            [ 4, 5, 6 ],
-            [ 7, 8, 9 ]
-          ]))
-        .toStrictEqual([
-            [ 1, 2, 10 ],
-            [ 4, 5, 11 ],
-            [ 7, 8,  9 ]
-        ]);
   });
 });
 
