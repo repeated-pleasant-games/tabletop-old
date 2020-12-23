@@ -31,11 +31,11 @@ export const xOffset =
       ]: Transform
     ) => x,
   set: (
+      newX: number,
       [
         [ a, b,   ],
         ...rest
-      ]: Transform,
-      newX: number
+      ]: Transform
     ): Transform => (
       [
         [ a, b, newX ],
