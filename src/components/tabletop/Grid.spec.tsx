@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
 import { SetViewTransformPayload } from "~/actions/tabletop";
-import { identityTransform, transformTranslation } from "~/core/Transform";
+import { identityTransform, translation } from "~/core/Transform";
 
 if (!global.PointerEvent)
 {
@@ -131,7 +131,7 @@ describe("Connected Grid component", () =>
 
     store.dispatch({
       type: "set view transform",
-      viewTransform: transformTranslation.set(identityTransform(), [ 2, 2 ]),
+      viewTransform: translation.set(identityTransform(), [ 2, 2 ]),
     } as SetViewTransformPayload);
 
     fireEvent.pointerDown(grid, { pointerId });

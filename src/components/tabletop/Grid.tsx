@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { setViewTransform } from "~/actions/tabletop";
-import { Transform, transformTranslation } from "~/core/Transform";
+import { Transform, translation } from "~/core/Transform";
 
 type GridProps = React.HTMLAttributes<{}> &
 {
@@ -47,7 +47,7 @@ export const Grid = ({
         {
           if (pointerId === focusedPointerId)
           {
-            const [ curX, curY ] = transformTranslation.get(viewTransform);
+            const [ curX, curY ] = translation.get(viewTransform);
 
             setViewTransform(
               curX + (clientX - lastPointerPosition[0]),

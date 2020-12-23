@@ -69,7 +69,7 @@ export const yOffset =
     ),
 };
 
-export const transformTranslation =
+export const translation =
 {
   get: (
       [
@@ -101,9 +101,9 @@ export const translateBy = (
   [ dx, dy ]: [ number, number ]
 ) =>
 {
-  const [ x, y ] = transformTranslation.get(transform);
+  const [ x, y ] = translation.get(transform);
 
-  return transformTranslation.set(
+  return translation.set(
     transform,
     [ x + dx, y + dy ]);
 };

@@ -2,7 +2,7 @@ import {
   identityTransform,
   Transform,
   toSvgMatrix,
-  transformTranslation,
+  translation,
   xOffset,
   yOffset,
   translateBy
@@ -100,7 +100,7 @@ describe("transformTranslation lens", () =>
   it("Retrieves x and y pair from transform.", () =>
   {
     expect(
-      transformTranslation.get([
+      translation.get([
         [ 1, 2, 3 ],
         [ 4, 5, 6 ],
         [ 7, 8, 9 ],
@@ -111,7 +111,7 @@ describe("transformTranslation lens", () =>
   it("Replaces x and y value pair with new x and y value pair.", () =>
   {
     expect(
-      transformTranslation.set([
+      translation.set([
             [ 1, 2, 3 ],
             [ 4, 5, 6 ],
             [ 7, 8, 9 ]
