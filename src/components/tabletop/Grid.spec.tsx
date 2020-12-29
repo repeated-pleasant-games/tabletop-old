@@ -8,7 +8,6 @@ import "@testing-library/jest-dom/extend-expect";
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
 import { SetViewTransformPayload } from "~/actions/tabletop";
-import { identityTransform } from "~/core/Transform";
 
 if (!global.PointerEvent)
 {
