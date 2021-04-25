@@ -26,7 +26,7 @@
     "test": "jest --env=jsdom",
     "coverage": "jest --coverage",
     "build": "webpack",
-    "serve": "webpack-dev-server --open"
+    "develop": "webpack-dev-server --open"
   },
   "dependencies": {
     "react": "^16.14.0",
