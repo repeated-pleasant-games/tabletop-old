@@ -6,6 +6,7 @@ import {
   translateBy,
   translation,
   scaleBy,
+  scale,
   transformerOf
 } from "./Transform";
 
@@ -87,6 +88,18 @@ describe("scaleBy", () =>
     ])
   });
 });
+
+describe("scale", () =>
+{
+  it("Creates a new transform with scale X and scale Y equal to factor", () =>
+  {
+    expect(scale(5)).toStrictEqual([
+      [ 5, 0, 0 ],
+      [ 0, 5, 0 ],
+      [ 0, 0, 1 ],
+    ])
+  });
+})
 
 describe("apply", () =>
 {

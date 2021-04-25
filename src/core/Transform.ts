@@ -38,13 +38,16 @@ export const translation = (dx: number, dy: number): Transform =>
 
 export const scaleBy = (factor: number, transform: Transform) =>
   apply(
-    [
-      [ factor,      0, 0 ],
-      [      0, factor, 0 ],
-      [      0,      0, 1 ],
-    ],
+    scale(factor),
     transform
-  )
+  );
+
+export const scale = (factor: number): Transform =>
+  ([
+    [ factor,      0, 0 ],
+    [      0, factor, 0 ],
+    [      0,      0, 1 ],
+  ]);
 
 /**
  * Applies the first transform to the second by performing matrix multiplication.
