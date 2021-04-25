@@ -248,4 +248,7 @@ describe("Connected Grid component", () =>
         [ 0, 0,  1 ]
       ]);
   });
+
+  // I want to test pointer capture, but due to limitations in how JSDOM is
+  // developed, they do not support setPointerCapture.
 });
