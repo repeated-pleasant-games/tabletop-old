@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { setViewTransform } from "~/actions/tabletop";
-import { Transform, translateBy } from "~/core/Transform";
+import { scaleBy, Transform, translateBy } from "~/core/Transform";
 
 type GridProps = React.HTMLAttributes<{}> &
 {
@@ -65,6 +65,20 @@ export const Grid = ({
         {
           if (pointerId === focusedPointerId)
             resetFocusedPointerId();
+        }
+      }
+
+      onWheel={
+        ({ deltaY }) =>
+        {
+          const factor = Math.floor(Math.abs(deltaY) / 10);
+
+          setViewTransform(
+            scaleBy(
+              Math.sign(deltaY) >= 0 ? factor : (1/factor),
+              viewTransform
+            )
+          );
         }
       }
     />

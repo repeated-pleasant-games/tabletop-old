@@ -251,4 +251,37 @@ describe("Connected Grid component", () =>
 
   // I want to test pointer capture, but due to limitations in how JSDOM is
   // developed, they do not support setPointerCapture.
+
+  it.each([
+    // In my firefox browser (Firefox 64-bit 88.0), I get a value of 51 and -51
+    // when I scroll the mouse wheel. (up = -51, down = 51)
+    [  51,  5 ],
+    [ -51, 1/5 ],
+    // In my chrome browser (Chrome Canary 64-bit 92.0.4487.0), I get a value of
+    // 100 and -100. (up = -100, down = 100)
+    [  100, 10 ],
+    [ -100, 1/10 ]
+    // My version of Edge (Edge 64-bit 90.0.818.46) returns the same values as
+    // Chrome Canary.
+  ])("Zooms when using scroll wheel.", (deltaY, scaleFactor) =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.wheel(grid, { deltaY: deltaY });
+
+    expect(store.getState().viewTransform)
+      .toStrictEqual([
+        [ scaleFactor,           0, 0 ],
+        [           0, scaleFactor, 0 ],
+        [           0,           0, 1 ]
+      ]);
+  })
 });
