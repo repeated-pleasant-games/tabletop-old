@@ -36,6 +36,16 @@ export const translation = (dx: number, dy: number): Transform =>
     [ 0, 0,  1 ],
   ]);
 
+export const scaleBy = (factor: number, transform: Transform) =>
+  apply(
+    [
+      [ factor,      0, 0 ],
+      [      0, factor, 0 ],
+      [      0,      0, 1 ],
+    ],
+    transform
+  )
+
 /**
  * Applies the first transform to the second by performing matrix multiplication.
  * @param a The transform to apply.

@@ -5,6 +5,7 @@ import {
   toSvgMatrix,
   translateBy,
   translation,
+  scaleBy,
   transformerOf
 } from "./Transform";
 
@@ -72,6 +73,18 @@ describe("translation", () =>
       [ 0, 1, 5 ],
       [ 0, 0, 1 ],
     ]);
+  });
+});
+
+describe("scaleBy", () =>
+{
+  it("Multiplies transform scale X and scale Y by scale factor.", () =>
+  {
+    expect(scaleBy(5, identityTransform())).toStrictEqual([
+      [ 5, 0, 0 ],
+      [ 0, 5, 0 ],
+      [ 0, 0, 1 ],
+    ])
   });
 });
 
