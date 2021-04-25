@@ -7,7 +7,8 @@ import "@testing-library/jest-dom/extend-expect";
 
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
-import { SetViewTransformPayload } from "~/actions/tabletop";
+import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
+import { Transform } from "~/core/Transform";
 
 if (!global.PointerEvent)
 {
@@ -252,20 +253,108 @@ describe("Connected Grid component", () =>
   // I want to test pointer capture, but due to limitations in how JSDOM is
   // developed, they do not support setPointerCapture.
 
+  /**
+   * We want zooming out to approach, but never reach 0.
+   * We want zooming in to continue to infinity.
+   * 
+   * This means we want a function where taking the limit of x to negative
+   * infinity results in an f(x) of infinity and taking the limit of x to
+   * positive infinity results in an f(x) of zero.
+   */
   it.each([
     // In my firefox browser (Firefox 64-bit 88.0), I get a value of 51 and -51
     // when I scroll the mouse wheel. (up = -51, down = 51)
-    [  51,  5 ],
-    [ -51, 1/5 ],
+    [ 
+      51,
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 1-0.051,       0, 0 ],
+        [       0, 1-0.051, 0 ],
+        [       0,       0, 1 ],
+      ]
+    ],
+    [
+      -51,
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 1.051,     0, 0 ],
+        [     0, 1.051, 0 ],
+        [     0,     0, 1 ],
+      ]
+    ],
     // In my chrome browser (Chrome Canary 64-bit 92.0.4487.0), I get a value of
     // 100 and -100. (up = -100, down = 100)
-    [  100, 10 ],
-    [ -100, 1/10 ]
+    [ 
+      100,
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 0.9,   0, 0 ],
+        [   0, 0.9, 0 ],
+        [   0,   0, 1 ],
+      ]
+    ],
+    [
+      -100,
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 1.1,   0, 0 ],
+        [   0, 1.1, 0 ],
+        [   0,   0, 1 ],
+      ]
+    ],
     // My version of Edge (Edge 64-bit 90.0.818.46) returns the same values as
     // Chrome Canary.
-  ])("Zooms when using scroll wheel.", (deltaY, scaleFactor) =>
+    // ---
+    [ 
+      50,
+      [
+        [ 3, 0, 0 ],
+        [ 0, 3, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 3-0.05,      0, 0 ],
+        [      0, 3-0.05, 0 ],
+        [      0,      0, 1 ],
+      ]
+    ],
+    [
+      -50,
+      [
+        [ 3, 0, 0 ],
+        [ 0, 3, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ 3.05,    0, 0 ],
+        [    0, 3.05, 0 ],
+        [    0,    0, 1 ],
+      ]
+    ],
+  ])("Zooms when using scroll wheel.", (
+    deltaY,
+    initialTransform: Transform,
+    expectedTransform: Transform
+  ) =>
   {
     const store = createStore(combineReducers({ viewTransform }));
+    store.dispatch(setViewTransform(initialTransform));
 
     const { getByTestId } = renderSVG(
       <Provider store={store}>
@@ -275,13 +364,8 @@ describe("Connected Grid component", () =>
 
     const grid = getByTestId(gridTestId);
 
-    fireEvent.wheel(grid, { deltaY: deltaY });
+    fireEvent.wheel(grid, { deltaY });
 
-    expect(store.getState().viewTransform)
-      .toStrictEqual([
-        [ scaleFactor,           0, 0 ],
-        [           0, scaleFactor, 0 ],
-        [           0,           0, 1 ]
-      ]);
-  })
+    expect(store.getState().viewTransform).toStrictEqual(expectedTransform);
+  });
 });
