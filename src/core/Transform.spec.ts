@@ -7,6 +7,7 @@ import {
   translation,
   scaleBy,
   scale,
+  getScale,
   transformerOf
 } from "./Transform";
 
@@ -91,7 +92,7 @@ describe("scaleBy", () =>
 
 describe("scale", () =>
 {
-  it("Creates a new transform with scale X and scale Y equal to factor", () =>
+  it("Creates a new transform with scale X and scale Y equal to factor.", () =>
   {
     expect(scale(5)).toStrictEqual([
       [ 5, 0, 0 ],
@@ -99,7 +100,20 @@ describe("scale", () =>
       [ 0, 0, 1 ],
     ])
   });
-})
+});
+
+describe("getScale", () =>
+{
+  it("Returns the scale X and scale Y values of a transform.", () =>
+  {
+    expect(getScale([
+      [ 5, 0, 0 ],
+      [ 0, 6, 0 ],
+      [ 0, 0, 1 ],
+    ]))
+    .toStrictEqual([ 5, 6 ]);
+  });
+});
 
 describe("apply", () =>
 {

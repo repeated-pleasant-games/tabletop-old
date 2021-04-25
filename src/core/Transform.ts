@@ -49,6 +49,15 @@ export const scale = (factor: number): Transform =>
     [      0,      0, 1 ],
   ]);
 
+export const getScale = (
+  [
+    [ scaleX,       , ],
+    [       , scaleY, ],
+    [       ,       , ]
+  ]: Transform
+) =>
+  ([ scaleX, scaleY ])
+
 /**
  * Applies the first transform to the second by performing matrix multiplication.
  * @param a The transform to apply.
