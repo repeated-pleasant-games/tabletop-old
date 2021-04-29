@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { viewTransform } from "~/reducers/tabletop";
 import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
-import { Transform } from "~/core/Transform";
+import { identityTransform, Transform } from "~/core/Transform";
 
 if (!global.PointerEvent)
 {
@@ -367,5 +367,30 @@ describe("Connected Grid component", () =>
     fireEvent.wheel(grid, { deltaY });
 
     expect(store.getState().viewTransform).toStrictEqual(expectedTransform);
+  });
+
+  it("Zooms centered on cursor.", () =>
+  {
+    const clientX = 10, clientY = 12, deltaY = 100;
+
+    const store = createStore(combineReducers({ viewTransform }));
+    store.dispatch(setViewTransform(identityTransform()));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Grid patternId={null} />
+      </Provider>
+    );
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.wheel(grid, { deltaY, clientX, clientY });
+
+    expect(store.getState().viewTransform)
+    .toStrictEqual([
+      [ 0.9,   0, (clientX * (1 - 0.9)) ],
+      [   0, 0.9, (clientY * (1 - 0.9)) ],
+      [   0,   0,                1 ],
+    ]);
   });
 });

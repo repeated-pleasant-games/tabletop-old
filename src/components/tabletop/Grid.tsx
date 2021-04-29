@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { setViewTransform } from "~/actions/tabletop";
-import { getScale, scaleBy, Transform, translateBy } from "~/core/Transform";
+import { getScale, scaleBy, scale, Transform, transformerOf, translateBy, translation } from "~/core/Transform";
 
 type GridProps = React.HTMLAttributes<{}> &
 {
@@ -69,16 +69,21 @@ export const Grid = ({
       }
 
       onWheel={
-        ({ deltaY }) =>
+        ({ deltaY, clientX, clientY }) =>
         {
-          const [ scale, ] = getScale(viewTransform);
+          const [ currentScale, ] = getScale(viewTransform);
 
-          setViewTransform(
-            scaleBy(
-              Math.max((scale + (-deltaY / 1000)) / scale, 0.01),
-              viewTransform
-            )
-          );
+          const zoomFactor = 
+              Math.max((currentScale + (-deltaY / 1000)) / currentScale, 0.01);
+
+          const zoom = transformerOf(scale(zoomFactor));
+
+          const pan = transformerOf(translation(
+            clientX * (1 - zoomFactor),
+            clientY * (1 - zoomFactor)
+          ));
+
+          setViewTransform(pan(zoom(viewTransform)));
         }
       }
     />
