@@ -9,6 +9,8 @@ import "~/pointer-event";
 
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
 import { viewTransform } from "~/reducers/tabletop";
+import { setViewTransform } from "~/actions/tabletop";
+import { translation } from "~/core/Transform";
 
 describe("Disconnected Token", () =>
 {
@@ -75,5 +77,25 @@ describe("Connected Token", () =>
 
     expect(getByTestId(tokenTestId))
       .toHaveAttribute("transform", "matrix(1,0,0,1,0,0)");
+  });
+
+  it("Adjusts pointer x and y using viewTransform.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+    store.dispatch(setViewTransform(translation(10, 20)));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Token x={0} y={0} cellSize={16} />
+      </Provider>
+    );
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token);
+    fireEvent.pointerMove(token, { clientX: 4, clientY: 3 });
+
+    expect(token).toHaveAttribute("x", /* 4 - 10 = */ "-6");
+    expect(token).toHaveAttribute("y", /* 3 - 20 = */ "-17");
   });
 });

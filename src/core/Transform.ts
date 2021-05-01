@@ -122,3 +122,20 @@ export const determinantOf = (
     // Source: https://en.wikipedia.org/wiki/Determinant
     (a*e*i) + (b*f*g) + (c*d*h) - (c*e*g) - (b*d*i) - (a*f*h)
   );
+
+export const inverseOf = (t: Transform): Transform =>
+{
+  const det = determinantOf(t);
+
+  const [
+    [ a, b, c ],
+    [ d, e, f ],
+    [ g, h, i ],
+  ] = t;
+
+  return [
+    [ a / det, d / det, g / det ],
+    [ b / det, e / det, h / det ],
+    [ c / det, f / det, i / det ],
+  ]
+}

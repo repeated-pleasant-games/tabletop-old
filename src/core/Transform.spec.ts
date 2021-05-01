@@ -10,7 +10,8 @@ import {
   getScale,
   transformerOf,
   apply,
-  determinantOf
+  determinantOf,
+  inverseOf
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -200,4 +201,24 @@ describe("determinantOf", () =>
 
     expect(determinantOf(transform)).toEqual(1);
   });
+});
+
+describe("inverseOf", () =>
+{
+  it("Creates the inverse of the given transform.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 0 ],
+      [ 0, 1, 0 ],
+      [ 0, 0, 1 ],
+    ];
+
+    expect(inverseOf(transform)).toStrictEqual([
+      [ 1, 0, 0 ],
+      [ 0, 1, 0 ],
+      [ 0, 0, 1 ],
+    ]);
+  });
+
+  // TODO: cover cases where the matrix is not invertible!
 });
