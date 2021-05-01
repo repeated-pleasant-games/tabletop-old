@@ -9,7 +9,8 @@ import {
   scale,
   getScale,
   transformerOf,
-  apply
+  apply,
+  determinantOf
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -184,5 +185,19 @@ describe("apply", () =>
     ];
 
     expect(apply(transform, [ 1, 1 ])).toStrictEqual([ 6, 6 ]);
+  });
+});
+
+describe("determinantOf", () =>
+{
+  it("Generates a determinant for the given transform.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 0, ],
+      [ 0, 1, 0, ],
+      [ 0, 0, 1, ],
+    ];
+
+    expect(determinantOf(transform)).toEqual(1);
   });
 });

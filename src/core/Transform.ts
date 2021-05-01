@@ -110,3 +110,15 @@ export const apply = (
     t_11*x + t_12*y + t_13,
     t_21*x + t_22*y + t_23,
   ]);
+
+export const determinantOf = (
+  [
+    [ a, b, c ],
+    [ d, e, f ],
+    [ g, h, i ],
+  ]: Transform
+): number =>
+  (
+    // Source: https://en.wikipedia.org/wiki/Determinant
+    (a*e*i) + (b*f*g) + (c*d*h) - (c*e*g) - (b*d*i) - (a*f*h)
+  );
