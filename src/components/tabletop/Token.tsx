@@ -1,4 +1,6 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { toSvgMatrix, Transform } from "~/core/Transform";
 
 export const tokenTestId = "token";
 
@@ -7,9 +9,15 @@ type TokenProps =
   x: number,
   y: number,
   cellSize: number,
+  viewTransform?: Transform,
 }
 
-export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
+export const Token = ({
+  x: _x,
+  y: _y,
+  cellSize,
+  viewTransform
+}: TokenProps) =>
 {
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
@@ -23,6 +31,8 @@ export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
       width={cellSize}
       height={cellSize}
 
+      transform={viewTransform && toSvgMatrix(viewTransform)}
+
       onPointerDown={({ button }) => setDragging(button === 0)}
       onPointerMove={
         ({ clientX, clientY }) =>
@@ -32,4 +42,9 @@ export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
   );
 };
 
-export default Token;
+const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
+({
+  viewTransform,
+});
+
+export default connect(stateToProps)(Token);
