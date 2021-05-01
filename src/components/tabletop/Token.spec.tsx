@@ -46,4 +46,16 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("x", "20");
     expect(token).toHaveAttribute("y", "20");
   });
+
+  it("Does not follow pointer when pointer is not down.", () =>
+  {
+    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "0");
+    expect(token).toHaveAttribute("y", "0");
+  });
 });

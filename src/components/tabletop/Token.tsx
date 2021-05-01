@@ -11,6 +11,7 @@ type TokenProps =
 
 export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
 {
+  const [ isDragging, setDragging ] = React.useState(false);
   const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
 
   return (
@@ -22,9 +23,10 @@ export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
       width={cellSize}
       height={cellSize}
 
+      onPointerDown={({ button }) => setDragging(button === 0)}
       onPointerMove={
         ({ clientX, clientY }) =>
-          setPosition([ clientX, clientY ])
+          isDragging && setPosition([ clientX, clientY ])
       }
     />
   );
