@@ -9,7 +9,7 @@ import { Token, tokenTestId } from "./Token";
 
 describe("Disconnected Token", () =>
 {
-  it("Has an SVG circle.", () =>
+  it("Has a SVG circle.", () =>
   {
     const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={1} />);
 
