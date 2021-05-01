@@ -8,7 +8,8 @@ import {
   scaleBy,
   scale,
   getScale,
-  transformerOf
+  transformerOf,
+  apply
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -170,4 +171,18 @@ describe("transformerOf", () =>
         [  7,  8,  1 ]
       ]);
   });
-})
+});
+
+describe("apply", () => 
+{
+  it("Multiplies a vector by the given transform.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 5 ],
+      [ 0, 1, 5 ],
+      [ 0, 0, 1 ],
+    ];
+
+    expect(apply(transform, [ 1, 1 ])).toStrictEqual([ 6, 6 ]);
+  });
+});

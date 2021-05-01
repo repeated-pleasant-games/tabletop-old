@@ -98,3 +98,15 @@ export type Transformer = (_: Transform) => Transform;
 export const transformerOf = (a: Transform): Transformer =>
   (b: Transform) =>
     composeTransforms(a, b);
+
+export const apply = (
+  [
+    [ t_11, t_12, t_13 ],
+    [ t_21, t_22, t_23 ],
+  ]: Transform,
+  [ x, y ]: [ number, number ]
+): [ number, number ] =>
+  ([
+    t_11*x + t_12*y + t_13,
+    t_21*x + t_22*y + t_23,
+  ]);
