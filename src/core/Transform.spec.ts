@@ -11,7 +11,8 @@ import {
   transformerOf,
   apply,
   determinantOf,
-  inverseOf
+  inverseOf,
+  negationOf
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -229,5 +230,38 @@ describe("inverseOf", () =>
     ];
 
     expect(() => inverseOf(transform)).toThrow("Transform cannot be inverted.");
+  });
+});
+
+describe("negationOf", () =>
+{
+  it("Creates a transform with negated translation.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0,  4 ],
+      [ 0, 1, -3 ],
+      [ 0, 0,  1 ],
+    ];
+
+    expect(negationOf(transform)).toStrictEqual([
+      [ 1, 0, -4 ],
+      [ 0, 1,  3 ],
+      [ 0, 0,  1 ],
+    ]);
+  });
+
+  it("Creates a transform with inverted scale values.", () =>
+  {
+    const transform: Transform = [
+      [ 2, 0, 0 ],
+      [ 0, 3, 0 ],
+      [ 0, 0, 1 ],
+    ];
+
+    expect(negationOf(transform)).toStrictEqual([
+      [ 1/2,   0, 0 ],
+      [   0, 1/3, 0 ],
+      [   0,   0, 1 ],
+    ]);
   });
 });

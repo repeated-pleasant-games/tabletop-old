@@ -140,4 +140,16 @@ export const inverseOf = (t: Transform): Transform =>
     [ b / det, e / det, h / det ],
     [ c / det, f / det, i / det ],
   ]
-}
+};
+
+export const negationOf = ([
+  [ sx,   , x ],
+  [   , sy, y ],
+]: Transform): Transform =>
+  ([
+    // We check to see if x and y are zero because, for some reason, JavaScript
+    // considers 0 and -0 to be different values.
+    [ 1/sx,    0, x == 0 ? 0 : -(x) ],
+    [    0, 1/sy, y == 0 ? 0 : -(y) ],
+    [    0,    0,                 1 ],
+  ]);
