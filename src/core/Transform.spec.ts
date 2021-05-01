@@ -220,5 +220,14 @@ describe("inverseOf", () =>
     ]);
   });
 
-  // TODO: cover cases where the matrix is not invertible!
+  it("Throws exception if transform cannot be inverted.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 1 ],
+      [ 0, 1, 0 ],
+      [ 1, 0, 1 ],
+    ];
+
+    expect(() => inverseOf(transform)).toThrow("Transform cannot be inverted.");
+  });
 });

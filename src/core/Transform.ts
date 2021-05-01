@@ -127,6 +127,8 @@ export const inverseOf = (t: Transform): Transform =>
 {
   const det = determinantOf(t);
 
+  if (det === 0) throw new Error("Transform cannot be inverted.");
+
   const [
     [ a, b, c ],
     [ d, e, f ],
