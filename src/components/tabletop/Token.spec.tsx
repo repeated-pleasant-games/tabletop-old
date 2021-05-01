@@ -11,16 +11,24 @@ describe("Disconnected Token", () =>
 {
   it("Has an SVG circle.", () =>
   {
-    const { getByTestId } = renderSVG(<Token x={0} y={0} />);
+    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={1} />);
 
     expect(getByTestId(tokenTestId).nodeName).toEqual("rect");
   });
 
   it("Has given x and y coordinates.", () =>
   {
-    const { getByTestId } = renderSVG(<Token x={10} y={11} />);
+    const { getByTestId } = renderSVG(<Token x={10} y={11} cellSize={1} />);
 
     expect(getByTestId(tokenTestId)).toHaveAttribute("x", "10");
     expect(getByTestId(tokenTestId)).toHaveAttribute("y", "11");
+  });
+
+  it("Has a width and height equal to the given cell size.", () =>
+  {
+    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
+
+    expect(getByTestId(tokenTestId)).toHaveAttribute("width", "16");
+    expect(getByTestId(tokenTestId)).toHaveAttribute("height", "16");
   });
 });
