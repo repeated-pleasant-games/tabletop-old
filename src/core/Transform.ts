@@ -25,7 +25,7 @@ export const translateBy = (
   [ dx, dy ]: [ number, number ],
   transform: Transform
 ) =>
-  apply(
+  composeTransforms(
     translation(dx, dy),
     transform);
 
@@ -37,7 +37,7 @@ export const translation = (dx: number, dy: number): Transform =>
   ]);
 
 export const scaleBy = (factor: number, transform: Transform) =>
-  apply(
+  composeTransforms(
     scale(factor),
     transform
   );
@@ -63,7 +63,7 @@ export const getScale = (
  * @param a The transform to apply.
  * @param b The transform to apply to.
  */
-export const apply = (
+export const composeTransforms = (
   [
     [ a_11, a_12, a_13 ],
     [ a_21, a_22, a_23 ],
@@ -97,4 +97,4 @@ export type Transformer = (_: Transform) => Transform;
 
 export const transformerOf = (a: Transform): Transformer =>
   (b: Transform) =>
-    apply(a, b);
+    composeTransforms(a, b);

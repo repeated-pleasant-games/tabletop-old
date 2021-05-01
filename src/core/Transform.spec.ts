@@ -1,5 +1,5 @@
 import {
-  apply,
+  composeTransforms,
   identityTransform,
   Transform,
   toSvgMatrix,
@@ -131,14 +131,14 @@ describe("apply", () =>
       [ 7, 8, 1 ]
     ];
 
-    expect(apply(transformOne, transformTwo))
+    expect(composeTransforms(transformOne, transformTwo))
       .toStrictEqual([
         [ 36, 42,  8 ],
         [ 39, 45, 11 ],
         [  7,  8,  1 ]
       ]);
 
-    expect(apply(transformTwo, transformOne))
+    expect(composeTransforms(transformTwo, transformOne))
       .toStrictEqual([
         [ 1, 2, 18 ],
         [ 4, 5, 51 ],
