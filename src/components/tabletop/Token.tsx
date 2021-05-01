@@ -9,15 +9,25 @@ type TokenProps =
   cellSize: number,
 }
 
-export const Token = ({ x, y, cellSize }: TokenProps): any =>
-(
-  <rect
-    data-testid={tokenTestId}
-    x={x}
-    y={y}
-    width={cellSize}
-    height={cellSize}
-  />
-);
+export const Token = ({ x: _x, y: _y, cellSize }: TokenProps): any =>
+{
+  const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
+
+  return (
+    <rect
+      data-testid={tokenTestId}
+
+      x={x}
+      y={y}
+      width={cellSize}
+      height={cellSize}
+
+      onPointerMove={
+        ({ clientX, clientY }) =>
+          setPosition([ clientX, clientY ])
+      }
+    />
+  );
+};
 
 export default Token;
