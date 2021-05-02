@@ -75,6 +75,32 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("x", "0");
     expect(token).toHaveAttribute("y", "0");
   });
+
+  it("Follows pointer if button 0 is pressed.", () =>
+  {
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token, { button: 0 });
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "0");
+    expect(token).toHaveAttribute("y", "0");
+  });
+
+  it("Does not follow pointer if button 0 is not pressed.", () =>
+  {
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token, { button: 1 });
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "0");
+    expect(token).toHaveAttribute("y", "0");
+  });
 });
 
 describe("Connected Token", () =>
