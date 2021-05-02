@@ -136,9 +136,17 @@ export const inverseOf = (t: Transform): Transform =>
   ] = t;
 
   return [
-    [ a / det, d / det, g / det ],
-    [ b / det, e / det, h / det ],
-    [ c / det, f / det, i / det ],
+    [ 
+      (e*i - f*h) / det,
+      -1 * (b*i - c*h) / det,
+      (b*f - c*e) / det
+    ],
+    [
+      -1 * (d*i - f*g) / det,
+      (a*i - c*g) / det,
+      -1 * (a*f - c*d) / det
+    ],
+    [  (d*h - e*g) / det, -1 * (a*h - b*g) / det,  (a*e - b*d) / det ],
   ]
 };
 

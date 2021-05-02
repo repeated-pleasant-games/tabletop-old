@@ -206,20 +206,41 @@ describe("determinantOf", () =>
 
 describe("inverseOf", () =>
 {
-  it("Creates the inverse of the given transform.", () =>
-  {
-    const transform: Transform = [
-      [ 1, 0, 0 ],
-      [ 0, 1, 0 ],
-      [ 0, 0, 1 ],
-    ];
-
-    expect(inverseOf(transform)).toStrictEqual([
-      [ 1, 0, 0 ],
-      [ 0, 1, 0 ],
-      [ 0, 0, 1 ],
-    ]);
-  });
+  it.each([
+    [
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [  1, -0,  0 ],
+        [ -0,  1, -0 ],
+        [  0, -0,  1 ],
+      ]
+    ],
+    [
+      [
+        [ 1, 2, 0 ],
+        [ 2, 3, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ -3,  2, -0 ],
+        [  2, -1,  0 ],
+        [ -0,  0,  1 ],
+      ]
+    ]
+  ])(
+    "Creates the inverse of the given transform.",
+    (
+      initialTransform: Transform,
+      inverseTransform: Transform
+    ) =>
+    {
+      expect(inverseOf(initialTransform)).toStrictEqual(inverseTransform);
+    }
+  );
 
   it("Throws exception if transform cannot be inverted.", () =>
   {
