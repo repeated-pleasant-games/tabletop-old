@@ -37,3 +37,6 @@ if (!global.PointerEvent)
 
   global.PointerEvent = PointerEvent as any;
 }
+
+if (!global.Element.prototype.setPointerCapture)
+  global.Element.prototype.setPointerCapture = jest.fn();

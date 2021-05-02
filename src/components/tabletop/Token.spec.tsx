@@ -115,6 +115,16 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("x", "20");
     expect(token).toHaveAttribute("y", "20");
   });
+
+  it("Captures pointer on click.", () =>
+  {
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+    fireEvent.pointerDown(token);
+
+    expect(global.Element.prototype.setPointerCapture).toHaveBeenCalled();
+  });
 });
 
 describe("Connected Token", () =>
