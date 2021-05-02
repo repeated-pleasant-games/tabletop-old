@@ -34,6 +34,7 @@ export const Token = ({
       transform={viewTransform && toSvgMatrix(viewTransform)}
 
       onPointerDown={({ button }) => setDragging(button === 0)}
+      onPointerUp={({ button }) => setDragging(!(button === 0))}
       onPointerMove={
         ({ clientX, clientY }) =>
           isDragging && setPosition(
