@@ -156,6 +156,22 @@ describe("Disconnected Token", () =>
     expect(f).toHaveBeenCalled();
     expect(f).toHaveBeenNthCalledWith(1, pointerId);
   });
+
+  it("Does not release pointer on pointer up if button is not 0.", () =>
+  {
+    const pointerId = 12;
+
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const f = jest.fn();
+    global.Element.prototype.releasePointerCapture = f;
+
+    const token = getByTestId(tokenTestId);
+    fireEvent.pointerDown(token, { pointerId, button: 0 });
+    fireEvent.pointerUp(token, { pointerId, button: 1 });
+
+    expect(f).not.toHaveBeenCalled();
+  });
 });
 
 describe("Connected Token", () =>

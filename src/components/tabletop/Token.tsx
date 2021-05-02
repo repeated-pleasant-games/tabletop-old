@@ -45,8 +45,11 @@ export const Token = ({
       onPointerUp={
         ({ button, target, pointerId }) =>
         (
-          (target as Element).releasePointerCapture(pointerId),
-          setDragging(!(button === 0))
+          button === 0 &&
+          (
+            (target as Element).releasePointerCapture(pointerId),
+            setDragging(false)
+          )
         )
       }
 
