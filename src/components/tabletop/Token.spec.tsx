@@ -103,25 +103,43 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("y", "20");
   });
 
+  beforeEach(() =>
+  {
+    global.Element.prototype.setPointerCapture = () => null;
+    global.Element.prototype.releasePointerCapture = () => null;
+  });
+
   it("Captures pointer on pointer down.", () =>
   {
+    const pointerId = 12;
+
     const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
 
-    const token = getByTestId(tokenTestId);
-    fireEvent.pointerDown(token);
+    const f = jest.fn();
+    global.Element.prototype.setPointerCapture = f;
 
-    expect(global.Element.prototype.setPointerCapture).toHaveBeenCalled();
+    const token = getByTestId(tokenTestId);
+    fireEvent.pointerDown(token, { pointerId });
+
+    expect(f).toHaveBeenCalled();
+    expect(f).toHaveBeenNthCalledWith(1, pointerId);
   });
 
   it("Releases pointer capture on pointer up.", () =>
   {
+    const pointerId = 12;
+
     const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
 
-    const token = getByTestId(tokenTestId);
-    fireEvent.pointerDown(token);
-    fireEvent.pointerUp(token);
+    const f = jest.fn();
+    global.Element.prototype.releasePointerCapture = f;
 
-    expect(global.Element.prototype.releasePointerCapture).toHaveBeenCalled();
+    const token = getByTestId(tokenTestId);
+    fireEvent.pointerDown(token, { pointerId });
+    fireEvent.pointerUp(token, { pointerId });
+
+    expect(f).toHaveBeenCalled();
+    expect(f).toHaveBeenNthCalledWith(1, pointerId);
   });
 });
 
