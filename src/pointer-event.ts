@@ -40,3 +40,6 @@ if (!global.PointerEvent)
 
 if (!global.Element.prototype.setPointerCapture)
   global.Element.prototype.setPointerCapture = jest.fn();
+
+if (!global.Element.prototype.releasePointerCapture)
+  global.Element.prototype.releasePointerCapture = jest.fn();

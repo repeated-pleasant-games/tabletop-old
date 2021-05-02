@@ -40,7 +40,14 @@ export const Token = ({
           setDragging(button === 0)
         )
       }
-      onPointerUp={({ button }) => setDragging(!(button === 0))}
+      onPointerUp={
+        ({ button, target, pointerId }) =>
+        (
+          (target as Element).releasePointerCapture(pointerId),
+          setDragging(!(button === 0))
+        )
+      }
+
       onPointerMove={
         ({ clientX, clientY }) =>
           isDragging && setPosition(

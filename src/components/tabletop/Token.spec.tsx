@@ -116,7 +116,7 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("y", "20");
   });
 
-  it("Captures pointer on click.", () =>
+  it("Captures pointer on pointer down.", () =>
   {
     const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
 
@@ -124,6 +124,17 @@ describe("Disconnected Token", () =>
     fireEvent.pointerDown(token);
 
     expect(global.Element.prototype.setPointerCapture).toHaveBeenCalled();
+  });
+
+  it("Releases pointer capture on pointer up.", () =>
+  {
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+    fireEvent.pointerDown(token);
+    fireEvent.pointerUp(token);
+
+    expect(global.Element.prototype.releasePointerCapture).toHaveBeenCalled();
   });
 });
 
