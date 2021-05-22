@@ -12,7 +12,7 @@ import { viewTransform } from "~/reducers/tabletop";
 
 describe("Disconnected Token", () =>
 {
-  it("Has a SVG circle.", () =>
+  it("Has a SVG rect.", () =>
   {
     const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={1} />);
 
