@@ -37,3 +37,9 @@ if (!global.PointerEvent)
 
   global.PointerEvent = PointerEvent as any;
 }
+
+if (!global.Element.prototype.setPointerCapture)
+  global.Element.prototype.setPointerCapture = () => null;
+
+if (!global.Element.prototype.releasePointerCapture)
+  global.Element.prototype.releasePointerCapture = () => null;

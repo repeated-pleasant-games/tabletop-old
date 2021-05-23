@@ -6,10 +6,10 @@ type TabletopProps = React.HTMLAttributes<{}> &
   grid: React.ReactElement,
 };
 
-export const Tabletop = ({ grid }: TabletopProps) =>
+export const Tabletop = ({ grid, children }: TabletopProps) =>
 (
   <svg id="tabletop">
     {grid}
-    <Token x={0} y={0} cellSize={16} />
+    {children}
   </svg>
 );

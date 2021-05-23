@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { toSvgMatrix, Transform } from "~/core/Transform";
+import { apply, inverseOf, toSvgMatrix, Transform } from "~/core/Transform";
 
 export const tokenTestId = "token";
 
@@ -33,10 +33,33 @@ export const Token = ({
 
       transform={viewTransform && toSvgMatrix(viewTransform)}
 
-      onPointerDown={({ button }) => setDragging(button === 0)}
+      onPointerDown={
+        ({ button, target, pointerId }) =>
+        (
+          button === 0 && (
+            (target as Element).setPointerCapture(pointerId),
+            setDragging(true)
+          )
+        )
+      }
+      onPointerUp={
+        ({ button, target, pointerId }) =>
+        (
+          button === 0 &&
+          (
+            (target as Element).releasePointerCapture(pointerId),
+            setDragging(false)
+          )
+        )
+      }
+
       onPointerMove={
         ({ clientX, clientY }) =>
-          isDragging && setPosition([ clientX, clientY ])
+          isDragging && setPosition(
+            viewTransform
+            ? apply(inverseOf(viewTransform), [ clientX, clientY ])
+            : [ clientX, clientY ]
+          )
       }
     />
   );

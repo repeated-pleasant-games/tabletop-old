@@ -1,5 +1,5 @@
 import {
-  apply,
+  composeTransforms,
   identityTransform,
   Transform,
   toSvgMatrix,
@@ -8,7 +8,11 @@ import {
   scaleBy,
   scale,
   getScale,
-  transformerOf
+  transformerOf,
+  apply,
+  determinantOf,
+  inverseOf,
+  negationOf
 } from "./Transform";
 
 describe("identityTransform", () =>
@@ -131,14 +135,14 @@ describe("apply", () =>
       [ 7, 8, 1 ]
     ];
 
-    expect(apply(transformOne, transformTwo))
+    expect(composeTransforms(transformOne, transformTwo))
       .toStrictEqual([
         [ 36, 42,  8 ],
         [ 39, 45, 11 ],
         [  7,  8,  1 ]
       ]);
 
-    expect(apply(transformTwo, transformOne))
+    expect(composeTransforms(transformTwo, transformOne))
       .toStrictEqual([
         [ 1, 2, 18 ],
         [ 4, 5, 51 ],
@@ -170,4 +174,115 @@ describe("transformerOf", () =>
         [  7,  8,  1 ]
       ]);
   });
-})
+});
+
+describe("apply", () => 
+{
+  it("Multiplies a vector by the given transform.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 5 ],
+      [ 0, 1, 5 ],
+      [ 0, 0, 1 ],
+    ];
+
+    expect(apply(transform, [ 1, 1 ])).toStrictEqual([ 6, 6 ]);
+  });
+});
+
+describe("determinantOf", () =>
+{
+  it("Generates a determinant for the given transform.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 0, ],
+      [ 0, 1, 0, ],
+      [ 0, 0, 1, ],
+    ];
+
+    expect(determinantOf(transform)).toEqual(1);
+  });
+});
+
+describe("inverseOf", () =>
+{
+  it.each([
+    [
+      [
+        [ 1, 0, 0 ],
+        [ 0, 1, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [  1, -0,  0 ],
+        [ -0,  1, -0 ],
+        [  0, -0,  1 ],
+      ]
+    ],
+    [
+      [
+        [ 1, 2, 0 ],
+        [ 2, 3, 0 ],
+        [ 0, 0, 1 ],
+      ],
+      [
+        [ -3,  2, -0 ],
+        [  2, -1,  0 ],
+        [ -0,  0,  1 ],
+      ]
+    ]
+  ])(
+    "Creates the inverse of the given transform.",
+    (
+      initialTransform: Transform,
+      inverseTransform: Transform
+    ) =>
+    {
+      expect(inverseOf(initialTransform)).toStrictEqual(inverseTransform);
+    }
+  );
+
+  it("Throws exception if transform cannot be inverted.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0, 1 ],
+      [ 0, 1, 0 ],
+      [ 1, 0, 1 ],
+    ];
+
+    expect(() => inverseOf(transform)).toThrow("Transform cannot be inverted.");
+  });
+});
+
+describe("negationOf", () =>
+{
+  it("Creates a transform with negated translation.", () =>
+  {
+    const transform: Transform = [
+      [ 1, 0,  4 ],
+      [ 0, 1, -3 ],
+      [ 0, 0,  1 ],
+    ];
+
+    expect(negationOf(transform)).toStrictEqual([
+      [ 1, 0, -4 ],
+      [ 0, 1,  3 ],
+      [ 0, 0,  1 ],
+    ]);
+  });
+
+  it("Creates a transform with inverted scale values.", () =>
+  {
+    const transform: Transform = [
+      [ 2, 0, 0 ],
+      [ 0, 3, 0 ],
+      [ 0, 0, 1 ],
+    ];
+
+    expect(negationOf(transform)).toStrictEqual([
+      [ 1/2,   0, 0 ],
+      [   0, 1/3, 0 ],
+      [   0,   0, 1 ],
+    ]);
+  });
+});
