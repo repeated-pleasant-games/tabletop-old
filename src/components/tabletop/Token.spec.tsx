@@ -50,6 +50,19 @@ describe("Disconnected Token", () =>
     expect(token).toHaveAttribute("y", "20");
   });
 
+  it("Follows pointer when user clicks and drags, relative to cursor.", () =>
+  {
+    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token, { button: 0, clientX: 8, clientY: 4 });
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "12");
+    expect(token).toHaveAttribute("y", "16");
+  });
+
   it("Does not follow pointer when pointer is not down.", () =>
   {
     const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);

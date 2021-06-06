@@ -21,6 +21,7 @@ export const Token = ({
 {
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
+  const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
 
   return (
     <rect
@@ -34,10 +35,11 @@ export const Token = ({
       transform={viewTransform && toSvgMatrix(viewTransform)}
 
       onPointerDown={
-        ({ button, target, pointerId }) =>
+        ({ button, target, pointerId, clientX, clientY }) =>
         (
           button === 0 && (
             (target as Element).setPointerCapture(pointerId),
+            setDelta([ x - clientX, y - clientY ]),
             setDragging(true)
           )
         )
@@ -48,6 +50,7 @@ export const Token = ({
           button === 0 &&
           (
             (target as Element).releasePointerCapture(pointerId),
+            setDelta([ 0, 0 ]),
             setDragging(false)
           )
         )
@@ -58,7 +61,7 @@ export const Token = ({
           isDragging && setPosition(
             viewTransform
             ? apply(inverseOf(viewTransform), [ clientX, clientY ])
-            : [ clientX, clientY ]
+            : [ clientX + dX, clientY + dY ]
           )
       }
     />
