@@ -60,7 +60,7 @@ export const Token = ({
         ({ clientX, clientY }) =>
           isDragging && setPosition(
             viewTransform
-            ? apply(inverseOf(viewTransform), [ clientX, clientY ])
+            ? apply(inverseOf(viewTransform), [ clientX + dX, clientY + dY ])
             : [ clientX + dX, clientY + dY ]
           )
       }

@@ -222,4 +222,44 @@ describe("Connected Token", () =>
     expect(token).toHaveAttribute("x", /* 4 - 10 = */ "-6");
     expect(token).toHaveAttribute("y", /* 3 - 20 = */ "-17");
   });
+
+  it("Follows pointer when user clicks and drags.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+    store.dispatch(setViewTransform(translation(0, 0)));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Token x={0} y={0} cellSize={16} />
+      </Provider>
+    );
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token, { button: 0 });
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "20");
+    expect(token).toHaveAttribute("y", "20");
+  });
+
+  it("Follows pointer when user clicks and drags, relative to cursor.", () =>
+  {
+    const store = createStore(combineReducers({ viewTransform }));
+    store.dispatch(setViewTransform(translation(0, 0)));
+
+    const { getByTestId } = renderSVG(
+      <Provider store={store}>
+        <Token x={0} y={0} cellSize={16} />
+      </Provider>
+    );
+
+    const token = getByTestId(tokenTestId);
+
+    fireEvent.pointerDown(token, { button: 0, clientX: 8, clientY: 4 });
+    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+
+    expect(token).toHaveAttribute("x", "12");
+    expect(token).toHaveAttribute("y", "16");
+  });
 });
