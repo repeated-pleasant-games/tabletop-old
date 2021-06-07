@@ -1,4 +1,5 @@
-import { SetViewTransformPayload } from "~/actions/tabletop";
+import { AddActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
+import { Actor } from "~/core/Actor";
 import { Transform } from "~/core/Transform";
 
 export const viewTransform = (
@@ -19,3 +20,21 @@ export const viewTransform = (
       return state;
   }
 };
+
+export const actors = (
+  state: Actor[] = [],
+  action: AddActorPayload
+) =>
+{
+  switch (action.type)
+  {
+    case "add actor":
+      return [
+        ...state,
+        action.actor
+      ];
+
+    default:
+      return state;
+  }
+}
