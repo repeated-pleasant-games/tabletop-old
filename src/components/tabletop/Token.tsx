@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { apply, inverseOf, toSvgMatrix, Transform } from "~/core/Transform";
+import { apply, identityTransform, inverseOf, toSvgMatrix, Transform } from "~/core/Transform";
 
 export const tokenTestId = "token";
 
@@ -36,13 +36,20 @@ export const Token = ({
 
       onPointerDown={
         ({ button, target, pointerId, clientX, clientY }) =>
-        (
-          button === 0 && (
-            (target as Element).setPointerCapture(pointerId),
-            setDelta([ x - clientX, y - clientY ]),
-            setDragging(true)
-          )
-        )
+        {
+          if (button === 0)
+          {
+            (target as Element).setPointerCapture(pointerId);
+
+            const [ viewX, viewY ] = apply(
+                viewTransform || identityTransform(),
+                [ x, y ]
+              );
+
+            setDelta([ viewX - clientX, viewY - clientY ]);
+            setDragging(true);
+          }
+        }
       }
       onPointerUp={
         ({ button, target, pointerId }) =>
@@ -59,9 +66,10 @@ export const Token = ({
       onPointerMove={
         ({ clientX, clientY }) =>
           isDragging && setPosition(
-            viewTransform
-            ? apply(inverseOf(viewTransform), [ clientX + dX, clientY + dY ])
-            : [ clientX + dX, clientY + dY ]
+            apply(
+              inverseOf(viewTransform || identityTransform()),
+              [ clientX + dX, clientY + dY ]
+            )
           )
       }
     />

@@ -10,7 +10,7 @@ import "~/pointer-event";
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
 import { viewTransform } from "~/reducers/tabletop";
 import { setViewTransform } from "~/actions/tabletop";
-import { translation } from "~/core/Transform";
+import { inverseOf, scale, translation } from "~/core/Transform";
 
 describe("Disconnected Token", () =>
 {
@@ -216,7 +216,7 @@ describe("Connected Token", () =>
 
     const token = getByTestId(tokenTestId);
 
-    fireEvent.pointerDown(token);
+    fireEvent.pointerDown(token, { clientX: 10, clientY: 20 });
     fireEvent.pointerMove(token, { clientX: 4, clientY: 3 });
 
     expect(token).toHaveAttribute("x", /* 4 - 10 = */ "-6");
@@ -243,23 +243,64 @@ describe("Connected Token", () =>
     expect(token).toHaveAttribute("y", "20");
   });
 
-  it("Follows pointer when user clicks and drags, relative to cursor.", () =>
-  {
-    const store = createStore(combineReducers({ viewTransform }));
-    store.dispatch(setViewTransform(translation(0, 0)));
+  it.each([
+    [
+      translation(0, 0),
+      [ 8, 4 ],
+      [ 20, 20 ],
+      [ 12, 16 ]
+    ],
+    [
+      translation(0, 10),
+      [ 8, 14 ],
+      [ 20, 30 ],
+      [ 12, 16 ]
+    ],
+    [
+      scale(2),
+      [ 8, 4 ],
+      [ 20, 20 ],
+      [ 6, 8 ]
+    ],
+    [
+      scale(0.5),
+      [ 4, 2 ],
+      [ 20, 20 ],
+      [ 32, 36 ]
+    ]
+  ])(
+    "Follows pointer when user clicks and drags, relative to cursor.",
+    (transform, [ initX, initY ], [ endX, endY ], [ expectedX, expectedY ]) =>
+    {
+      const store = createStore(combineReducers({ viewTransform }));
+      store.dispatch(setViewTransform(transform));
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Token x={0} y={0} cellSize={16} />
-      </Provider>
-    );
+      const { getByTestId } = renderSVG(
+        <Provider store={store}>
+          <Token x={0} y={0} cellSize={16} />
+        </Provider>
+      );
 
-    const token = getByTestId(tokenTestId);
+      const token = getByTestId(tokenTestId);
 
-    fireEvent.pointerDown(token, { button: 0, clientX: 8, clientY: 4 });
-    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
+      fireEvent.pointerDown(
+        token,
+        {
+          button: 0,
+          clientX: initX,
+          clientY: initY
+        }
+      );
+      fireEvent.pointerMove(
+        token,
+        {
+          clientX: endX,
+          clientY: endY
+        }
+      );
 
-    expect(token).toHaveAttribute("x", "12");
-    expect(token).toHaveAttribute("y", "16");
-  });
+      expect(token).toHaveAttribute("x", expectedX.toString());
+      expect(token).toHaveAttribute("y", expectedY.toString());
+    }
+  );
 });
