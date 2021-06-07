@@ -1,4 +1,5 @@
-import { setViewTransform } from "./tabletop";
+import { Actor } from "~/core/Actor";
+import { addActor, setViewTransform } from "./tabletop";
 
 describe("Action setViewTransform", () =>
 {
@@ -24,5 +25,18 @@ describe("Action setViewTransform", () =>
         [ 0, 1,  2 ],
         [ 0, 0,  1 ]
       ]);
+  });
+});
+
+describe("addActor", () =>
+{
+  it("Returns a payload with 'type' of 'add actor'.", () =>
+  {
+    expect(addActor({} as Actor).type).toBe("add actor");
+  });
+
+  it("Returns a payload whose actor is the given actor.", () =>
+  {
+    expect(addActor(new Actor(0, "", 0)).actor).toStrictEqual(new Actor(0, "", 0));
   });
 });

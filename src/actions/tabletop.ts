@@ -1,3 +1,4 @@
+import { Actor } from "~/core/Actor";
 import { Transform } from "~/core/Transform";
 
 export type SetViewTransformPayload = {
@@ -10,4 +11,14 @@ export const setViewTransform = (
 ({
   type: "set view transform",
   viewTransform,
+});
+
+export type AddActorPayload = {
+  type: "add actor",
+  actor: Actor
+};
+export const addActor = (actor: Actor): AddActorPayload =>
+({
+  type: "add actor",
+  actor
 });
