@@ -10,7 +10,7 @@ import "~/pointer-event";
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
 import { viewTransform } from "~/reducers/tabletop";
 import { setViewTransform } from "~/actions/tabletop";
-import { inverseOf, scale, translation } from "~/core/Transform";
+import { scale, translation } from "~/core/Transform";
 
 describe("Disconnected Token", () =>
 {
