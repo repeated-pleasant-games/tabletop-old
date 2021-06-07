@@ -1,4 +1,5 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import Token from "./Token";
 
 type TabletopProps = React.HTMLAttributes<{}> &
@@ -13,3 +14,5 @@ export const Tabletop = ({ grid, children }: TabletopProps) =>
     {children}
   </svg>
 );
+
+export default connect()(Tabletop);
