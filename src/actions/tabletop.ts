@@ -1,4 +1,4 @@
-import { identityTransform, Transform, translation } from "~/core/Transform";
+import { Transform } from "~/core/Transform";
 
 export type SetViewTransformPayload = {
   type: "set view transform",
