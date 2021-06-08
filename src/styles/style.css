@@ -59,4 +59,7 @@ html {
 .control-panel {
   position: absolute;
   z-index: 1;
+
+  right: 0;
+  margin: 1em 1em 0 0;
 }
