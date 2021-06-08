@@ -37,6 +37,20 @@ describe("addActor", () =>
 
   it("Returns a payload whose actor is the given actor.", () =>
   {
-    expect(addActor(new Actor(0, "", 0)).actor).toStrictEqual(new Actor(0, "", 0));
+    expect(
+      addActor({
+        id: 0,
+        name: "",
+        initiative: 0,
+        x: 0,
+        y: 0,
+      }).actor
+    ).toStrictEqual({
+      id: 0,
+      name: "",
+      initiative: 0,
+      x: 0,
+      y: 0,
+    });
   });
 });

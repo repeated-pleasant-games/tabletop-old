@@ -20,7 +20,15 @@ export const ControlPanel = ({ addActor }: ControlPanelProps): any =>
 
 const dispatchToProps = (dispatch: Dispatch) =>
 ({
-  addActor: () => dispatch(addActor(new Actor(0, "", 0))),
+  addActor: () => dispatch(addActor(
+    {
+      id: 0,
+      name: "",
+      initiative: 0,
+      x: 0,
+      y: 0,
+    } as Actor
+  )),
 });
 
 export default connect(null, dispatchToProps)(ControlPanel);

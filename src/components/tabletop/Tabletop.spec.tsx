@@ -42,7 +42,18 @@ describe("Connected Tabletop component", () =>
 {
   it.each([
     [ [], 0 ],
-    [ [ new Actor(0, "", 0) ], 1 ]
+    [
+      [
+        {
+          id: 0,
+          name: "",
+          initiative: 0,
+          x: 0,
+          y: 0,
+        } as Actor
+      ],
+      1
+    ]
   ])(
     "Has a number of Tokens equal to the number of Actors in the app store",
     (actorList, expectedTokenCount) =>
