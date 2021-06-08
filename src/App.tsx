@@ -7,13 +7,9 @@ import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
 
 import { viewTransform, actors } from "./reducers/tabletop";
 
-import Token from "./components/tabletop/Token";
-
 export const App = () =>
 (
   <Provider store={createStore(combineReducers({ viewTransform, actors }))}>
-    <Tabletop grid={<RectangularGrid />}>
-      <Token x={0} y={0} cellSize={16} />
-    </Tabletop>
+    <Tabletop grid={<RectangularGrid />} />
   </Provider>
 );
