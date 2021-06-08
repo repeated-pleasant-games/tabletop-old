@@ -6,14 +6,14 @@ import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { actors } from "~/reducers/tabletop";
-import ControlPanel, { ControlPanel as DisconnectedControlPanel } from "./ControlPanel";
+import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
 
 describe("Disconnected ControlPanel", () =>
 {
   it("Is a div.", () =>
   {
     const { getByTestId } = render(<DisconnectedControlPanel />);
-    expect(getByTestId("control-panel").nodeName.toLowerCase()).toBe("div");
+    expect(getByTestId(controlPanelTestId).nodeName.toLowerCase()).toBe("div");
   });
 
   it("Contains an element that says 'Add Actor'.", () =>
@@ -22,6 +22,13 @@ describe("Disconnected ControlPanel", () =>
 
     expect(getByText("Add Actor")).toBeInTheDocument();
   });
+
+  it("Has the class .control-panel", () =>
+  {
+    const { getByTestId } = render(<DisconnectedControlPanel />);
+
+    expect(getByTestId(controlPanelTestId).className).toBe("control-panel");
+  })
 });
 
 describe("Connected ControlPanel", () =>

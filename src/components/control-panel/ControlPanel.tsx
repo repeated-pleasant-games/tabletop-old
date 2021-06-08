@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addActor } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 
-const controlPanelTestId = "control-panel";
+export const controlPanelTestId = "control-panel";
 
 type ControlPanelProps =
 {
@@ -13,7 +13,7 @@ type ControlPanelProps =
 
 export const ControlPanel = ({ addActor }: ControlPanelProps): any =>
 (
-  <div data-testid={controlPanelTestId}>
+  <div className="control-panel" data-testid={controlPanelTestId}>
     <button onClick={addActor}>Add Actor</button>
   </div>
 );
