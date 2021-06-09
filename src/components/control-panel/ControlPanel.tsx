@@ -1,6 +1,8 @@
 import React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { v4 as uuid } from "uuid";
+
 import { addActor } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 
@@ -22,7 +24,7 @@ const dispatchToProps = (dispatch: Dispatch) =>
 ({
   addActor: () => dispatch(addActor(
     {
-      id: "",
+      id: uuid(),
       name: "",
       initiative: 0,
       x: 0,
