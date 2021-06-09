@@ -53,7 +53,7 @@ export const TurnCard = ({ actor, onClick, setInitiative }: TurnCardProps & Disp
 
 const mapDispatchToProps = (dispatch: Dispatch) => (
     {
-        setInitiative: (id: number, newInitiative: number) =>
+        setInitiative: (id: string, newInitiative: number) =>
             dispatch(setInitiative(id, newInitiative))
     }
 )

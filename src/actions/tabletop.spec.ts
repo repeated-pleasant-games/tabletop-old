@@ -39,14 +39,14 @@ describe("addActor", () =>
   {
     expect(
       addActor({
-        id: 0,
+        id: "",
         name: "",
         initiative: 0,
         x: 0,
         y: 0,
       }).actor
     ).toStrictEqual({
-      id: 0,
+      id: "",
       name: "",
       initiative: 0,
       x: 0,

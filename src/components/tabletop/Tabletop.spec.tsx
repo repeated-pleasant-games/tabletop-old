@@ -45,7 +45,7 @@ describe("Connected Tabletop component", () =>
     [
       [
         {
-          id: 0,
+          id: "",
           name: "",
           initiative: 0,
           x: 0,

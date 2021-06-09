@@ -15,23 +15,23 @@ export enum ActorAction {
 type ActionPayload<T> = { type: ActorAction } & T
 
 export type PayloadMoveActor = ActionPayload<{
-    id: number
+    id: string
     x: number
     y: number
 }>
 
 export type PayloadSetActorInitiative = ActionPayload<{
-    id: number
+    id: string
     initiative: number
 }>
 
 
 /* --- Action Creators --- */
 
-export const moveActor = (id: number, x: number, y: number) =>
+export const moveActor = (id: string, x: number, y: number) =>
     <PayloadMoveActor>{ type: "MOVE_ACTOR", id, x, y }
 
-export const setActorInitiative = (id: number, initiative: number) =>
+export const setActorInitiative = (id: string, initiative: number) =>
     <PayloadSetActorInitiative>{
         type: "SET_ACTOR_INITIATIVE",
         id,

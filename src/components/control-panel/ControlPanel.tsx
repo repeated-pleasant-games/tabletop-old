@@ -22,7 +22,7 @@ const dispatchToProps = (dispatch: Dispatch) =>
 ({
   addActor: () => dispatch(addActor(
     {
-      id: 0,
+      id: "",
       name: "",
       initiative: 0,
       x: 0,
