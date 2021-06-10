@@ -1,5 +1,6 @@
-import { SetViewTransformPayload } from "~/actions/tabletop";
-import { viewTransform } from "./tabletop";
+import { AddActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
+import { Actor } from "~/core/Actor";
+import { actors, viewTransform } from "./tabletop";
 
 describe("viewTransform reducer", () =>
 {
@@ -54,4 +55,72 @@ describe("viewTransform reducer", () =>
         [ 0, 0, 1 ]
       ]);
   });
+});
+
+describe("actors reducer", () =>
+{
+  it("Returns default state when state is undefined and action is empty.", () =>
+  {
+    expect(
+      actors(
+        undefined,
+        {} as AddActorPayload
+      )
+    )
+    .toStrictEqual(
+      []
+    );
+  });
+
+  it.each([
+    [
+      [ {} as Actor ],
+      {} as Actor
+    ],
+    [
+      [ { id: "", name: "", initiative: 0, x: 0, y: 0 } ],
+      { id: "", name: "Actor 1", initiative: 1, x: 0, y: 0 }
+    ]
+  ])(
+    "Returns a list that includes the given actor when state is defined.",
+    (initialActorList, actor) =>
+    {
+      expect(
+        actors(
+          initialActorList,
+          {
+            type: "add actor",
+            actor
+          }
+        )
+      )
+      .toStrictEqual(
+        [
+          ...initialActorList,
+          actor
+        ]
+      )
+    }
+  );
+
+  it(
+    "Returns a list containing only the given actor when list is undefined",
+    () =>
+    {
+      expect(
+        actors(
+          undefined,
+          {
+            type: "add actor",
+            actor: {} as Actor
+          }
+        )
+      )
+      .toStrictEqual(
+        [
+          {}
+        ]
+      )
+    }
+  );
 });
