@@ -1,5 +1,5 @@
 import { Actor } from "~/core/Actor";
-import { addActor, setViewTransform } from "./tabletop";
+import { addActor, removeActor, setViewTransform } from "./tabletop";
 
 describe("Action setViewTransform", () =>
 {
@@ -52,5 +52,18 @@ describe("addActor", () =>
       x: 0,
       y: 0,
     });
+  });
+});
+
+describe("removeActor", () =>
+{
+  it("Returns a payload with 'type' of 'remove actor'.", () =>
+  {
+    expect(removeActor("1").type).toBe("remove actor");
+  });
+
+  it("Returns a payload whose id is the given id.", () =>
+  {
+    expect(removeActor("1").id).toBe("1");
   });
 });

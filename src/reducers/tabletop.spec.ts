@@ -123,4 +123,27 @@ describe("actors reducer", () =>
       )
     }
   );
+
+  it(
+    "Removes the actor with a matching id.",
+    () =>
+    {
+      expect(
+        actors(
+          [
+            {
+              id: "1",
+            } as Actor
+          ],
+          {
+            type: "remove actor",
+            id: "1"
+          }
+        )
+      )
+      .toStrictEqual(
+        []
+      );
+    }
+  )
 });

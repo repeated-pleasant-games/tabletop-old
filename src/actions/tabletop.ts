@@ -22,3 +22,13 @@ export const addActor = (actor: Actor): AddActorPayload =>
   type: "add actor",
   actor
 });
+
+export type RemoveActorPayload = {
+  type: "remove actor",
+  id: string
+};
+export const removeActor = (id: string): RemoveActorPayload =>
+({
+  type: "remove actor",
+  id
+});

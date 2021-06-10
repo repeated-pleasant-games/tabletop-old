@@ -1,4 +1,4 @@
-import { AddActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
+import { AddActorPayload, RemoveActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { Transform } from "~/core/Transform";
 
@@ -23,7 +23,7 @@ export const viewTransform = (
 
 export const actors = (
   state: Actor[] = [],
-  action: AddActorPayload
+  action: AddActorPayload | RemoveActorPayload
 ) =>
 {
   switch (action.type)
@@ -33,6 +33,9 @@ export const actors = (
         ...state,
         action.actor
       ];
+
+    case "remove actor":
+      return state.filter(({ id }) => id !== action.id);
 
     default:
       return state;
