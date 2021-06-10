@@ -17,10 +17,10 @@ type ControlPanelProps =
 export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
-    <div>
+    <section>
       <button onClick={addActor}>Add Actor</button>
-    </div>
-    <div>
+    </section>
+    <section>
       <ul>
         {
           actors &&
@@ -36,7 +36,7 @@ export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
           )
         }
       </ul>
-    </div>
+    </section>
   </div>
 );
 
