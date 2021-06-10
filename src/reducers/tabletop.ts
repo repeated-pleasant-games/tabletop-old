@@ -1,4 +1,4 @@
-import { AddActorPayload, RemoveActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
+import { AddActorPayload, RemoveActorPayload, SetSnapToGridPayload, SetViewTransformPayload } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { Transform } from "~/core/Transform";
 
@@ -40,4 +40,10 @@ export const actors = (
     default:
       return state;
   }
-}
+};
+
+export const snapToGrid = (
+	state: boolean = false,
+	action: SetSnapToGridPayload
+) =>
+	action.snapToGrid;

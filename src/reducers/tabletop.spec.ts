@@ -1,6 +1,6 @@
 import { AddActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
-import { actors, viewTransform } from "./tabletop";
+import { actors, snapToGrid, viewTransform } from "./tabletop";
 
 describe("viewTransform reducer", () =>
 {
@@ -146,4 +146,24 @@ describe("actors reducer", () =>
       );
     }
   )
+});
+
+describe("snapToGrid reducer", () =>
+{
+	it.each([
+		[ false ],
+		[ true ]
+	])("Sets snapToGrid to the given value.", (value) =>
+	{
+		expect(
+			snapToGrid(
+				undefined,
+				{
+					type: "set snap to grid",
+					snapToGrid: value
+				}
+			)
+		)
+		.toBe(value)
+	});
 });
