@@ -24,7 +24,11 @@ export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
       <ul>
         {
           actors &&
-          actors.map(
+          actors
+          .sort(
+            (a, b) => Math.sign(b.initiative - a.initiative)
+          )
+          .map(
             ({ id, name }) =>
             (
               <li key={id}>{name}</li>

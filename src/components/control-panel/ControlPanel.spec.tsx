@@ -68,4 +68,73 @@ describe("Connected ControlPanel", () =>
 
     expect(getByText("Actor 1")).toBeInTheDocument();
   });
+
+  it.each([
+    [
+      [
+        {
+          id: "1",
+          name: "Actor 1",
+          initiative: 2,
+          x: 0,
+          y: 0
+        },
+        {
+          id: "2",
+          name: "Actor 2",
+          initiative: 1,
+          x: 0,
+          y: 0
+        }
+      ],
+      [
+        "Actor 1",
+        "Actor 2"
+      ]
+    ],
+    [
+      [
+        {
+          id: "1",
+          name: "Actor 1",
+          initiative: 10,
+          x: 0,
+          y: 0
+        },
+        {
+          id: "2",
+          name: "Actor 2",
+          initiative: 15,
+          x: 0,
+          y: 0
+        }
+      ],
+      [
+        "Actor 2",
+        "Actor 1"
+      ]
+    ]
+  ])(
+    "Orders actors by their initiative from greatest to least.",
+    (testActors, expectedOrder) =>
+  {
+    const store = createStore(combineReducers({ actors }));
+
+    for (let actor of testActors)
+      store.dispatch(addActor(actor));
+
+    const { getAllByText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    const entries = getAllByText(/.*/i, { selector: "li" })
+
+    expect(entries.map(
+      (entry) => entry.textContent.trim()
+    )).toStrictEqual(
+      expectedOrder
+    );
+  });
 });
