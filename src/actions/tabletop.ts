@@ -32,3 +32,14 @@ export const removeActor = (id: string): RemoveActorPayload =>
   type: "remove actor",
   id
 });
+
+export type SetSnapToGridPayload =
+{
+	type: "set snap to grid",
+	snapToGrid: boolean,
+};
+export const setSnapToGrid = (snapToGrid: boolean): SetSnapToGridPayload =>
+({
+	type: "set snap to grid",
+	snapToGrid
+});

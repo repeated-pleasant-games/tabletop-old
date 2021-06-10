@@ -1,5 +1,5 @@
 import { Actor } from "~/core/Actor";
-import { addActor, removeActor, setViewTransform } from "./tabletop";
+import { addActor, removeActor, setSnapToGrid, setViewTransform } from "./tabletop";
 
 describe("Action setViewTransform", () =>
 {
@@ -66,4 +66,20 @@ describe("removeActor", () =>
   {
     expect(removeActor("1").id).toBe("1");
   });
+});
+
+describe("setSnapToGrid", () =>
+{
+	it("Returns a payload with 'type' of 'set snap to grid'.", () =>
+	{
+		expect(setSnapToGrid(false).type).toBe("set snap to grid");
+	});
+
+	it.each([
+		[ false ],
+		[ true ]
+	])("Returns a payload whose value is the given boolean.", (value) =>
+	{
+		expect(setSnapToGrid(value).snapToGrid).toBe(value);
+	});
 });
