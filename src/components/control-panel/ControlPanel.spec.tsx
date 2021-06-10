@@ -149,7 +149,7 @@ describe("Connected ControlPanel", () =>
       y: 0
     }));
 
-    const { getByText, getAllByText } = render(
+    const { getByText } = render(
       <Provider store={store}>
         <ControlPanel />
       </Provider>
