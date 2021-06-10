@@ -11,14 +11,35 @@ export const controlPanelTestId = "control-panel";
 type ControlPanelProps =
 {
   addActor?: () => void,
+  actors?: Actor[],
 };
 
-export const ControlPanel = ({ addActor }: ControlPanelProps): any =>
+export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
-    <button onClick={addActor}>Add Actor</button>
+    <div>
+      <button onClick={addActor}>Add Actor</button>
+    </div>
+    <div>
+      <ul>
+        {
+          actors &&
+          actors.map(
+            ({ id, name }) =>
+            (
+              <li key={id}>{name}</li>
+            )
+          )
+        }
+      </ul>
+    </div>
   </div>
 );
+
+const stateToProps = ({ actors }: { actors: Actor[] }) =>
+({
+  actors
+});
 
 const dispatchToProps = (dispatch: Dispatch) =>
 ({
@@ -33,4 +54,4 @@ const dispatchToProps = (dispatch: Dispatch) =>
   )),
 });
 
-export default connect(null, dispatchToProps)(ControlPanel);
+export default connect(stateToProps, dispatchToProps)(ControlPanel);

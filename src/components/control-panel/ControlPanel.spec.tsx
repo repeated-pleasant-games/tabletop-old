@@ -7,6 +7,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { actors } from "~/reducers/tabletop";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
+import { addActor } from "~/actions/tabletop";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -46,5 +47,25 @@ describe("Connected ControlPanel", () =>
     fireEvent.click(getByText("Add Actor"));
 
     expect(store.getState().actors.length).toBe(1);
+  });
+
+  it("Shows a list of actors when there is an actor in the store.", () =>
+  {
+    const store = createStore(combineReducers({ actors }));
+    store.dispatch(addActor({
+      id: "",
+      name: "Actor 1",
+      initiative: 0,
+      x: 0,
+      y: 0
+    }));
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect(getByText("Actor 1")).toBeInTheDocument();
   });
 });
