@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
 
-import { addActor } from "~/actions/tabletop";
+import { addActor, removeActor } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 
 export const controlPanelTestId = "control-panel";
@@ -11,10 +11,11 @@ export const controlPanelTestId = "control-panel";
 type ControlPanelProps =
 {
   addActor?: () => void,
+  removeActor?: (id: string) => void,
   actors?: Actor[],
 };
 
-export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
+export const ControlPanel = ({ addActor, removeActor, actors }: ControlPanelProps): any =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
@@ -31,7 +32,12 @@ export const ControlPanel = ({ addActor, actors }: ControlPanelProps): any =>
           .map(
             ({ id, name }) =>
             (
-              <li key={id}>{name}</li>
+              <li
+                key={id}
+                onClick={() => removeActor(id)}
+              >
+                {name}
+              </li>
             )
           )
         }
@@ -56,6 +62,7 @@ const dispatchToProps = (dispatch: Dispatch) =>
       y: 0,
     } as Actor
   )),
+  removeActor: (id: string) => dispatch(removeActor(id)),
 });
 
 export default connect(stateToProps, dispatchToProps)(ControlPanel);

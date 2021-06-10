@@ -137,4 +137,26 @@ describe("Connected ControlPanel", () =>
       expectedOrder
     );
   });
+
+  it("Removes the actor associated with the clicked initiative entry.", () =>
+  {
+    const store = createStore(combineReducers({ actors }));
+    store.dispatch(addActor({
+      id: "1",
+      name: "Actor 1",
+      initiative: 0,
+      x: 0,
+      y: 0
+    }));
+
+    const { getByText, getAllByText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    fireEvent.click(getByText("Actor 1"));
+
+    expect(() => getByText("Actor 1")).toThrow();
+  });
 });
