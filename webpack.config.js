@@ -53,14 +53,6 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                use: [
-                    "style-loader",
-                    "css-loader"
-                ]
-            },
-            {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"

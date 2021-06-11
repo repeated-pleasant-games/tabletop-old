@@ -3,7 +3,7 @@ import { Actor } from "./Actor"
 
 
 export default class TurnEntry {
-    public actorId: string
+    public actorId: number
 
     public constructor({ id }: Actor) {
         this.actorId = id
