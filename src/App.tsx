@@ -1,27 +1,22 @@
 import * as React from "react"
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 
 import Tabletop from "~/components/tabletop/Tabletop";
 import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
 
-import { viewTransform, actors, snapToGrid } from "./reducers/tabletop";
 import ControlPanel from "./components/control-panel/ControlPanel";
+import { connect } from "react-redux";
 
-export const App = () =>
+export const App = ({ theme }: { theme?: string }) =>
 (
-  <Provider
-    store={
-      createStore(combineReducers({
-        viewTransform,
-        actors,
-        snapToGrid,
-      }))
-    }
-  >
-    <main className="day" style={{ width: "100%", height: "100%" }}>
-      <ControlPanel />
-      <Tabletop grid={<RectangularGrid />} />
-    </main>
-  </Provider>
+  <main className={theme} style={{ width: "100%", height: "100%" }}>
+    <ControlPanel />
+    <Tabletop grid={<RectangularGrid />} />
+  </main>
 );
+
+const stateToProps = ({ theme }: { theme: string }) =>
+({
+  theme,
+});
+
+export default connect(stateToProps)(App);
