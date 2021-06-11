@@ -10,7 +10,15 @@ import ControlPanel from "./components/control-panel/ControlPanel";
 
 export const App = () =>
 (
-  <Provider store={createStore(combineReducers({ viewTransform, actors, snapToGrid }))}>
+  <Provider
+    store={
+      createStore(combineReducers({
+        viewTransform,
+        actors,
+        snapToGrid,
+      }))
+    }
+  >
     <ControlPanel />
     <Tabletop grid={<RectangularGrid />} />
   </Provider>
