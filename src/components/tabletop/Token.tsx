@@ -10,18 +10,22 @@ type TokenProps =
   y: number,
   cellSize: number,
   viewTransform?: Transform,
+  snapToGrid?: boolean,
 }
 
 export const Token = ({
   x: _x,
   y: _y,
   cellSize,
-  viewTransform
+  viewTransform,
+  snapToGrid,
 }: TokenProps) =>
 {
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
   const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
+
+  const snap = (value: number) => Math.floor(value / cellSize) * cellSize;
 
   return (
     <rect
@@ -65,20 +69,40 @@ export const Token = ({
 
       onPointerMove={
         ({ clientX, clientY }) =>
-          isDragging && setPosition(
-            apply(
-              inverseOf(viewTransform || identityTransform()),
-              [ clientX + dX, clientY + dY ]
-            )
-          )
+        {
+          if (isDragging)
+          {
+            const tokenX = clientX + dX;
+            const tokenY = clientY + dY;
+
+            const tokenPosition: [ number, number ] =
+              apply(
+                inverseOf(viewTransform || identityTransform()),
+                [ tokenX, tokenY ]
+              )
+
+            setPosition(
+              snapToGrid
+              ? tokenPosition.map(snap) as [ number, number ]
+              : tokenPosition
+            );
+          }
+        }
       }
     />
   );
 };
 
-const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
+const stateToProps = ({
+  viewTransform,
+  snapToGrid,
+}: {
+  viewTransform: Transform,
+  snapToGrid: boolean,
+}) =>
 ({
   viewTransform,
+  snapToGrid,
 });
 
 export default connect(stateToProps)(Token);

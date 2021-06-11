@@ -8,8 +8,8 @@ import "@testing-library/jest-dom/extend-expect";
 import "~/pointer-event";
 
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
-import { viewTransform } from "~/reducers/tabletop";
-import { setViewTransform } from "~/actions/tabletop";
+import { viewTransform, snapToGrid } from "~/reducers/tabletop";
+import { setSnapToGrid, setViewTransform } from "~/actions/tabletop";
 import { scale, translation } from "~/core/Transform";
 
 describe("Disconnected Token", () =>
@@ -303,4 +303,37 @@ describe("Connected Token", () =>
       expect(token).toHaveAttribute("y", expectedY.toString());
     }
   );
+
+  it("Snaps to grid when snapToGrid is true", () =>
+  {
+		const store = createStore(combineReducers({ snapToGrid }));
+		store.dispatch(setSnapToGrid(true));
+
+		const { getByTestId } = renderSVG(
+			<Provider store={store}>
+				<Token x={0} y={0} cellSize={16} />
+			</Provider>
+		);
+
+		const token = getByTestId(tokenTestId);
+
+		fireEvent.pointerDown(
+			token,
+			{
+				button: 0,
+				clientX: 0,
+				clientY: 0,
+			}
+		);
+		fireEvent.pointerMove(
+			token,
+			{
+				clientX: 18,
+				clientY: 20,
+			}
+		);
+
+		expect(token).toHaveAttribute("x", "16");
+		expect(token).toHaveAttribute("y", "16");
+  });
 });
