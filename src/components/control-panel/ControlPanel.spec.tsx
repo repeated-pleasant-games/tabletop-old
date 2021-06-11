@@ -235,4 +235,36 @@ describe("Connected ControlPanel", () =>
 
     expect((getByLabelText("Day") as HTMLInputElement).checked).toBe(true);
   });
+
+  it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
+  {
+    const store = createStore(combineReducers({ theme }));
+    store.dispatch(setTheme('dark'));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(true);
+  });
+
+  it.each([
+    [ 'day', [ true, false ] ],
+    [ 'dark', [ false, true ] ]
+  ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
+  {
+    const store = createStore(combineReducers({ theme }));
+    store.dispatch(setTheme(themeName));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect((getByLabelText("Day") as HTMLInputElement).checked).toBe(dayState);
+    expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
+  });
 });

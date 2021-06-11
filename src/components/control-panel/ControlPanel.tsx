@@ -76,6 +76,16 @@ export const ControlPanel = ({
         checked={theme === "day"}
       />
       <label id="set-theme-day-label">Day</label>
+
+      <input
+        type="radio"
+        name="set-theme"
+        id="set-theme-dark"
+        value="dark"
+        aria-labelledby="set-theme-dark-label"
+        checked={theme === "dark"}
+      />
+      <label id="set-theme-dark-label">Dark</label>
     </section>
   </div>
 );
