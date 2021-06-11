@@ -37,7 +37,10 @@ const mapAddActorDispatchToProps = (dispatch: any) => (
     {
         addActor: (id: number) =>
             dispatch(
-              addActor({} as Actor))
+              addActor(new Actor(
+                id,
+                `Actor ${id}`,
+                Math.floor(Math.random() * 20) + 1)))
     }
 )
 

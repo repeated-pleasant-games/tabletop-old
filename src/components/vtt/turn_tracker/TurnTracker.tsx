@@ -19,7 +19,7 @@ type TurnTrackerProps = {
     actors?: Actor[]
     turnOrder?: TurnEntry[]
     setVttTransform?: (scale: number, x: number, y: number) => void
-    setInitiative?: (id: string, initiative: number) => void
+    setInitiative?: (id: number, initiative: number) => void
 }
 
 
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch: any) => (
         setVttTransform: (scale: number, x: number, y: number) =>
             dispatch(setVttTransform(scale, x, y)),
 
-        setInitiative: (id: string, initiative: number) =>
+        setInitiative: (id: number, initiative: number) =>
             dispatch(setActorInitiative(id, initiative))
     }
 )

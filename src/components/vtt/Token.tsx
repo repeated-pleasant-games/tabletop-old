@@ -14,7 +14,7 @@ export type TokenProps = {
     
     // Handled by Token container
     snapToGrid?: boolean
-    dispatchMoveActor?: (id: string, x: number, y: number) => void
+    dispatchMoveActor?: (id: number, x: number, y: number) => void
 }
 
 
@@ -39,7 +39,7 @@ export class Token extends React.Component<TokenProps, TokenState> {
 
         const tokenRadius = this.props.cellDimension / 2
 
-        const actor = this.props.actor ?? { id: "", name: "", x: 0, y: 0 };
+        const actor = this.props.actor ?? { id: -1, name: "", x: 0, y: 0 };
 
         return <circle
                     id={`token-${actor.name.replace(" ", "_")}`}
@@ -135,7 +135,7 @@ const mapStateToProps = ({ gridSnap, vttTransform }: VttState) => (
 
 const mapDispatchToProps = (dispatch: any) => (
     {
-        dispatchMoveActor: (id: string, x: number, y: number) =>
+        dispatchMoveActor: (id: number, x: number, y: number) =>
             dispatch(moveActor(id, x, y))
     }
 )
