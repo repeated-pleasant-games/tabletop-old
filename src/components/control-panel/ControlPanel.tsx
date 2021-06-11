@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
+import { setTheme } from "~/actions/app";
 
 export const controlPanelTestId = "control-panel";
 
@@ -13,6 +14,7 @@ type ControlPanelProps =
   addActor?: () => void,
   removeActor?: (id: string) => void,
   setSnapToGrid?: (snapToGrid: boolean) => void,
+  setTheme?: (theme: string) => void,
   actors?: Actor[],
   snapToGrid?: boolean,
   theme?: string,
@@ -22,6 +24,7 @@ export const ControlPanel = ({
   addActor,
   removeActor,
   setSnapToGrid,
+  setTheme,
   actors,
   snapToGrid,
   theme,
@@ -73,7 +76,9 @@ export const ControlPanel = ({
         id="set-theme-day"
         value="day"
         aria-labelledby="set-theme-day-label"
+
         checked={theme === "day"}
+        onChange={({ target }) => target.checked && setTheme("day")}
       />
       <label id="set-theme-day-label">Day</label>
 
@@ -118,6 +123,7 @@ const dispatchToProps = (dispatch: Dispatch) =>
   )),
   removeActor: (id: string) => dispatch(removeActor(id)),
   setSnapToGrid: (snapToGrid: boolean) => dispatch(setSnapToGrid(snapToGrid)),
+  setTheme: (theme: string) => dispatch(setTheme(theme)),
 });
 
 export default connect(stateToProps, dispatchToProps)(ControlPanel);
