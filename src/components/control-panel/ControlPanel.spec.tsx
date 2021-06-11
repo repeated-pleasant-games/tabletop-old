@@ -175,4 +175,48 @@ describe("Connected ControlPanel", () =>
 
     expect(store.getState().snapToGrid).toBe(true);
   });
+
+  it("Unchecks 'Snap to Grid' when snapToGrid is false.", () =>
+  {
+    const store = createStore(combineReducers({ snapToGrid }));
+    store.dispatch(setSnapToGrid(false));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect(getByLabelText("Snap to Grid")).not.toHaveAttribute("checked");
+  });
+
+  it("Checks 'Snap to Grid' when snapToGrid is true.", () =>
+  {
+    const store = createStore(combineReducers({ snapToGrid }));
+    store.dispatch(setSnapToGrid(true));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect(getByLabelText("Snap to Grid")).toHaveAttribute("checked");
+  });
+
+  it("Disables snap-to-grid when 'Snap to Grid' is unchecked.", () =>
+  {
+    const store = createStore(combineReducers({ snapToGrid }));
+    store.dispatch(setSnapToGrid(true));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    fireEvent.click(getByLabelText("Snap to Grid"));
+
+    expect(store.getState().snapToGrid).toBe(false);
+  })
 });

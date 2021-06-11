@@ -14,13 +14,15 @@ type ControlPanelProps =
   removeActor?: (id: string) => void,
   setSnapToGrid?: (snapToGrid: boolean) => void,
   actors?: Actor[],
+  snapToGrid?: boolean,
 };
 
 export const ControlPanel = ({
   addActor,
   removeActor,
   setSnapToGrid,
-  actors
+  actors,
+  snapToGrid,
 }: ControlPanelProps) =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
@@ -51,25 +53,30 @@ export const ControlPanel = ({
     </section>
     <section>
       <input
-        onChange={
-          ({ target }) =>
-            setSnapToGrid(
-              target.value === "on"
-              ? true
-              : false
-            )
-        }
         type="checkbox"
         aria-labelledby="snap-to-grid-label"
+
+        checked={snapToGrid}
+
+        onChange={
+          ({ target }) => setSnapToGrid(target.checked)
+        }
       />
       <label id="snap-to-grid-label">Snap to Grid</label>
     </section>
   </div>
 );
 
-const stateToProps = ({ actors }: { actors: Actor[] }) =>
+const stateToProps = ({
+  actors,
+  snapToGrid
+}: {
+  actors: Actor[],
+  snapToGrid: boolean
+}) =>
 ({
-  actors
+  actors,
+  snapToGrid,
 });
 
 const dispatchToProps = (dispatch: Dispatch) =>
