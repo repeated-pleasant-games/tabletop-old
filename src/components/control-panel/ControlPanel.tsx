@@ -88,7 +88,9 @@ export const ControlPanel = ({
         id="set-theme-dark"
         value="dark"
         aria-labelledby="set-theme-dark-label"
+
         checked={theme === "dark"}
+        onChange={({ target }) => target.checked && setTheme("dark")}
       />
       <label id="set-theme-dark-label">Dark</label>
     </section>

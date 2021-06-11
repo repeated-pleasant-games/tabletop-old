@@ -284,4 +284,21 @@ describe("Connected ControlPanel", () =>
 
     expect(store.getState().theme).toBe("day");
   });
+
+  it("Sets theme to dark when dark theme is clicked.", () =>
+  {
+
+    const store = createStore(combineReducers({ theme }));
+    store.dispatch(setTheme("day"));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    fireEvent.click(getByLabelText("Dark"));
+
+    expect(store.getState().theme).toBe("dark");
+  });
 });
