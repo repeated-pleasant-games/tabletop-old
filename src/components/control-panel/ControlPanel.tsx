@@ -15,6 +15,7 @@ type ControlPanelProps =
   setSnapToGrid?: (snapToGrid: boolean) => void,
   actors?: Actor[],
   snapToGrid?: boolean,
+  theme?: string,
 };
 
 export const ControlPanel = ({
@@ -23,6 +24,7 @@ export const ControlPanel = ({
   setSnapToGrid,
   actors,
   snapToGrid,
+  theme,
 }: ControlPanelProps) =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
@@ -64,19 +66,33 @@ export const ControlPanel = ({
       />
       <label id="snap-to-grid-label">Snap to Grid</label>
     </section>
+    <section>
+      <input
+        type="radio"
+        name="set-theme"
+        id="set-theme-day"
+        value="day"
+        aria-labelledby="set-theme-day-label"
+        checked={theme === "day"}
+      />
+      <label id="set-theme-day-label">Day</label>
+    </section>
   </div>
 );
 
 const stateToProps = ({
   actors,
-  snapToGrid
+  snapToGrid,
+  theme,
 }: {
   actors: Actor[],
-  snapToGrid: boolean
+  snapToGrid: boolean,
+  theme: string,
 }) =>
 ({
   actors,
   snapToGrid,
+  theme,
 });
 
 const dispatchToProps = (dispatch: Dispatch) =>

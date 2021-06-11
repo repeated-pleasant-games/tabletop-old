@@ -6,8 +6,10 @@ import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { actors, snapToGrid } from "~/reducers/tabletop";
+import { theme } from "~/reducers/app";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
+import { setTheme } from "~/actions/app";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -218,5 +220,19 @@ describe("Connected ControlPanel", () =>
     fireEvent.click(getByLabelText("Snap to Grid"));
 
     expect(store.getState().snapToGrid).toBe(false);
-  })
+  });
+
+  it("Checks 'day' theme indicator when theme is set to 'day'.", () =>
+  {
+    const store = createStore(combineReducers({ theme }));
+    store.dispatch(setTheme('day'));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    expect((getByLabelText("Day") as HTMLInputElement).checked).toBe(true);
+  });
 });
