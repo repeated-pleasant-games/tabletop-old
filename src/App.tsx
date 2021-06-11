@@ -19,7 +19,9 @@ export const App = () =>
       }))
     }
   >
-    <ControlPanel />
-    <Tabletop grid={<RectangularGrid />} />
+    <div className="day" style={{ width: "100%", height: "100%" }}>
+      <ControlPanel />
+      <Tabletop grid={<RectangularGrid />} />
+    </div>
   </Provider>
 );

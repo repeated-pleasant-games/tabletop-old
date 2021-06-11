@@ -45,6 +45,10 @@ html {
   background: var(--color-bg);
 }
 
+html *:not(button) {
+  color: var(--color-fg)
+}
+
 #tabletop {
   position: absolute;
   width: 100vw;
