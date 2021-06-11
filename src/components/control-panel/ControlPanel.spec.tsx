@@ -270,7 +270,6 @@ describe("Connected ControlPanel", () =>
 
   it("Sets theme to day when day theme is clicked.", () =>
   {
-
     const store = createStore(combineReducers({ theme }));
     store.dispatch(setTheme("dark"));
 
@@ -287,7 +286,6 @@ describe("Connected ControlPanel", () =>
 
   it("Sets theme to dark when dark theme is clicked.", () =>
   {
-
     const store = createStore(combineReducers({ theme }));
     store.dispatch(setTheme("day"));
 
