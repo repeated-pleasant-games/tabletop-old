@@ -46,4 +46,13 @@ export const snapToGrid = (
 	state: boolean = false,
 	action: SetSnapToGridPayload
 ) =>
-	action.snapToGrid;
+{
+	switch (action.type)
+	{
+		case "set snap to grid":
+			return action.snapToGrid;
+
+		default:
+			return state;
+	}
+}

@@ -1,4 +1,4 @@
-import { AddActorPayload, SetViewTransformPayload } from "~/actions/tabletop";
+import { AddActorPayload, SetSnapToGridPayload, SetViewTransformPayload } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { actors, snapToGrid, viewTransform } from "./tabletop";
 
@@ -150,6 +150,17 @@ describe("actors reducer", () =>
 
 describe("snapToGrid reducer", () =>
 {
+	it("Returns false on initialization", () =>
+	{
+		expect(
+			snapToGrid(
+				undefined,
+				{} as SetSnapToGridPayload
+			)
+		)
+		.toBe(false);
+	});
+
 	it.each([
 		[ false ],
 		[ true ]
