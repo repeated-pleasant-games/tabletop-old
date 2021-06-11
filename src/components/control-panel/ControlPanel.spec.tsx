@@ -5,9 +5,9 @@ import { combineReducers, createStore } from "redux";
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { actors } from "~/reducers/tabletop";
+import { actors, snapToGrid } from "~/reducers/tabletop";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
-import { addActor } from "~/actions/tabletop";
+import { addActor, setSnapToGrid } from "~/actions/tabletop";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -158,5 +158,21 @@ describe("Connected ControlPanel", () =>
     fireEvent.click(getByText("Actor 1"));
 
     expect(() => getByText("Actor 1")).toThrow();
+  });
+
+  it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
+  {
+    const store = createStore(combineReducers({ snapToGrid }));
+    store.dispatch(setSnapToGrid(false));
+
+    const { getByLabelText } = render(
+      <Provider store={store}>
+        <ControlPanel />
+      </Provider>
+    );
+
+    fireEvent.click(getByLabelText("Snap to Grid"));
+
+    expect(store.getState().snapToGrid).toBe(true);
   });
 });

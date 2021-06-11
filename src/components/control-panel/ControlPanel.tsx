@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
 
-import { addActor, removeActor } from "~/actions/tabletop";
+import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 
 export const controlPanelTestId = "control-panel";
@@ -12,10 +12,16 @@ type ControlPanelProps =
 {
   addActor?: () => void,
   removeActor?: (id: string) => void,
+  setSnapToGrid?: (snapToGrid: boolean) => void,
   actors?: Actor[],
 };
 
-export const ControlPanel = ({ addActor, removeActor, actors }: ControlPanelProps): any =>
+export const ControlPanel = ({
+  addActor,
+  removeActor,
+  setSnapToGrid,
+  actors
+}: ControlPanelProps) =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
@@ -43,6 +49,21 @@ export const ControlPanel = ({ addActor, removeActor, actors }: ControlPanelProp
         }
       </ul>
     </section>
+    <section>
+      <input
+        onChange={
+          ({ target }) =>
+            setSnapToGrid(
+              target.value === "on"
+              ? true
+              : false
+            )
+        }
+        type="checkbox"
+        aria-labelledby="snap-to-grid-label"
+      />
+      <label id="snap-to-grid-label">Snap to Grid</label>
+    </section>
   </div>
 );
 
@@ -63,6 +84,7 @@ const dispatchToProps = (dispatch: Dispatch) =>
     } as Actor
   )),
   removeActor: (id: string) => dispatch(removeActor(id)),
+  setSnapToGrid: (snapToGrid: boolean) => dispatch(setSnapToGrid(snapToGrid)),
 });
 
 export default connect(stateToProps, dispatchToProps)(ControlPanel);
