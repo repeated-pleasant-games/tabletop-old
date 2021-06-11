@@ -5,8 +5,12 @@
     "name": "Joseph R Miles",
     "email": "joe@repeatedpleasant.games"
   },
-  "homepage": "https://github.com/repeated-pleasant-games/tabletop",
-  "license": "AGPL",
+  "homepage": "https://tabletop.repeatedpleasant.games",
+  "repository": {
+    "url": "git+https://github.com/repeated-pleasant-games/tabletop",
+    "type": "git"
+  },
+  "license": "AGPL-3.0-only",
   "description": "A virtual tabletop (VTT) for tabletop roleplaying games (TTRPG).",
   "keywords": [
     "vtt",
@@ -22,26 +26,34 @@
     "test": "jest --env=jsdom",
     "coverage": "jest --coverage",
     "build": "webpack",
-    "serve": "webpack-dev-server --open"
+    "develop": "webpack-dev-server --open"
   },
   "dependencies": {
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^25.2.3",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "@types/react-redux": "^7.1.11",
+    "@types/uuid": "^8.3.0",
     "css-loader": "^3.6.0",
+    "husky": "^4.3.6",
     "jest": "^25.5.4",
     "sass": "^1.29.0",
     "sass-loader": "^8.0.2",
+    "semantic-release": "^17.3.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.3.0",
     "ts-jest": "^25.5.1",
@@ -50,5 +62,294 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "commitlint": {
+    "parserPreset": "./commitlint-parser-config",
+    "rules": {
+      "body-max-line-length": [
+        1,
+        "always",
+        75
+      ],
+      "footer-max-line-length": [
+        1,
+        "always",
+        75
+      ],
+      "header-max-length": [
+        1,
+        "always",
+        75
+      ],
+      "subject-min-length": [
+        2,
+        "always",
+        1
+      ],
+      "subject-case": [
+        1,
+        "always",
+        "sentence-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          ":arrow_down:",
+          ":arrow_up:",
+          ":art:",
+          ":boom:",
+          ":bug:",
+          ":bulb:",
+          ":construction_worker:",
+          ":fire:",
+          ":green_heart:",
+          ":hammer:",
+          ":heavy_minus_sign:",
+          ":heavy_plus_sign:",
+          ":label:",
+          ":lipstick:",
+          ":memo:",
+          ":pencil2:",
+          ":recycle:",
+          ":rewind:",
+          ":sparkles:",
+          ":sunrise_over_mountains:",
+          ":tada:",
+          ":twisted_rightwards_arrows:",
+          ":white_check_mark:",
+          ":wrench:",
+          ":zap:"
+        ]
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm test"
+    }
+  },
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      },
+      {
+        "name": "alpha",
+        "channel": "alpha",
+        "prerelease": "alpha"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "parserOpts": {
+            "headerPattern": "^(:\\w+:)?\\s(.*)$",
+            "headerCorrespondence": [
+              "type",
+              "subject"
+            ],
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
+              "type": ":arrow_down:",
+              "release": false
+            },
+            {
+              "type": ":arrow_up:",
+              "release": false
+            },
+            {
+              "type": ":art:",
+              "release": false
+            },
+            {
+              "type": ":boom:",
+              "release": "major"
+            },
+            {
+              "type": ":bug:",
+              "release": "patch"
+            },
+            {
+              "type": ":bulb:",
+              "release": false
+            },
+            {
+              "type": ":construction_worker:",
+              "release": false
+            },
+            {
+              "type": ":fire:",
+              "release": "patch"
+            },
+            {
+              "type": ":green_heart:",
+              "release": false
+            },
+            {
+              "type": ":hammer:",
+              "release": false
+            },
+            {
+              "type": ":heavy_minus_sign:",
+              "release": false
+            },
+            {
+              "type": ":heavy_plus_sign:",
+              "release": false
+            },
+            {
+              "type": ":label:",
+              "release": "patch"
+            },
+            {
+              "type": ":lipstick:",
+              "release": false
+            },
+            {
+              "type": ":memo:",
+              "release": false
+            },
+            {
+              "type": ":pencil2:",
+              "release": false
+            },
+            {
+              "type": ":recycle:",
+              "release": false
+            },
+            {
+              "type": ":rewind:",
+              "release": false
+            },
+            {
+              "type": ":sparkles:",
+              "release": "minor"
+            },
+            {
+              "type": ":sunrise_over_mountains:",
+              "release": false
+            },
+            {
+              "type": ":tada:",
+              "release": false
+            },
+            {
+              "type": ":twisted_rightwards_arrows:",
+              "release": false
+            },
+            {
+              "type": ":white_check_mark:",
+              "release": false
+            },
+            {
+              "type": ":wrench:",
+              "release": false
+            },
+            {
+              "type": ":zap:",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "parserOpts": {
+            "headerPattern": "^(:\\w+:)?\\s(.*)$",
+            "headerCorrespondence": [
+              "type",
+              "subject"
+            ],
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "date": "mediumDate",
+            "groupBy": "type",
+            "commitsSort": [
+              "subject",
+              "type"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [],
+          "successComments": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue' is resolved in ${nextRelease.version}!",
+          "failTitle": ":crossed_swords: To arms! The automated release calls for aid!",
+          "failComment": "The release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
+          "labels": [
+            "release"
+          ],
+          "assignees": [
+            "joebobmiles"
+          ],
+          "releasedLabels": [
+            "${nextRelease.version}${brance.preRelease ? '-${branch.preRelease}' : ''}"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "message": ":sunrise_over_mountains: Behold! ${nextRelease.version}! [skip ci]\n\n${nextRelease.notes}",
+          "assets": [
+            "package.json",
+            "package-lock.json",
+            "docs/CHANGELOG.md"
+          ]
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": ".*\\.(test|spec)\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^~(.*)$": "<rootDir>/src$1"
+    }
   }
 }

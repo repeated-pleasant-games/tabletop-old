@@ -1,18 +1,26 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
+import { combineReducers, createStore } from "redux"
 
-import vttReducer from "./reducers/vtt"
+import App from "./App"
+import { viewTransform, actors, snapToGrid } from "./reducers/tabletop"
+import { theme } from "./reducers/app";
 
-import { App } from "./App"
-
-import "./styles/style.sass"
-
+import "./styles/style.css"
 
 ReactDOM.render(
-    <Provider store={createStore(vttReducer)}>
-        <App />
-    </Provider>,
-    document.getElementById("app")
+  <Provider
+    store={
+      createStore(combineReducers({
+        viewTransform,
+        actors,
+        snapToGrid,
+        theme,
+      }))
+    }
+  >
+    <App />
+  </Provider>,
+  document.getElementById("app")
 )
