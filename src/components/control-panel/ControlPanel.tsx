@@ -7,6 +7,7 @@ import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { setTheme } from "~/actions/app";
 import { Button } from "../util/Button";
+import { Checkbox } from "../util/Checkbox";
 
 export const controlPanelTestId = "control-panel";
 
@@ -58,17 +59,13 @@ export const ControlPanel = ({
       </ul>
     </section>
     <section>
-      <input
-        type="checkbox"
-        aria-labelledby="snap-to-grid-label"
-
+      <Checkbox
         checked={snapToGrid}
-
-        onChange={
-          ({ target }) => setSnapToGrid(target.checked)
-        }
-      />
-      <label id="snap-to-grid-label">Snap to Grid</label>
+        onChecked={() => setSnapToGrid(true)}
+        onUnchecked={() => setSnapToGrid(false)}
+      >
+        Snap to Grid
+      </Checkbox>
     </section>
     <section>
       <input
