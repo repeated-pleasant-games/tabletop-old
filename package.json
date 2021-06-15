@@ -317,7 +317,7 @@
             "joebobmiles"
           ],
           "releasedLabels": [
-            "${nextRelease.version}${branch.preRelease ? '-${branch.preRelease}' : ''}"
+            "${nextRelease.version}${branch.preRelease ? `-${branch.preRelease}` : ''}"
           ]
         }
       ],
