@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Release
-        use: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v2
         id: release
         with:
           semantic_version: 17
