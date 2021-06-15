@@ -26,6 +26,18 @@ jobs:
         run: npm ci
 
       - name: Release
-        run: npx semantic-release
+        use: cycjimmy/semantic-release-action@v2
+        id: release
+        with:
+          semantic_version: 17
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Announce to Discord
+        if: steps.release.outputs.new_release_published == 'true'
+        run: |
+          curl \
+            -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{ "content": "@everyone, ${{ steps.release.outputs.new_release_version }} is now available!" }' \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
