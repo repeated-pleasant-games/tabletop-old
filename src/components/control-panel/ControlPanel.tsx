@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { setTheme } from "~/actions/app";
+import { Button } from "../util/Button";
 
 export const controlPanelTestId = "control-panel";
 
@@ -32,7 +33,7 @@ export const ControlPanel = ({
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
-      <button onClick={addActor}>Add Actor</button>
+      <Button onClick={addActor}>Add Actor</Button>
     </section>
     <section>
       <ul>
