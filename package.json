@@ -268,10 +268,6 @@
             {
               "type": ":zap:",
               "release": "patch"
-            },
-            {
-              "type": ":pencil_2:",
-              "release": false
             }
           ]
         }
@@ -321,7 +317,7 @@
             "joebobmiles"
           ],
           "releasedLabels": [
-            "${nextRelease.version}${brance.preRelease ? '-${branch.preRelease}' : ''}"
+            "${nextRelease.version}${branch.preRelease ? '-${branch.preRelease}' : ''}"
           ]
         }
       ],
