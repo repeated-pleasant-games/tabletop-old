@@ -26,6 +26,8 @@ jobs:
         run: npm ci
 
       - name: Release
-        run: npx semantic-release
+        use: cycjimmy/semantic-release-action@v2
+        with:
+          semantic_version: 17
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
