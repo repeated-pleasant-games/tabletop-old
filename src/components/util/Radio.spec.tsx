@@ -9,7 +9,7 @@ describe("Radio", () =>
   {
     const { getByLabelText } = render(
       <Radio name="fish">
-        <Radio.Option>Red fish</Radio.Option>
+        <Radio.Option value="red">Red fish</Radio.Option>
       </Radio>
     );
 
@@ -21,10 +21,21 @@ describe("Radio", () =>
   {
     const { getByLabelText } = render(
       <Radio name="fish">
-        <Radio.Option>Red fish</Radio.Option>
+        <Radio.Option value="red">Red fish</Radio.Option>
       </Radio>
     );
 
     expect((getByLabelText("Red fish") as HTMLInputElement).name).toBe("fish");
+  });
+
+  it("Gives a Radio.Option the specified value.", () =>
+  {
+    const { getByLabelText } = render(
+      <Radio name="fish">
+        <Radio.Option value="red">Red fish</Radio.Option>
+      </Radio>
+    );
+
+    expect((getByLabelText("Red fish") as HTMLInputElement).value).toBe("red");
   });
 });

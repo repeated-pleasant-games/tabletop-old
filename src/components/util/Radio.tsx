@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 
 type TRadio = React.FunctionComponent<RadioProps> &
 {
-  Option?: React.FunctionComponent
+  Option?: React.FunctionComponent<OptionProps>
 };
 
 type RadioProps = React.HTMLAttributes<{}> &
@@ -22,7 +22,12 @@ export const Radio: TRadio = ({ children, name }: RadioProps) =>
   </RadioContext.Provider>
 );
 
-Radio.Option = ({ children }: React.HTMLAttributes<{}>) => 
+type OptionProps = React.HTMLAttributes<{}> &
+{
+  value: any,
+};
+
+Radio.Option = ({ children, value }: OptionProps) => 
 {
   const labelId = uuid();
 
@@ -30,7 +35,7 @@ Radio.Option = ({ children }: React.HTMLAttributes<{}>) =>
 
   return (
     <>
-      <input type="radio" aria-labelledby={labelId} name={name} />
+      <input type="radio" aria-labelledby={labelId} name={name} value={value} />
       <label id={labelId}>{children}</label>
     </>
   );
