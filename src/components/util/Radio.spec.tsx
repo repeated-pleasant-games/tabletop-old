@@ -154,7 +154,7 @@ describe("Radio", () =>
     fireEvent.click(getByLabelText("Blue fish"));
 
     expect((getByLabelText("Blue fish") as HTMLInputElement).checked).toBe(true);
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledWith("blue");
   });
 });
