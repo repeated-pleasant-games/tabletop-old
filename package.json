@@ -23,7 +23,7 @@
     "tabletop-rpg"
   ],
   "scripts": {
-    "test": "jest --env=jsdom",
+    "test": "jest",
     "coverage": "jest --coverage",
     "build": "webpack",
     "develop": "webpack-dev-server --open"
@@ -343,7 +343,6 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testEnvironment": "node",
     "testRegex": ".*\\.(test|spec)\\.tsx?$",
     "moduleFileExtensions": [
       "ts",
