@@ -6,6 +6,9 @@ import { v4 as uuid } from "uuid";
 import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 import { setTheme } from "~/actions/app";
+import { Button } from "../util/Button";
+import { Checkbox } from "../util/Checkbox";
+import { Radio } from "../util/Radio";
 
 export const controlPanelTestId = "control-panel";
 
@@ -32,7 +35,7 @@ export const ControlPanel = ({
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
-      <button onClick={addActor}>Add Actor</button>
+      <Button onClick={addActor}>Add Actor</Button>
     </section>
     <section>
       <ul>
@@ -57,42 +60,19 @@ export const ControlPanel = ({
       </ul>
     </section>
     <section>
-      <input
-        type="checkbox"
-        aria-labelledby="snap-to-grid-label"
-
+      <Checkbox
         checked={snapToGrid}
-
-        onChange={
-          ({ target }) => setSnapToGrid(target.checked)
-        }
-      />
-      <label id="snap-to-grid-label">Snap to Grid</label>
+        onChecked={() => setSnapToGrid(true)}
+        onUnchecked={() => setSnapToGrid(false)}
+      >
+        Snap to Grid
+      </Checkbox>
     </section>
     <section>
-      <input
-        type="radio"
-        name="set-theme"
-        id="set-theme-day"
-        value="day"
-        aria-labelledby="set-theme-day-label"
-
-        checked={theme === "day"}
-        onChange={({ target }) => target.checked && setTheme("day")}
-      />
-      <label id="set-theme-day-label">Day</label>
-
-      <input
-        type="radio"
-        name="set-theme"
-        id="set-theme-dark"
-        value="dark"
-        aria-labelledby="set-theme-dark-label"
-
-        checked={theme === "dark"}
-        onChange={({ target }) => target.checked && setTheme("dark")}
-      />
-      <label id="set-theme-dark-label">Dark</label>
+      <Radio name="set-theme" onChange={setTheme}>
+        <Radio.Option value="day" checked={theme === "day"}>Day</Radio.Option>
+        <Radio.Option value="dark" checked={theme === "dark"}>Dark</Radio.Option>
+      </Radio>
     </section>
   </div>
 );
