@@ -12,12 +12,17 @@ type RadioProps = React.HTMLAttributes<{}> &
 };
 
 const RadioContext = React.createContext({
-  name: ""
+  name: "",
+  onChange: (value: any) => null,
 });
 
-export const Radio: TRadio = ({ children, name }: RadioProps) =>
+export const Radio: TRadio = ({
+  children,
+  name,
+  onChange = (value: any) => null
+}: RadioProps) =>
 (
-  <RadioContext.Provider value={{ name }}>
+  <RadioContext.Provider value={{ name, onChange }}>
     {children}
   </RadioContext.Provider>
 );
@@ -31,11 +36,19 @@ Radio.Option = ({ children, value }: OptionProps) =>
 {
   const labelId = uuid();
 
-  const { name } = React.useContext(RadioContext);
+  const { name, onChange } = React.useContext(RadioContext);
 
   return (
     <>
-      <input type="radio" aria-labelledby={labelId} name={name} value={value} />
+      <input
+        type="radio"
+        name={name}
+
+        aria-labelledby={labelId}
+
+        value={value}
+        onChange={() => onChange(value)}
+      />
       <label id={labelId}>{children}</label>
     </>
   );

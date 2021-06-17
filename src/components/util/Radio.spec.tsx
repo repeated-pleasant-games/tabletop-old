@@ -55,4 +55,48 @@ describe("Radio", () =>
 
     expect(redFish.checked).toBe(true);
   });
+
+  it("Calls onChange when an Option is clicked.", () =>
+  {
+    const onChange = jest.fn();
+
+    const { getByLabelText } = render(
+      <Radio name="fish" onChange={onChange}>
+        <Radio.Option value="red">Red fish</Radio.Option>
+      </Radio>
+    );
+
+    fireEvent.click(getByLabelText("Red fish"));
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledWith("red");
+  });
+
+  it("Changes between Radio.Options when they are checked.", () =>
+  {
+    const { getByLabelText } = render(
+      <Radio name="fish">
+        <Radio.Option value="red">Red fish</Radio.Option>
+        <Radio.Option value="blue">Blue fish</Radio.Option>
+      </Radio>
+    );
+
+    const redFish = getByLabelText("Red fish") as HTMLInputElement;
+    const blueFish = getByLabelText("Blue fish") as HTMLInputElement;
+
+    expect(redFish.checked).toBe(false);
+    expect(blueFish.checked).toBe(false);
+
+    fireEvent.click(redFish);
+    expect(redFish.checked).toBe(true);
+    expect(blueFish.checked).toBe(false);
+
+    fireEvent.click(blueFish);
+    expect(redFish.checked).toBe(false);
+    expect(blueFish.checked).toBe(true);
+
+    fireEvent.click(redFish);
+    expect(redFish.checked).toBe(true);
+    expect(blueFish.checked).toBe(false);
+  });
 });
