@@ -139,4 +139,22 @@ describe("Radio", () =>
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledWith("blue");
   });
+
+  it("Can switch between options after one has been checked.", () =>
+  {
+    const onChange = jest.fn();
+
+    const { getByLabelText } = render(
+      <Radio name="fish" onChange={onChange}>
+        <Radio.Option value="red" checked>Red fish</Radio.Option>
+        <Radio.Option value="blue">Blue fish</Radio.Option>
+      </Radio>
+    );
+
+    fireEvent.click(getByLabelText("Blue fish"));
+
+    expect((getByLabelText("Blue fish") as HTMLInputElement).checked).toBe(true);
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledWith("blue");
+  });
 });
