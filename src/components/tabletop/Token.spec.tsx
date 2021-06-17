@@ -118,8 +118,8 @@ describe("Disconnected Token", () =>
 
   beforeEach(() =>
   {
-    global.Element.prototype.setPointerCapture = () => null;
-    global.Element.prototype.releasePointerCapture = () => null;
+    global.Element.prototype.setPointerCapture = (): any => null;
+    global.Element.prototype.releasePointerCapture = (): any => null;
   });
 
   it("Captures pointer on pointer down.", () =>
