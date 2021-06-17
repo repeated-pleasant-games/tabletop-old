@@ -6,9 +6,12 @@ type TRadio = React.FunctionComponent<RadioProps> &
   Option?: React.FunctionComponent<OptionProps>
 };
 
-type RadioProps = React.HTMLAttributes<{}> &
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+type RadioProps = Omit<React.HTMLAttributes<{}>, "onChange"> &
 {
   name: string,
+  onChange?: (value: any) => void
 };
 
 const RadioContext = React.createContext({

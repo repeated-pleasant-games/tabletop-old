@@ -8,6 +8,7 @@ import { Actor } from "~/core/Actor";
 import { setTheme } from "~/actions/app";
 import { Button } from "../util/Button";
 import { Checkbox } from "../util/Checkbox";
+import { Radio } from "../util/Radio";
 
 export const controlPanelTestId = "control-panel";
 
@@ -68,29 +69,10 @@ export const ControlPanel = ({
       </Checkbox>
     </section>
     <section>
-      <input
-        type="radio"
-        name="set-theme"
-        id="set-theme-day"
-        value="day"
-        aria-labelledby="set-theme-day-label"
-
-        checked={theme === "day"}
-        onChange={({ target }) => target.checked && setTheme("day")}
-      />
-      <label id="set-theme-day-label">Day</label>
-
-      <input
-        type="radio"
-        name="set-theme"
-        id="set-theme-dark"
-        value="dark"
-        aria-labelledby="set-theme-dark-label"
-
-        checked={theme === "dark"}
-        onChange={({ target }) => target.checked && setTheme("dark")}
-      />
-      <label id="set-theme-dark-label">Dark</label>
+      <Radio name="set-theme" onChange={setTheme}>
+        <Radio.Option value="day" checked>Day</Radio.Option>
+        <Radio.Option value="dark">Dark</Radio.Option>
+      </Radio>
     </section>
   </div>
 );
