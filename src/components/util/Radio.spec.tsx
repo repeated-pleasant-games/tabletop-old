@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 
 import { Radio } from "./Radio";
 
@@ -37,5 +37,22 @@ describe("Radio", () =>
     );
 
     expect((getByLabelText("Red fish") as HTMLInputElement).value).toBe("red");
+  });
+
+  it("Changes Radio.Option checked state when it is clicked.", () =>
+  {
+    const { getByLabelText } = render(
+      <Radio name="fish">
+        <Radio.Option value="red">Red fish</Radio.Option>
+      </Radio>
+    );
+
+    const redFish = getByLabelText("Red fish") as HTMLInputElement;
+
+    expect(redFish.checked).toBe(false);
+
+    fireEvent.click(redFish);
+
+    expect(redFish.checked).toBe(true);
   });
 });
