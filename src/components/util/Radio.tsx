@@ -1,4 +1,4 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import { v4 as uuid } from "uuid";
 
 type TRadio = React.FunctionComponent<RadioProps> &
@@ -27,16 +27,24 @@ export const Radio: TRadio = ({
   </RadioContext.Provider>
 );
 
-type OptionProps = React.HTMLAttributes<{}> &
+type OptionProps = React.InputHTMLAttributes<{}> &
 {
   value: any,
 };
 
-Radio.Option = ({ children, value }: OptionProps) => 
+Radio.Option = ({ children, value, checked }: OptionProps) => 
 {
   const labelId = uuid();
 
   const { name, onChange } = React.useContext(RadioContext);
+
+  React.useEffect(
+    () =>
+    {
+      if (checked) onChange(value);
+    },
+    [ checked ]
+  );
 
   return (
     <>
@@ -48,6 +56,8 @@ Radio.Option = ({ children, value }: OptionProps) =>
 
         value={value}
         onChange={() => onChange(value)}
+
+        checked={checked}
       />
       <label id={labelId}>{children}</label>
     </>

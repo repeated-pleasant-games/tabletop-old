@@ -99,4 +99,15 @@ describe("Radio", () =>
     expect(redFish.checked).toBe(true);
     expect(blueFish.checked).toBe(false);
   });
+
+  it("Sets a Option as checked when given a checked prop.", () =>
+  {
+    const { getByLabelText } = render(
+      <Radio name="fish">
+        <Radio.Option value="red" checked>Red fish</Radio.Option>
+      </Radio>
+    );
+
+    expect((getByLabelText("Red fish") as HTMLInputElement).checked).toBe(true);
+  });
 });
