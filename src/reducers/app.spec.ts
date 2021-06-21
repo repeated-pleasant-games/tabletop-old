@@ -3,7 +3,7 @@ import { theme } from "./app";
 
 describe("theme reducer", () =>
 {
-  it("Initializes with theme 'day'.", () =>
+  it("Initializes with theme 'light'.", () =>
   {
     expect(
       theme(
@@ -11,13 +11,13 @@ describe("theme reducer", () =>
         {} as SetThemePayload
       )
     )
-    .toBe("day");
+    .toBe("light");
   });
 
   it.each([
     [
       undefined,
-      "day"
+      "light"
     ],
     [
       undefined,

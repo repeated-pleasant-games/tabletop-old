@@ -225,7 +225,7 @@ describe("Connected ControlPanel", () =>
   it("Checks 'day' theme indicator when theme is set to 'day'.", () =>
   {
     const store = createStore(combineReducers({ theme }));
-    store.dispatch(setTheme('day'));
+    store.dispatch(setTheme('light'));
 
     const { getByLabelText } = render(
       <Provider store={store}>
@@ -233,7 +233,7 @@ describe("Connected ControlPanel", () =>
       </Provider>
     );
 
-    expect((getByLabelText("Day") as HTMLInputElement).checked).toBe(true);
+    expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(true);
   });
 
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
@@ -251,7 +251,7 @@ describe("Connected ControlPanel", () =>
   });
 
   it.each([
-    [ 'day', [ true, false ] ],
+    [ 'light', [ true, false ] ],
     [ 'dark', [ false, true ] ]
   ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
   {
@@ -264,7 +264,7 @@ describe("Connected ControlPanel", () =>
       </Provider>
     );
 
-    expect((getByLabelText("Day") as HTMLInputElement).checked).toBe(dayState);
+    expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(dayState);
     expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
   });
 
@@ -279,9 +279,9 @@ describe("Connected ControlPanel", () =>
       </Provider>
     );
 
-    fireEvent.click(getByLabelText("Day"));
+    fireEvent.click(getByLabelText("Light"));
 
-    expect(store.getState().theme).toBe("day");
+    expect(store.getState().theme).toBe("light");
   });
 
   it("Sets theme to dark when dark theme is clicked.", () =>

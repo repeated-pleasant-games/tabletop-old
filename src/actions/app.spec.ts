@@ -5,13 +5,13 @@ describe("setTheme", () =>
   it("Returns a payload with type 'set theme'.", () =>
   {
     expect(
-      setTheme("day").type
+      setTheme("light").type
     )
     .toBe("set theme");
   });
 
   it.each([
-    [ "day" ],
+    [ "light" ],
     [ "dark" ],
     [ "brazilian "]
   ])("Returns a payload with theme equal to the given theme.", (theme) =>
