@@ -1,4 +1,4 @@
-.day, .day-scheme {
+:root {
   --color-fg: black;
   --color-bg: white;
 
@@ -6,31 +6,13 @@
   --color-grid-bg: var(--color-bg);
 }
 
-.dark, .dark-scheme {
-  --color-fg: white;
-  --color-bg: black;
-
-  --color-grid-fg: #aaa;
-  --color-grid-bg: #777;
-}
-
-@media (prefers-color-scheme: light) {
-  .dark {
-    --color-fg: black;
-    --color-bg: white;
-
-    --color-grid-fg: #ccc;
-    --color-grid-bg: var(--color-bg);
-  }
-}
-
 @media (prefers-color-scheme: dark) {
-  .day {
+  :root {
     --color-fg: white;
     --color-bg: black;
 
-    --color-grid-fg: #666;
-    --color-grid-bg: #444;
+    --color-grid-fg: white;
+    --color-grid-bg: black;
   }
 }
 

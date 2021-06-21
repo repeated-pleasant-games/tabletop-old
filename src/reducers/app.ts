@@ -1,6 +1,10 @@
 import { SetThemePayload } from "~/actions/app";
 
-export const theme = (theme: string = "light", action: SetThemePayload) =>
+const initialTheme =
+  window.document.documentElement.style.getPropertyValue("--initial-theme")
+  || "light";
+
+export const theme = (theme: string = initialTheme, action: SetThemePayload) =>
 {
   switch (action.type)
   {
