@@ -4,7 +4,7 @@ describe.each([
   { name: chromium.name(), driver: chromium },
   { name: firefox.name(), driver: firefox },
   { name: webkit.name(), driver: webkit },
-])("Theme selection ($name)", ({ name: browserName, driver }) =>
+])("Theme selection ($name)", ({ driver }) =>
 {
   let browser: Browser;
   let page: Page;
