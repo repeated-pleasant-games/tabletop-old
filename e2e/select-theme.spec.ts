@@ -1,4 +1,5 @@
 import { firefox, chromium, webkit, Browser, Page } from "playwright";
+import { theme } from "~/reducers/app";
 
 describe.each([
   { name: chromium.name(), driver: chromium },
@@ -7,7 +8,6 @@ describe.each([
 ])("Theme selection ($name)", ({ driver }) =>
 {
   let browser: Browser;
-  let page: Page;
 
   beforeAll(async () =>
   {
@@ -19,28 +19,92 @@ describe.each([
     await browser.close();
   });
 
-  afterEach(async () =>
-  {
-    if (page && !page.isClosed())
-      await page.close()
-  });
-
-  it.each([
-    [ "Light", "light" ],
-    [ "Dark", "dark" ],
-    [ "Light", "no-preference" ]
+  describe.each([
+    { preferredTheme: "light", option: "Light", },
+    { preferredTheme: "dark", option: "Dark", },
+    { preferredTheme: "no-preference", option: "Light", },
   ])(
-    "Checks '%s' when browser prefers %s colorscheme.",
-    async (optionName, colorScheme: "light" | "dark" | "no-preference") =>
+    "When user opens page with no cache and theme preference of '$preferredTheme'.",
+    (
+      {
+        preferredTheme,
+        option,
+      }: {
+        preferredTheme: "light" | "dark" | "no-preference",
+        option: string,
+      }
+    ) =>
     {
-      page = await browser.newPage({ colorScheme });
+      let page: Page;
 
-      await page.goto("http://localhost");
-      const element = await page.waitForSelector(
-        `input[type=radio]:left-of(:text("${optionName}"))`
+      beforeEach(async () =>
+      {
+        page = await browser.newPage({ colorScheme: preferredTheme });
+        await page.goto("http://localhost");
+      });
+
+      afterEach(async () =>
+      {
+        await page.close()
+      });
+
+      it(
+        `Checks option '${option}'.`,
+        async () =>
+        {
+          const element = await page.waitForSelector(
+            `input[type=radio]:left-of(:text("${option}"))`
+          );
+
+          expect(await element.isChecked()).toBe(true);
+        }
       );
+    }
+  );
 
-      expect(await element.isChecked()).toBe(true);
+  describe.each([
+    { from: "light", to: "dark", option: "Dark"},
+    { from: "dark", to: "light", option: "Light"},
+  ])(
+    "When user selects a theme different from their preferred theme.",
+    (
+      {
+        from,
+        to,
+        option,
+      }: {
+        from: "light" | "dark" | "no-preference",
+        to: "light" | "dark" | "no-preference",
+        option: string,
+      }
+    ) =>
+    {
+      let page: Page;
+
+      beforeEach(async () =>
+      {
+        page = await browser.newPage({ colorScheme: from });
+        await page.goto("http://localhost");
+      });
+
+      afterEach(async () =>
+      {
+        await page.close();
+      });
+
+      it(
+        `Switches theme from '${from}' to '${to}' when '${option}' is checked.`,
+        async () =>
+        {
+          const element = await page.waitForSelector(
+            `input[type=radio]:left-of(:text("${option}"))`
+          );
+
+          await element.click();
+
+          expect(await element.isChecked()).toBe(true);
+        }
+      );
     }
   );
 });
