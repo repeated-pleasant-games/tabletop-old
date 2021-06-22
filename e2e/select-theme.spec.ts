@@ -100,6 +100,8 @@ describe.each([
             `input[type=radio]:left-of(:text("${option}"))`
           );
 
+          expect(await element.isChecked()).toBe(false);
+
           await element.click();
 
           expect(await element.isChecked()).toBe(true);
