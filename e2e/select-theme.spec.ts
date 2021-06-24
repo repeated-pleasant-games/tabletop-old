@@ -45,7 +45,7 @@ describe.each([
 
       afterEach(async () =>
       {
-        await page.close()
+        await page.close();
       });
 
       it(
@@ -62,28 +62,15 @@ describe.each([
     }
   );
 
-  describe.each([
-    { from: "light", to: "dark", option: "Dark"},
-    { from: "dark", to: "light", option: "Light"},
-  ])(
-    "When user selects a theme different from their preferred theme.",
-    (
-      {
-        from,
-        to,
-        option,
-      }: {
-        from: "light" | "dark" | "no-preference",
-        to: "light" | "dark" | "no-preference",
-        option: string,
-      }
-    ) =>
+  describe(
+    "When a user selects a theme and refreshes the page.",
+    () =>
     {
       let page: Page;
 
       beforeEach(async () =>
       {
-        page = await browser.newPage({ colorScheme: from });
+        page = await browser.newPage({ colorScheme: "light" });
         await page.goto("http://localhost");
       });
 
@@ -92,21 +79,24 @@ describe.each([
         await page.close();
       });
 
-      it(
-        `Switches theme from '${from}' to '${to}' when '${option}' is checked.`,
-        async () =>
-        {
-          const element = await page.waitForSelector(
-            `input[type=radio]:left-of(:text("${option}"))`
-          );
+      it("Selects that theme regardless of browser preference.", async () =>
+      {
+        const selector = `input[type=radio]:left-of(:text("Dark"))`;
 
-          expect(await element.isChecked()).toBe(false);
+        const initialOption = await page.waitForSelector(selector);
 
-          await element.click();
+        expect(await initialOption.isChecked()).toBe(false);
 
-          expect(await element.isChecked()).toBe(true);
-        }
-      );
+        await initialOption.click();
+
+        expect(await initialOption.isChecked()).toBe(true);
+
+        await page.reload();
+
+        const reloadedOption = await page.waitForSelector(selector);
+
+        expect(await reloadedOption.isChecked()).toBe(true);
+      });
     }
-  );
+  )
 });
