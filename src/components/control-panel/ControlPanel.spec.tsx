@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -10,6 +10,7 @@ import { theme } from "~/reducers/app";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
 import { setTheme } from "~/actions/app";
+import { apply } from "~/core/Transform";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -238,7 +239,7 @@ describe("Connected ControlPanel", () =>
 
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
   {
-    const store = createStore(combineReducers({ theme }));
+    const store = createStore(combineReducers({ theme }), applyMiddleware(thunk));
     store.dispatch(setTheme('dark'));
 
     const { getByLabelText } = render(
