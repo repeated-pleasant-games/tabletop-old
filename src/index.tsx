@@ -20,6 +20,10 @@ ReactDOM.render(
           snapToGrid,
           theme,
         }),
+        {
+          theme: 
+            window.document.documentElement.style.getPropertyValue("--initial-theme")
+        },
         applyMiddleware(
           thunk
         )
