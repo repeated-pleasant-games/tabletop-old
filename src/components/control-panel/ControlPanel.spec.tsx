@@ -308,7 +308,7 @@ describe("Connected ControlPanel", () =>
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme("day"));
+    store.dispatch(setTheme("light"));
 
     const { getByLabelText } = render(
       <Provider store={store}>
