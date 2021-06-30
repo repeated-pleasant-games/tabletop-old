@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 export type SetThemePayload =
