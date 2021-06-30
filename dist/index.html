@@ -11,7 +11,7 @@
         {
             const storedThemePreference = window.localStorage.getItem('theme');
             const hasStoredThemePreference =
-                typeof storedThemePreference === 'boolean';
+                typeof storedThemePreference === 'string';
 
             if (hasStoredThemePreference)
                 return storedThemePreference;
