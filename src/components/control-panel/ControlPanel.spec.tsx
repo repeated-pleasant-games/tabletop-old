@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { applyMiddleware, combineReducers, createStore } from "redux";
+import { AnyAction, applyMiddleware, combineReducers, createStore } from "redux";
+import thunk, { ThunkDispatch } from "redux-thunk";
 
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -10,7 +11,6 @@ import { theme } from "~/reducers/app";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
 import { setTheme } from "~/actions/app";
-import { apply } from "~/core/Transform";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -225,7 +225,11 @@ describe("Connected ControlPanel", () =>
 
   it("Checks 'day' theme indicator when theme is set to 'day'.", () =>
   {
-    const store = createStore(combineReducers({ theme }));
+    const store = createStore(
+      combineReducers({ theme }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setTheme('light'));
 
     const { getByLabelText } = render(
@@ -239,7 +243,11 @@ describe("Connected ControlPanel", () =>
 
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
   {
-    const store = createStore(combineReducers({ theme }), applyMiddleware(thunk));
+    const store = createStore(
+      combineReducers({ theme }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setTheme('dark'));
 
     const { getByLabelText } = render(
@@ -256,7 +264,11 @@ describe("Connected ControlPanel", () =>
     [ 'dark', [ false, true ] ]
   ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
   {
-    const store = createStore(combineReducers({ theme }));
+    const store = createStore(
+      combineReducers({ theme }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setTheme(themeName));
 
     const { getByLabelText } = render(
@@ -271,7 +283,11 @@ describe("Connected ControlPanel", () =>
 
   it("Sets theme to day when day theme is clicked.", () =>
   {
-    const store = createStore(combineReducers({ theme }));
+    const store = createStore(
+      combineReducers({ theme }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setTheme("dark"));
 
     const { getByLabelText } = render(
@@ -287,7 +303,11 @@ describe("Connected ControlPanel", () =>
 
   it("Sets theme to dark when dark theme is clicked.", () =>
   {
-    const store = createStore(combineReducers({ theme }));
+    const store = createStore(
+      combineReducers({ theme }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setTheme("day"));
 
     const { getByLabelText } = render(

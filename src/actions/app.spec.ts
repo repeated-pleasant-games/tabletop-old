@@ -1,24 +1,25 @@
+import { ThunkDispatch } from "redux-thunk";
 import { setTheme } from "./app";
 
 describe("setTheme", () =>
 {
-  it("Returns a payload with type 'set theme'.", () =>
-  {
-    expect(
-      setTheme("light").type
-    )
-    .toBe("set theme");
-  });
-
   it.each([
     [ "light" ],
     [ "dark" ],
     [ "brazilian "]
-  ])("Returns a payload with theme equal to the given theme.", (theme) =>
+  ])("Async dispatches a payload with the given type.", (theme) =>
   {
-    expect(
-      setTheme(theme).theme
-    )
-    .toBe(theme);
+    const dispatch = jest.fn();
+    const thunk = setTheme(theme);
+
+    thunk(dispatch, undefined, undefined)
+
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
+      {
+        type: "set theme",
+        theme,
+      }
+    );
   });
 });

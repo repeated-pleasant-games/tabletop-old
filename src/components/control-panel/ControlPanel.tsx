@@ -9,6 +9,7 @@ import { setTheme } from "~/actions/app";
 import { Button } from "../util/Button";
 import { Checkbox } from "../util/Checkbox";
 import { Radio } from "../util/Radio";
+import { ThunkDispatch } from "redux-thunk";
 
 export const controlPanelTestId = "control-panel";
 
@@ -92,7 +93,7 @@ const stateToProps = ({
   theme,
 });
 
-const dispatchToProps = (dispatch: Dispatch) =>
+const dispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) =>
 ({
   addActor: () => dispatch(addActor(
     {
