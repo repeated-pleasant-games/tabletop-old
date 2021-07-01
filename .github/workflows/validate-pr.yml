@@ -93,6 +93,6 @@ jobs:
       - name: Run tests
         run: |
           concurrently --success="first" --kill-others --kill-others-on-fail \
-            "http-server ./dist -p 8080" \
+            "http-server ./dist --port 8080 --silent" \
             "npm:test:e2e"
         shell: bash
