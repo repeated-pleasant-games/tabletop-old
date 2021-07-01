@@ -1,6 +1,6 @@
 import React from "react";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
 import { v4 as uuid } from "uuid";
 
 import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
@@ -9,7 +9,6 @@ import { setTheme } from "~/actions/app";
 import { Button } from "../util/Button";
 import { Checkbox } from "../util/Checkbox";
 import { Radio } from "../util/Radio";
-import { ThunkDispatch } from "redux-thunk";
 
 export const controlPanelTestId = "control-panel";
 
