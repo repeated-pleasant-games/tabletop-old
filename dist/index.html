@@ -77,7 +77,8 @@
 
         setColorMode(getInitialColorMode(themePreference));
 
-        root.style.setProperty(`--theme-preference`, themePreference);
+        window.document.documentElement.style
+        .setProperty(`--theme-preference`, themePreference);
     </script>
 
     <div id="app"></div>
