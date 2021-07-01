@@ -39,7 +39,7 @@ describe.each([
       beforeEach(async () =>
       {
         page = await browser.newPage({ colorScheme: preferredTheme });
-        await page.goto("http://localhost");
+        await page.goto("http://localhost:8080");
       });
 
       afterEach(async () =>
@@ -70,7 +70,7 @@ describe.each([
       beforeEach(async () =>
       {
         page = await browser.newPage({ colorScheme: "light" });
-        await page.goto("http://localhost");
+        await page.goto("http://localhost:8080");
       });
 
       afterEach(async () =>
