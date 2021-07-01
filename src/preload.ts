@@ -6,7 +6,7 @@ const getThemePreference = () =>
   else                                return "system";
 };
 
-const getInitialColorMode = (themePreference: string) =>
+const getColorMode = (themePreference: string) =>
 {
   switch (themePreference)
   {
@@ -23,52 +23,51 @@ const getInitialColorMode = (themePreference: string) =>
   }
 };
 
-const setColorMode = (colorMode: string) =>
+const setColors = (colorMode: string) =>
 {
-    const root = window.document.documentElement;
+  const root = window.document.documentElement;
 
-    root.style.setProperty(
-        `--color-fg`,
-        colorMode === "light"
-        ? `black`
-        : `white`
-    );
+  root.style.setProperty(
+    `--color-fg`,
+    colorMode === "light"
+    ? `black`
+    : `white`
+  );
 
-    root.style.setProperty(
-        `--color-bg`,
-        colorMode === "light"
-        ? `white`
-        : `black`
-    );
+  root.style.setProperty(
+    `--color-bg`,
+    colorMode === "light"
+    ? `white`
+    : `black`
+  );
 
-    root.style.setProperty(
-        `--color-grid-fg`,
-        colorMode === "light"
-        ? `black`
-        : `white`
-    );
+  root.style.setProperty(
+    `--color-grid-fg`,
+    colorMode === "light"
+    ? `black`
+    : `white`
+  );
 
-    root.style.setProperty(
-        `--color-grid-bg`,
-        colorMode === "light"
-        ? `white`
-        : `black`
-    );
+  root.style.setProperty(
+    `--color-grid-bg`,
+    colorMode === "light"
+    ? `white`
+    : `black`
+  );
 };
 
-const themePreference = getThemePreference();
+const detectAndSetTheme = () =>
+{
+  const themePreference = getThemePreference();
 
-setColorMode(getInitialColorMode(themePreference));
+  setColors(getColorMode(themePreference));
 
-window.document.documentElement.style
-.setProperty(`--theme-preference`, themePreference);
+  window.document.documentElement.style
+  .setProperty(`--theme-preference`, themePreference);
+}
 
 window.matchMedia("(prefers-color-scheme: dark)")
 .addEventListener(
-    "change",
-    () =>
-    {
-        const themePreference = getThemePreference();
-        setColorMode(getInitialColorMode(themePreference));
-    }
+  "change",
+  detectAndSetTheme
 );
