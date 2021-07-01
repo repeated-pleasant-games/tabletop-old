@@ -1,6 +1,6 @@
 import { SetThemePayload } from "~/actions/app";
 
-export const theme = (theme: string = "light", action: SetThemePayload) =>
+export const themePreference = (theme: string = "system", action: SetThemePayload) =>
 {
   switch (action.type)
   {

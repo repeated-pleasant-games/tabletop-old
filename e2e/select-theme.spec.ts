@@ -1,5 +1,4 @@
 import { firefox, chromium, webkit, Browser, Page } from "playwright";
-import { theme } from "~/reducers/app";
 
 describe.each([
   { name: chromium.name(), driver: chromium },

@@ -1,17 +1,17 @@
 import { SetThemePayload } from "~/actions/app";
-import { theme } from "./app";
+import { themePreference } from "./app";
 
 describe("theme reducer", () =>
 {
-  it("Initializes with theme 'light'.", () =>
+  it("Initializes with theme 'system'.", () =>
   {
     expect(
-      theme(
+      themePreference(
         undefined,
         {} as SetThemePayload
       )
     )
-    .toBe("light");
+    .toBe("system");
   });
 
   it.each([
@@ -32,7 +32,7 @@ describe("theme reducer", () =>
     (initialTheme, newTheme) =>
     {
       expect(
-        theme(
+        themePreference(
           initialTheme,
           {
             type: "set theme",

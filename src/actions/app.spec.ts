@@ -1,7 +1,7 @@
 import { ThunkDispatch } from "redux-thunk";
-import { setTheme } from "./app";
+import { setThemePreference } from "./app";
 
-describe("setTheme", () =>
+describe("setThemePreference", () =>
 {
   it.each([
     [ "light" ],
@@ -10,7 +10,7 @@ describe("setTheme", () =>
   ])("Async dispatches a payload with the given type.", (theme) =>
   {
     const dispatch = jest.fn();
-    const thunk = setTheme(theme);
+    const thunk = setThemePreference(theme);
 
     thunk(dispatch, undefined, undefined)
 

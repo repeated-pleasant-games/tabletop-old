@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import { addActor, removeActor, setSnapToGrid } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
-import { setTheme } from "~/actions/app";
+import { setThemePreference } from "~/actions/app";
 import { Button } from "../util/Button";
 import { Checkbox } from "../util/Checkbox";
 import { Radio } from "../util/Radio";
@@ -17,20 +17,20 @@ type ControlPanelProps =
   addActor?: () => void,
   removeActor?: (id: string) => void,
   setSnapToGrid?: (snapToGrid: boolean) => void,
-  setTheme?: (theme: string) => void,
+  setThemePreference?: (theme: string) => void,
   actors?: Actor[],
   snapToGrid?: boolean,
-  theme?: string,
+  themePreference?: string,
 };
 
 export const ControlPanel = ({
   addActor,
   removeActor,
   setSnapToGrid,
-  setTheme,
+  setThemePreference,
   actors,
   snapToGrid,
-  theme,
+  themePreference,
 }: ControlPanelProps) =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
@@ -69,10 +69,10 @@ export const ControlPanel = ({
       </Checkbox>
     </section>
     <section>
-      <Radio name="set-theme" onChange={setTheme}>
-        <Radio.Option value="light" checked={theme === "light"}>Light</Radio.Option>
-        <Radio.Option value="system" checked={theme === "system"}>System</Radio.Option>
-        <Radio.Option value="dark" checked={theme === "dark"}>Dark</Radio.Option>
+      <Radio name="set-theme" onChange={setThemePreference}>
+        <Radio.Option value="light" checked={themePreference === "light"}>Light</Radio.Option>
+        <Radio.Option value="system" checked={themePreference === "system"}>System</Radio.Option>
+        <Radio.Option value="dark" checked={themePreference === "dark"}>Dark</Radio.Option>
       </Radio>
     </section>
   </div>
@@ -90,7 +90,7 @@ const stateToProps = ({
 ({
   actors,
   snapToGrid,
-  theme: themePreference,
+  themePreference,
 });
 
 const dispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) =>
@@ -106,7 +106,7 @@ const dispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) =>
   )),
   removeActor: (id: string) => dispatch(removeActor(id)),
   setSnapToGrid: (snapToGrid: boolean) => dispatch(setSnapToGrid(snapToGrid)),
-  setTheme: (theme: string) => dispatch(setTheme(theme)),
+  setThemePreference: (theme: string) => dispatch(setThemePreference(theme)),
 });
 
 export default connect(stateToProps, dispatchToProps)(ControlPanel);

@@ -7,10 +7,10 @@ import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { actors, snapToGrid } from "~/reducers/tabletop";
-import { theme } from "~/reducers/app";
+import { themePreference } from "~/reducers/app";
 import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
-import { setTheme } from "~/actions/app";
+import { setThemePreference } from "~/actions/app";
 
 describe("Disconnected ControlPanel", () =>
 {
@@ -226,11 +226,11 @@ describe("Connected ControlPanel", () =>
   it("Checks 'light' theme indicator when theme is set to 'light'.", () =>
   {
     const store = createStore(
-      combineReducers({ themePreference: theme }),
+      combineReducers({ themePreference: themePreference }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme('light'));
+    store.dispatch(setThemePreference('light'));
 
     const { getByLabelText } = render(
       <Provider store={store}>
@@ -244,11 +244,11 @@ describe("Connected ControlPanel", () =>
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
   {
     const store = createStore(
-      combineReducers({ themePreference: theme }),
+      combineReducers({ themePreference: themePreference }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme('dark'));
+    store.dispatch(setThemePreference('dark'));
 
     const { getByLabelText } = render(
       <Provider store={store}>
@@ -265,11 +265,11 @@ describe("Connected ControlPanel", () =>
   ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
   {
     const store = createStore(
-      combineReducers({ themePreference: theme }),
+      combineReducers({ themePreference: themePreference }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme(themeName));
+    store.dispatch(setThemePreference(themeName));
 
     const { getByLabelText } = render(
       <Provider store={store}>
@@ -284,11 +284,11 @@ describe("Connected ControlPanel", () =>
   it("Sets theme to day when day theme is clicked.", () =>
   {
     const store = createStore(
-      combineReducers({ themePreference: theme }),
+      combineReducers({ themePreference: themePreference }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme("dark"));
+    store.dispatch(setThemePreference("dark"));
 
     const { getByLabelText } = render(
       <Provider store={store}>
@@ -304,11 +304,11 @@ describe("Connected ControlPanel", () =>
   it("Sets theme to dark when dark theme is clicked.", () =>
   {
     const store = createStore(
-      combineReducers({ themePreference: theme }),
+      combineReducers({ themePreference: themePreference }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
-    store.dispatch(setTheme("light"));
+    store.dispatch(setThemePreference("light"));
 
     const { getByLabelText } = render(
       <Provider store={store}>

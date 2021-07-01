@@ -6,7 +6,7 @@ import thunk from "redux-thunk"
 
 import App from "./App"
 import { viewTransform, actors, snapToGrid } from "./reducers/tabletop"
-import { theme as themePreference } from "./reducers/app";
+import { themePreference } from "./reducers/app";
 
 import "./styles/style.css"
 
