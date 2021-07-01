@@ -6,7 +6,7 @@ import thunk from "redux-thunk"
 
 import App from "./App"
 import { viewTransform, actors, snapToGrid } from "./reducers/tabletop"
-import { theme } from "./reducers/app";
+import { theme as themePreference } from "./reducers/app";
 
 import "./styles/style.css"
 
@@ -18,11 +18,11 @@ ReactDOM.render(
           viewTransform,
           actors,
           snapToGrid,
-          theme,
+          themePreference,
         }),
         {
-          theme: 
-            window.document.documentElement.style.getPropertyValue("--initial-theme")
+          themePreference: 
+            window.document.documentElement.style.getPropertyValue("--theme-preference")
         },
         applyMiddleware(
           thunk

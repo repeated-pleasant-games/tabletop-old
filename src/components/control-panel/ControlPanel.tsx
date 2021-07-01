@@ -82,16 +82,16 @@ export const ControlPanel = ({
 const stateToProps = ({
   actors,
   snapToGrid,
-  theme,
+  themePreference,
 }: {
   actors: Actor[],
   snapToGrid: boolean,
-  theme: string,
+  themePreference: string,
 }) =>
 ({
   actors,
   snapToGrid,
-  theme,
+  theme: themePreference,
 });
 
 const dispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) =>
