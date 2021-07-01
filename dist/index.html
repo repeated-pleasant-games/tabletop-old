@@ -7,23 +7,37 @@
 </head>
 <body>
     <script>
-        const getInitialColorMode = () =>
+        const getThemePreference = () =>
         {
-            const storedThemePreference = window.localStorage.getItem('theme');
+            const storedThemePreference = window.localStorage.getItem('themePreference');
             const hasStoredThemePreference =
                 typeof storedThemePreference === 'string';
 
-            if (hasStoredThemePreference)
-                return storedThemePreference;
+            if (hasStoredThemePreference)   return storedThemePreference;
+            else                            return "system";
+        };
 
-            const query = window.matchMedia("(prefers-color-scheme: dark)");
-            const hasThemePreference = typeof query.matches === 'boolean';
+        const getInitialColorMode = (themePreference) =>
+        {
+            switch (themePreference)
+            {
+                case "light":
+                case "dark":
+                    return themePreference;
 
-            if (hasThemePreference)
-                return query.matches ? "dark" : "light";
+                case "system":
+                default:
+                {
+                    const query = window.matchMedia("(prefers-color-scheme: dark)");
+                    const hasThemePreference = typeof query.matches === 'boolean';
 
-            else
-                return "light";
+                    if (hasThemePreference)
+                        return query.matches ? "dark" : "light";
+
+                    else
+                        return "light";
+                }
+            }
         };
 
         const setColorMode = (colorMode) =>
@@ -57,14 +71,13 @@
                 ? `white`
                 : `black`
             );
-
-            root.style.setProperty(
-                `--initial-theme`,
-                colorMode
-            );
         };
 
-        setColorMode(getInitialColorMode());
+        const themePreference = getThemePreference();
+
+        setColorMode(getInitialColorMode(themePreference));
+
+        root.style.setProperty(`--theme-preference`, themePreference);
     </script>
 
     <div id="app"></div>
