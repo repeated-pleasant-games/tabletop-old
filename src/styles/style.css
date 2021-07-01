@@ -1,4 +1,4 @@
-:root {
+html, html.light {
   --color-fg: black;
   --color-bg: white;
 
@@ -6,14 +6,12 @@
   --color-grid-bg: var(--color-bg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-fg: white;
-    --color-bg: black;
+html.dark {
+  --color-fg: white;
+  --color-bg: black;
 
-    --color-grid-fg: white;
-    --color-grid-bg: black;
-  }
+  --color-grid-fg: #ccc;
+  --color-grid-bg: var(--color-bg);
 }
 
 * {
