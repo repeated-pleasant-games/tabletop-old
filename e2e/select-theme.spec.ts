@@ -1,5 +1,7 @@
 import { firefox, chromium, webkit, Browser, Page } from "playwright";
 
+jest.setTimeout(10000);
+
 describe.each([
   { name: chromium.name(), driver: chromium },
   { name: firefox.name(), driver: firefox },
