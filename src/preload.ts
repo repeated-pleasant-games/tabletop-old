@@ -64,7 +64,9 @@ const detectAndSetTheme = () =>
 
   window.document.documentElement.style
   .setProperty(`--theme-preference`, themePreference);
-}
+};
+
+detectAndSetTheme();
 
 window.matchMedia("(prefers-color-scheme: dark)")
 .addEventListener(
