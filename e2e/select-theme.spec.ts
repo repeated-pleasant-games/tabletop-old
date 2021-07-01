@@ -20,9 +20,9 @@ describe.each([
   });
 
   describe.each([
-    { preferredTheme: "light", option: "Light", },
-    { preferredTheme: "dark", option: "Dark", },
-    { preferredTheme: "no-preference", option: "Light", },
+    { preferredTheme: "light", option: "System", },
+    { preferredTheme: "dark", option: "System", },
+    { preferredTheme: "no-preference", option: "System", },
   ])(
     "When user opens page with no cache and theme preference of '$preferredTheme'.",
     (
