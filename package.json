@@ -26,7 +26,7 @@
     "test": "npm run test:app",
     "test:app": "jest --selectProjects app",
     "test:app:coverage": "jest --coverage --selectProjects app",
-    "text:e2e": "jest --selectProjects e2e",
+    "test:e2e": "jest --selectProjects e2e",
     "test:all": "jest",
     "build": "webpack",
     "develop": "webpack-dev-server --open"
@@ -349,7 +349,7 @@
     "verbose": true,
     "projects": [
       {
-        "rootDir": "./src/",
+        "rootDir": "./src",
         "displayName": "app",
         "testEnvironment": "jsdom",
         "transform": {
@@ -360,12 +360,15 @@
         }
       },
       {
-        "rootDir": "./e2e/",
+        "rootDir": ".",
         "displayName": "e2e",
         "testEnvironment": "node",
         "transform": {
           "\\.tsx?$": "ts-jest"
-        }
+        },
+        "testPathIgnorePatterns": [
+          "<rootDir>/src/"
+        ]
       }
     ]
   }
