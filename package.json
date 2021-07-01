@@ -349,8 +349,8 @@
     "verbose": true,
     "projects": [
       {
-        "rootDir": "./src",
         "displayName": "app",
+        "rootDir": "./src",
         "testEnvironment": "jsdom",
         "transform": {
           "\\.tsx?$": "ts-jest"
@@ -360,8 +360,8 @@
         }
       },
       {
-        "rootDir": ".",
         "displayName": "e2e",
+        "rootDir": ".",
         "testEnvironment": "node",
         "transform": {
           "\\.tsx?$": "ts-jest"
