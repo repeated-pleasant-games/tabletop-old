@@ -8,7 +8,8 @@ export type SetThemePayload =
 export const setTheme = (theme: string): ThunkAction<unknown, {}, {}, SetThemePayload> =>
   (dispatch) =>
   {
-    window.localStorage.setItem("theme", theme);
+    window.localStorage.setItem("themePreference", theme);
+
     dispatch(
       ({
         type: "set theme",
