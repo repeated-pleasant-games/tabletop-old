@@ -12,29 +12,6 @@ import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTes
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
 import { setThemePreference } from "~/actions/app";
 
-describe("Disconnected ControlPanel", () =>
-{
-  it("Is a div.", () =>
-  {
-    const { getByTestId } = render(<DisconnectedControlPanel />);
-    expect(getByTestId(controlPanelTestId).nodeName.toLowerCase()).toBe("div");
-  });
-
-  it("Contains an element that says 'Add Actor'.", () =>
-  {
-    const { getByText } = render(<DisconnectedControlPanel />);
-
-    expect(getByText("Add Actor")).toBeInTheDocument();
-  });
-
-  it("Has the class .control-panel", () =>
-  {
-    const { getByTestId } = render(<DisconnectedControlPanel />);
-
-    expect(getByTestId(controlPanelTestId).className).toBe("control-panel");
-  })
-});
-
 describe("Connected ControlPanel", () =>
 {
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
