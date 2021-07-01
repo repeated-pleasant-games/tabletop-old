@@ -223,10 +223,10 @@ describe("Connected ControlPanel", () =>
     expect(store.getState().snapToGrid).toBe(false);
   });
 
-  it("Checks 'day' theme indicator when theme is set to 'day'.", () =>
+  it("Checks 'light' theme indicator when theme is set to 'light'.", () =>
   {
     const store = createStore(
-      combineReducers({ theme }),
+      combineReducers({ themePreference: theme }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
@@ -244,7 +244,7 @@ describe("Connected ControlPanel", () =>
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
   {
     const store = createStore(
-      combineReducers({ theme }),
+      combineReducers({ themePreference: theme }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
@@ -265,7 +265,7 @@ describe("Connected ControlPanel", () =>
   ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
   {
     const store = createStore(
-      combineReducers({ theme }),
+      combineReducers({ themePreference: theme }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
@@ -284,7 +284,7 @@ describe("Connected ControlPanel", () =>
   it("Sets theme to day when day theme is clicked.", () =>
   {
     const store = createStore(
-      combineReducers({ theme }),
+      combineReducers({ themePreference: theme }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
@@ -298,13 +298,13 @@ describe("Connected ControlPanel", () =>
 
     fireEvent.click(getByLabelText("Light"));
 
-    expect(store.getState().theme).toBe("light");
+    expect(store.getState().themePreference).toBe("light");
   });
 
   it("Sets theme to dark when dark theme is clicked.", () =>
   {
     const store = createStore(
-      combineReducers({ theme }),
+      combineReducers({ themePreference: theme }),
       {},
       applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
     );
@@ -318,6 +318,6 @@ describe("Connected ControlPanel", () =>
 
     fireEvent.click(getByLabelText("Dark"));
 
-    expect(store.getState().theme).toBe("dark");
+    expect(store.getState().themePreference).toBe("dark");
   });
 });
