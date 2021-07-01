@@ -72,6 +72,7 @@ export const ControlPanel = ({
     <section>
       <Radio name="set-theme" onChange={setTheme}>
         <Radio.Option value="light" checked={theme === "light"}>Light</Radio.Option>
+        <Radio.Option value="system" checked={theme === "system"}>System</Radio.Option>
         <Radio.Option value="dark" checked={theme === "dark"}>Dark</Radio.Option>
       </Radio>
     </section>
