@@ -23,8 +23,11 @@
     "tabletop-rpg"
   ],
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "npm run test:app",
+    "test:app": "jest --selectProjects app",
+    "test:app:coverage": "jest --coverage --selectProjects app",
+    "test:e2e": "jest --selectProjects e2e",
+    "test:all": "jest",
     "build": "webpack",
     "develop": "webpack-dev-server --open"
   },
@@ -33,6 +36,7 @@
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "resize-observer-polyfill": "^1.5.1",
     "uuid": "^8.3.2"
   },
@@ -50,14 +54,16 @@
     "@types/uuid": "^8.3.0",
     "css-loader": "^5.0.0",
     "husky": "^4.3.6",
-    "jest": "^25.5.4",
+    "jest": "^27.0.0",
+    "playwright": "^1.12.2",
     "sass": "^1.29.0",
     "sass-loader": "^8.0.2",
     "semantic-release": "^17.3.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.3.0",
-    "ts-jest": "^25.5.1",
+    "ts-jest": "^27.0.0",
     "ts-loader": "^6.2.2",
+    "ts-node": "^10.0.0",
     "typescript": "^3.9.7",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
@@ -128,7 +134,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "npm test"
+      "pre-push": "npm run test:all"
     }
   },
   "release": {
@@ -340,20 +346,30 @@
     ]
   },
   "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": ".*\\.(test|spec)\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "^~(.*)$": "<rootDir>/src$1"
-    }
+    "verbose": true,
+    "projects": [
+      {
+        "displayName": "app",
+        "rootDir": "./src",
+        "testEnvironment": "jsdom",
+        "transform": {
+          "\\.tsx?$": "ts-jest"
+        },
+        "moduleNameMapper": {
+          "^~(.*)$": "<rootDir>$1"
+        }
+      },
+      {
+        "displayName": "e2e",
+        "rootDir": ".",
+        "testEnvironment": "node",
+        "transform": {
+          "\\.tsx?$": "ts-jest"
+        },
+        "testPathIgnorePatterns": [
+          "<rootDir>/src/"
+        ]
+      }
+    ]
   }
 }

@@ -1,24 +1,39 @@
-import { setTheme } from "./app";
+import { ThunkDispatch } from "redux-thunk";
+import { setThemePreference } from "./app";
 
-describe("setTheme", () =>
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+describe("setThemePreference", () =>
 {
-  it("Returns a payload with type 'set theme'.", () =>
-  {
-    expect(
-      setTheme("day").type
-    )
-    .toBe("set theme");
-  });
-
   it.each([
-    [ "day" ],
+    [ "light" ],
     [ "dark" ],
     [ "brazilian "]
-  ])("Returns a payload with theme equal to the given theme.", (theme) =>
+  ])("Async dispatches a payload with the given type.", (theme) =>
   {
-    expect(
-      setTheme(theme).theme
-    )
-    .toBe(theme);
+    const dispatch = jest.fn();
+    const thunk = setThemePreference(theme);
+
+    thunk(dispatch, undefined, undefined)
+
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
+      {
+        type: "set theme",
+        theme,
+      }
+    );
   });
 });
