@@ -23,9 +23,11 @@
     "tabletop-rpg"
   ],
   "scripts": {
-    "e2e": "cd e2e && jest",
-    "test": "cd src && jest",
-    "coverage": "jest --coverage",
+    "test": "npm run test:app",
+    "test:app": "jest --selectProjects app",
+    "test:app:coverage": "jest --coverage --selectProjects app",
+    "text:e2e": "jest --selectProjects e2e",
+    "test:all": "jest",
     "build": "webpack",
     "develop": "webpack-dev-server --open"
   },
@@ -341,6 +343,30 @@
           ]
         }
       ]
+    ]
+  },
+  "jest": {
+    "verbose": true,
+    "projects": [
+      {
+        "rootDir": "./src/",
+        "displayName": "app",
+        "testEnvironment": "jsdom",
+        "transform": {
+          "\\.tsx?$": "ts-jest"
+        },
+        "moduleNameMapper": {
+          "^~(.*)$": "<rootDir>$1"
+        }
+      },
+      {
+        "rootDir": "./e2e/",
+        "displayName": "e2e",
+        "testEnvironment": "node",
+        "transform": {
+          "\\.tsx?$": "ts-jest"
+        }
+      }
     ]
   }
 }
