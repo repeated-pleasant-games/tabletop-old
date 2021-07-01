@@ -39,5 +39,5 @@ jobs:
           curl \
             -X POST \
             -H 'Content-Type: application/json' \
-            -d '{ "content": "@everyone, ${{ steps.release.outputs.new_release_version }} is now available!" }' \
+            -d '{ "content": "@everyone, version ${{ steps.release.outputs.new_release_version }} is now available! [Check it out!](https://alpha.repeatedpleasant.games)" }' \
             ${{ secrets.DISCORD_WEBHOOK_URL }}

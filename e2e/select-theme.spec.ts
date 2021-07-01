@@ -1,5 +1,7 @@
 import { firefox, chromium, webkit, Browser, Page } from "playwright";
 
+jest.setTimeout(10000);
+
 describe.each([
   { name: chromium.name(), driver: chromium },
   { name: firefox.name(), driver: firefox },
@@ -39,7 +41,7 @@ describe.each([
       beforeEach(async () =>
       {
         page = await browser.newPage({ colorScheme: preferredTheme });
-        await page.goto("http://localhost");
+        await page.goto("http://localhost:8080");
       });
 
       afterEach(async () =>
@@ -70,7 +72,7 @@ describe.each([
       beforeEach(async () =>
       {
         page = await browser.newPage({ colorScheme: "light" });
-        await page.goto("http://localhost");
+        await page.goto("http://localhost:8080");
       });
 
       afterEach(async () =>

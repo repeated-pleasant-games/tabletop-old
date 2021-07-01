@@ -6,7 +6,7 @@ module.exports = {
     devtool: "source-map",
     devServer: {
         compress: true,
-        port: 80,
+        port: 8080,
         contentBase: "./dist",
         writeToDisk: true,
     },
