@@ -79,6 +79,16 @@
 
         window.document.documentElement.style
         .setProperty(`--theme-preference`, themePreference);
+
+        window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener(
+            "change",
+            () =>
+            {
+                const themePreference = getThemePreference();
+                setColorMode(getInitialColorMode(themePreference));
+            }
+        );
     </script>
 
     <div id="app"></div>
