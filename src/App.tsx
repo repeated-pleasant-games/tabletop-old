@@ -4,7 +4,6 @@ import Tabletop from "~/components/tabletop/Tabletop";
 import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
 
 import ControlPanel from "./components/control-panel/ControlPanel";
-import { connect } from "react-redux";
 
 export const App = () =>
 (
