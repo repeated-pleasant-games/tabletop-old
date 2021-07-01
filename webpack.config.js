@@ -11,10 +11,13 @@ module.exports = {
         writeToDisk: true,
     },
 
-    entry: "./src/index.tsx",
+    entry: {
+      preload: "./src/preload.ts",
+      app: "./src/index.tsx",
+    },
 
     output: {
-        filename: "app.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "dist", "js")
     },
 
