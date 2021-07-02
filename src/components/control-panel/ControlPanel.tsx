@@ -11,25 +11,18 @@ import { Checkbox } from "../util/Checkbox";
 import { Radio } from "../util/Radio";
 import AddActor from "./AddActor";
 import ActorList from "./ActorList";
+import SnapToGrid from "./SnapToGrid";
 
 export const controlPanelTestId = "control-panel";
 
 type ControlPanelProps =
 {
-  removeActor?: (id: string) => void,
-  setSnapToGrid?: (snapToGrid: boolean) => void,
   setThemePreference?: (theme: string) => void,
-  actors?: Actor[],
-  snapToGrid?: boolean,
   themePreference?: string,
 };
 
 export const ControlPanel = ({
-  removeActor,
-  setSnapToGrid,
   setThemePreference,
-  actors,
-  snapToGrid,
   themePreference,
 }: ControlPanelProps) =>
 (
@@ -41,13 +34,7 @@ export const ControlPanel = ({
       <ActorList />
     </section>
     <section>
-      <Checkbox
-        checked={snapToGrid}
-        onChecked={() => setSnapToGrid(true)}
-        onUnchecked={() => setSnapToGrid(false)}
-      >
-        Snap to Grid
-      </Checkbox>
+      <SnapToGrid />
     </section>
     <section>
       <Radio name="set-theme" onChange={setThemePreference}>
@@ -60,24 +47,16 @@ export const ControlPanel = ({
 );
 
 const stateToProps = ({
-  actors,
-  snapToGrid,
   themePreference,
 }: {
-  actors: Actor[],
-  snapToGrid: boolean,
   themePreference: string,
 }) =>
 ({
-  actors,
-  snapToGrid,
   themePreference,
 });
 
 const dispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) =>
 ({
-  removeActor: (id: string) => dispatch(removeActor(id)),
-  setSnapToGrid: (snapToGrid: boolean) => dispatch(setSnapToGrid(snapToGrid)),
   setThemePreference: (theme: string) => dispatch(setThemePreference(theme)),
 });
 
