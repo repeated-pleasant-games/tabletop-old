@@ -10,6 +10,7 @@ import { Button } from "../util/Button";
 import { Checkbox } from "../util/Checkbox";
 import { Radio } from "../util/Radio";
 import AddActor from "./AddActor";
+import ActorList from "./ActorList";
 
 export const controlPanelTestId = "control-panel";
 
@@ -37,26 +38,7 @@ export const ControlPanel = ({
       <AddActor />
     </section>
     <section>
-      <ul>
-        {
-          actors &&
-          actors
-          .sort(
-            (a, b) => Math.sign(b.initiative - a.initiative)
-          )
-          .map(
-            ({ id, name }) =>
-            (
-              <li
-                key={id}
-                onClick={() => removeActor(id)}
-              >
-                {name}
-              </li>
-            )
-          )
-        }
-      </ul>
+      <ActorList />
     </section>
     <section>
       <Checkbox
