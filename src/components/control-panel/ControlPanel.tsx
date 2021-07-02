@@ -12,6 +12,7 @@ import { Radio } from "../util/Radio";
 import AddActor from "./AddActor";
 import ActorList from "./ActorList";
 import SnapToGrid from "./SnapToGrid";
+import ThemeSelect from "./ThemeSelect";
 
 export const controlPanelTestId = "control-panel";
 
@@ -37,11 +38,7 @@ export const ControlPanel = ({
       <SnapToGrid />
     </section>
     <section>
-      <Radio name="set-theme" onChange={setThemePreference}>
-        <Radio.Option value="light" checked={themePreference === "light"}>Light</Radio.Option>
-        <Radio.Option value="system" checked={themePreference === "system"}>System</Radio.Option>
-        <Radio.Option value="dark" checked={themePreference === "dark"}>Dark</Radio.Option>
-      </Radio>
+      <ThemeSelect />
     </section>
   </div>
 );
