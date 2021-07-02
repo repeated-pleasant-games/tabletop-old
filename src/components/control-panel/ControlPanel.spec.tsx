@@ -8,38 +8,33 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { actors, snapToGrid } from "~/reducers/tabletop";
 import { themePreference } from "~/reducers/app";
-import ControlPanel, { ControlPanel as DisconnectedControlPanel, controlPanelTestId } from "./ControlPanel";
+import ControlPanel from "./ControlPanel";
 import { addActor, setSnapToGrid } from "~/actions/tabletop";
 import { setThemePreference } from "~/actions/app";
 
-describe("Disconnected ControlPanel", () =>
-{
-  it("Is a div.", () =>
-  {
-    const { getByTestId } = render(<DisconnectedControlPanel />);
-    expect(getByTestId(controlPanelTestId).nodeName.toLowerCase()).toBe("div");
-  });
-
-  it("Contains an element that says 'Add Actor'.", () =>
-  {
-    const { getByText } = render(<DisconnectedControlPanel />);
-
-    expect(getByText("Add Actor")).toBeInTheDocument();
-  });
-
-  it("Has the class .control-panel", () =>
-  {
-    const { getByTestId } = render(<DisconnectedControlPanel />);
-
-    expect(getByTestId(controlPanelTestId).className).toBe("control-panel");
-  })
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
 });
 
 describe("Connected ControlPanel", () =>
 {
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
-    const store = createStore(combineReducers({ actors }));
+    const store = createStore(
+      combineReducers({ actors }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
 
     const { getByText } = render(
       <Provider store={store}>
@@ -54,7 +49,11 @@ describe("Connected ControlPanel", () =>
 
   it("Shows a list of actors when there is an actor in the store.", () =>
   {
-    const store = createStore(combineReducers({ actors }));
+    const store = createStore(
+      combineReducers({ actors }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(addActor({
       id: "",
       name: "Actor 1",
@@ -121,7 +120,11 @@ describe("Connected ControlPanel", () =>
     "Orders actors by their initiative from greatest to least.",
     (testActors, expectedOrder) =>
   {
-    const store = createStore(combineReducers({ actors }));
+    const store = createStore(
+      combineReducers({ actors }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
 
     for (let actor of testActors)
       store.dispatch(addActor(actor));
@@ -143,7 +146,11 @@ describe("Connected ControlPanel", () =>
 
   it("Removes the actor associated with the clicked initiative entry.", () =>
   {
-    const store = createStore(combineReducers({ actors }));
+    const store = createStore(
+      combineReducers({ actors }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(addActor({
       id: "1",
       name: "Actor 1",
@@ -165,7 +172,11 @@ describe("Connected ControlPanel", () =>
 
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }));
+    const store = createStore(
+      combineReducers({ snapToGrid }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setSnapToGrid(false));
 
     const { getByLabelText } = render(
@@ -181,7 +192,11 @@ describe("Connected ControlPanel", () =>
 
   it("Unchecks 'Snap to Grid' when snapToGrid is false.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }));
+    const store = createStore(
+      combineReducers({ snapToGrid }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setSnapToGrid(false));
 
     const { getByLabelText } = render(
@@ -195,7 +210,11 @@ describe("Connected ControlPanel", () =>
 
   it("Checks 'Snap to Grid' when snapToGrid is true.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }));
+    const store = createStore(
+      combineReducers({ snapToGrid }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setSnapToGrid(true));
 
     const { getByLabelText } = render(
@@ -209,7 +228,11 @@ describe("Connected ControlPanel", () =>
 
   it("Disables snap-to-grid when 'Snap to Grid' is unchecked.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }));
+    const store = createStore(
+      combineReducers({ snapToGrid }),
+      {},
+      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
+    );
     store.dispatch(setSnapToGrid(true));
 
     const { getByLabelText } = render(
