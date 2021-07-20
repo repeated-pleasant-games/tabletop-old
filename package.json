@@ -23,7 +23,7 @@
     "tabletop-rpg"
   ],
   "scripts": {
-    "test": "npm run test:app",
+    "test": "npm run test:app --",
     "test:app": "jest --selectProjects app",
     "test:app:coverage": "jest --coverage --selectProjects app",
     "test:e2e": "jest --selectProjects e2e",
