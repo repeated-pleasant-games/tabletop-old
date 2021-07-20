@@ -1,6 +1,4 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 
@@ -8,8 +6,6 @@ import "@testing-library/jest-dom/extend-expect";
 import "~/pointer-event";
 
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
-import { viewTransform } from "~/reducers/tabletop";
-import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
 import { identityTransform, Transform } from "~/core/Transform";
 import { useLocalStore } from "~/store/local";
 import { act } from "react-dom/test-utils";
@@ -78,13 +74,6 @@ describe("Connected Grid component", () =>
 
   it("Translates the view relative to the current transform.", () =>
   {
-    useLocalStore.getState().setViewTransform(identityTransform());
-
-    const { getByTestId } = renderSVG(<Grid patternId={null} />);
-
-    const grid = getByTestId(gridTestId);
-    const pointerId = 0;
-
     useLocalStore.getState().setViewTransform(
       [
         [ 1, 0, 2 ],
@@ -92,6 +81,11 @@ describe("Connected Grid component", () =>
         [ 0, 0, 1 ]
       ]
     );
+
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
+
+    const grid = getByTestId(gridTestId);
+    const pointerId = 0;
 
     fireEvent.pointerDown(grid, { pointerId });
     fireEvent.pointerMove(
