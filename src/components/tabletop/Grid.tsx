@@ -1,24 +1,26 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { setViewTransform } from "~/actions/tabletop";
 import { getScale, scaleBy, scale, Transform, transformerOf, translateBy, translation } from "~/core/Transform";
+import { useLocalStore } from "~/store/local";
 
 type GridProps = React.HTMLAttributes<{}> &
 {
   patternId: string,
-  viewTransform?: Transform,
-  setViewTransform?: (transform: Transform) => void,
 };
 
 export const gridTestId = "grid-rect";
 
-export const Grid = ({
-  patternId,
-  viewTransform,
-  setViewTransform
-}: GridProps) =>
+export const Grid = ({ patternId, }: GridProps) =>
 {
+  const { viewTransform, setViewTransform } = useLocalStore(
+    ({ viewTransform, setViewTransform }) =>
+    ({
+      viewTransform,
+      setViewTransform,
+    })
+  );
+
   const [ focusedPointerId, setFocusedPointerId ] = React.useState(-1);
   const resetFocusedPointerId = () => setFocusedPointerId(-1);
 
@@ -90,15 +92,4 @@ export const Grid = ({
   );
 };
 
-const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
-({
-  viewTransform,
-});
-
-const dispatchToProps = (dispatch: any) =>
-({
-  setViewTransform: (transform: Transform) =>
-    dispatch(setViewTransform(transform)),
-});
-
-export default connect(stateToProps, dispatchToProps)(Grid);
+export default Grid;
