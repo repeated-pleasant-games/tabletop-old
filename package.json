@@ -25,8 +25,9 @@
   "scripts": {
     "test": "npm run test:app --",
     "test:app": "jest --selectProjects app",
-    "test:app:coverage": "jest --coverage --selectProjects app",
+    "test:app:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --selectProjects app --runInBand",
     "test:e2e": "jest --selectProjects e2e",
+    "test:e2e:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --selectProjects e2e --runInBand",
     "test:all": "jest",
     "build": "webpack",
     "develop": "webpack serve --open"
