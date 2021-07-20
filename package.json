@@ -29,7 +29,7 @@
     "test:e2e": "jest --selectProjects e2e",
     "test:all": "jest",
     "build": "webpack",
-    "develop": "webpack-dev-server --open"
+    "develop": "webpack serve --open"
   },
   "dependencies": {
     "react": "^16.14.0",
@@ -69,9 +69,9 @@
     "ts-loader": "^6.2.2",
     "ts-node": "^10.0.0",
     "typescript": "^3.9.7",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
   "commitlint": {
     "parserPreset": "./commitlint-parser-config",
