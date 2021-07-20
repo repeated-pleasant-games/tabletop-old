@@ -1,7 +1,6 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
-import { getScale, scaleBy, scale, Transform, transformerOf, translateBy, translation } from "~/core/Transform";
+import { getScale, scale, transformerOf, translateBy, translation } from "~/core/Transform";
 import { useLocalStore } from "~/store/local";
 
 type GridProps = React.HTMLAttributes<{}> &
