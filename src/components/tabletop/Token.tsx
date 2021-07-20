@@ -1,6 +1,6 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { apply, identityTransform, inverseOf, toSvgMatrix, Transform } from "~/core/Transform";
+import { apply, identityTransform, inverseOf, toSvgMatrix } from "~/core/Transform";
+import { useLocalStore } from "~/store/local";
 
 export const tokenTestId = "token";
 
@@ -9,18 +9,23 @@ type TokenProps =
   x: number,
   y: number,
   cellSize: number,
-  viewTransform?: Transform,
-  snapToGrid?: boolean,
 }
 
 export const Token = ({
   x: _x,
   y: _y,
   cellSize,
-  viewTransform,
-  snapToGrid,
 }: TokenProps) =>
 {
+  const {
+    viewTransform,
+    snapToGrid,
+  } = useLocalStore((state) =>
+    ({
+      "viewTransform": state.viewTransform,
+      "snapToGrid": state.snapToGrid,
+    }));
+
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
   const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
@@ -93,16 +98,4 @@ export const Token = ({
   );
 };
 
-const stateToProps = ({
-  viewTransform,
-  snapToGrid,
-}: {
-  viewTransform: Transform,
-  snapToGrid: boolean,
-}) =>
-({
-  viewTransform,
-  snapToGrid,
-});
-
-export default connect(stateToProps)(Token);
+export default Token;

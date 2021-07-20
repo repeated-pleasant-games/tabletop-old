@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Actor } from "~/core/Actor";
+
 import { useSharedStore } from "~/store/shared";
+
 import Token from "./Token";
 
 type TabletopProps = React.HTMLAttributes<{}> &
 {
   grid: React.ReactElement,
 };
-
 export const Tabletop = ({ grid, }: TabletopProps) =>
 {
   const {
