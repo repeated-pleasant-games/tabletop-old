@@ -8,6 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { themePreference } from "~/reducers/app";
 import { setThemePreference } from "~/actions/app";
 import ThemeSelect, { ThemeSelect as DisconnectedThemeSelect } from "./ThemeSelect";
+import { useLocalStore } from "~/store/local";
 
 describe("Disconnected ThemeSelect", () =>
 {
@@ -43,23 +44,17 @@ describe("Connected ThemeSelect", () =>
     [ /light/i, "light" ],
     [ /system/i, "system" ],
     [ /dark/i, "dark" ],
-  ])("Selects the same theme as what is in the store.", (selector, theme) =>
-  {
-    const store = createStore(
-      combineReducers({ themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference(theme));
+  ])(
+    "Selects the same theme as what is in the store.",
+    (selector, theme: "light" | "dark" | "system") =>
+    {
+      useLocalStore.getState().setThemePreference(theme);
 
-    const {getByLabelText} = render(
-      <Provider store={store}>
-        <ThemeSelect />
-      </Provider>
-    );
+      const {getByLabelText} = render(<ThemeSelect />);
 
-    expect((getByLabelText(selector) as HTMLInputElement).checked).toBe(true);
-  });
+      expect((getByLabelText(selector) as HTMLInputElement).checked).toBe(true);
+    }
+  );
 
   it.each([
     { from: "system", to: "light", option: "Light", selector: /light/i },
@@ -70,25 +65,15 @@ describe("Connected ThemeSelect", () =>
     { from: "system", to: "dark", option: "Dark", selector: /dark/i },
   ])(
     "Changes theme from $from to $to when selecting '$option'.",
-    ({ from, to, selector }) =>
+    ({ from, to, selector }: { from: "light" | "dark" | "system", to: "light" | "dark" | "system", option: string, selector: RegExp }) =>
     {
-      const store = createStore(
-        combineReducers({ themePreference }),
-        {},
-        applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-      );
-      store.dispatch(setThemePreference(from));
+      useLocalStore.getState().setThemePreference(from);
 
-      const {getByLabelText} = render(
-        <Provider store={store}>
-          <ThemeSelect />
-        </Provider>
-      );
+      const { getByLabelText } = render(<ThemeSelect />);
 
       fireEvent.click(getByLabelText(selector));
 
-      expect((getByLabelText(selector) as HTMLInputElement).checked).toBe(true);
-      expect(store.getState().themePreference).toBe(to);
+      expect(useLocalStore.getState().themePreference).toBe(to);
     }
   );
 });

@@ -1,16 +1,11 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { AnyAction, applyMiddleware, combineReducers, createStore } from "redux";
-import thunk, { ThunkDispatch } from "redux-thunk";
-
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { actors, snapToGrid } from "~/reducers/tabletop";
-import { themePreference } from "~/reducers/app";
+import { useSharedStore } from "~/store/shared";
+import { useLocalStore } from "~/store/local";
+
 import ControlPanel from "./ControlPanel";
-import { addActor, setSnapToGrid } from "~/actions/tabletop";
-import { setThemePreference } from "~/actions/app";
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -30,43 +25,26 @@ describe("Connected ControlPanel", () =>
 {
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
-    const store = createStore(
-      combineReducers({ actors }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
+    useSharedStore.setState(() => ({ actors: [] }));
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByText } = render(<ControlPanel />);
 
     fireEvent.click(getByText("Add Actor"));
 
-    expect(store.getState().actors.length).toBe(1);
+    expect(useSharedStore.getState().actors.length).toBe(1);
   });
 
   it("Shows a list of actors when there is an actor in the store.", () =>
   {
-    const store = createStore(
-      combineReducers({ actors }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(addActor({
+    useSharedStore.getState().addActor({
       id: "",
       name: "Actor 1",
       initiative: 0,
       x: 0,
       y: 0
-    }));
+    })
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByText } = render(<ControlPanel />);
 
     expect(getByText("Actor 1")).toBeInTheDocument();
   });
@@ -120,20 +98,12 @@ describe("Connected ControlPanel", () =>
     "Orders actors by their initiative from greatest to least.",
     (testActors, expectedOrder) =>
   {
-    const store = createStore(
-      combineReducers({ actors }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
+    useSharedStore.setState(() => ({ actors: [] }));
 
     for (let actor of testActors)
-      store.dispatch(addActor(actor));
+      useSharedStore.getState().addActor(actor);
 
-    const { getAllByText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getAllByText } = render(<ControlPanel />);
 
     const entries = getAllByText(/.*/i, { selector: "li" })
 
@@ -146,24 +116,16 @@ describe("Connected ControlPanel", () =>
 
   it("Removes the actor associated with the clicked initiative entry.", () =>
   {
-    const store = createStore(
-      combineReducers({ actors }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(addActor({
+    useSharedStore.setState(() => ({ actors: [] }));
+    useSharedStore.getState().addActor({
       id: "1",
       name: "Actor 1",
       initiative: 0,
       x: 0,
       y: 0
-    }));
+    });
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByText } = render(<ControlPanel />);
 
     fireEvent.click(getByText("Actor 1"));
 
@@ -172,112 +134,60 @@ describe("Connected ControlPanel", () =>
 
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
   {
-    const store = createStore(
-      combineReducers({ snapToGrid }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setSnapToGrid(false));
+    useLocalStore.setState(() => ({ snapToGrid: false }));
 
     const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
+      <ControlPanel />
     );
 
     fireEvent.click(getByLabelText("Snap to Grid"));
 
-    expect(store.getState().snapToGrid).toBe(true);
+    expect(useLocalStore.getState().snapToGrid).toBe(true);
   });
 
   it("Unchecks 'Snap to Grid' when snapToGrid is false.", () =>
   {
-    const store = createStore(
-      combineReducers({ snapToGrid }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setSnapToGrid(false));
+    useLocalStore.setState(() => ({ snapToGrid: false }))
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     expect(getByLabelText("Snap to Grid")).not.toHaveAttribute("checked");
   });
 
   it("Checks 'Snap to Grid' when snapToGrid is true.", () =>
   {
-    const store = createStore(
-      combineReducers({ snapToGrid }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setSnapToGrid(true));
+    useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     expect(getByLabelText("Snap to Grid")).toHaveAttribute("checked");
   });
 
   it("Disables snap-to-grid when 'Snap to Grid' is unchecked.", () =>
   {
-    const store = createStore(
-      combineReducers({ snapToGrid }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setSnapToGrid(true));
+    useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     fireEvent.click(getByLabelText("Snap to Grid"));
 
-    expect(store.getState().snapToGrid).toBe(false);
+    expect(useLocalStore.getState().snapToGrid).toBe(false);
   });
 
   it("Checks 'light' theme indicator when theme is set to 'light'.", () =>
   {
-    const store = createStore(
-      combineReducers({ themePreference: themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference('light'));
+    useLocalStore.setState(() => ({ themePreference: 'light' }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(true);
   });
 
   it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
   {
-    const store = createStore(
-      combineReducers({ themePreference: themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference('dark'));
+    useLocalStore.setState(() => ({ themePreference: 'dark' }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(true);
   });
@@ -285,62 +195,41 @@ describe("Connected ControlPanel", () =>
   it.each([
     [ 'light', [ true, false ] ],
     [ 'dark', [ false, true ] ]
-  ])("Only checks one theme at a time.", (themeName, [ dayState, darkState ]) =>
-  {
-    const store = createStore(
-      combineReducers({ themePreference: themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference(themeName));
+  ])(
+    "Only checks one theme at a time.",
+    (
+      themeName: "light" | "dark",
+      [ dayState, darkState ]
+    ) =>
+    {
+      useLocalStore.setState(() => ({ themePreference: themeName }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+      const { getByLabelText } = render(<ControlPanel />);
 
-    expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(dayState);
-    expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
-  });
+      expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(dayState);
+      expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
+    }
+  );
 
   it("Sets theme to day when day theme is clicked.", () =>
   {
-    const store = createStore(
-      combineReducers({ themePreference: themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference("dark"));
+    useLocalStore.setState(() => ({ themePreference: "dark" }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     fireEvent.click(getByLabelText("Light"));
 
-    expect(store.getState().themePreference).toBe("light");
+    expect(useLocalStore.getState().themePreference).toBe("light");
   });
 
   it("Sets theme to dark when dark theme is clicked.", () =>
   {
-    const store = createStore(
-      combineReducers({ themePreference: themePreference }),
-      {},
-      applyMiddleware<ThunkDispatch<{}, unknown, AnyAction>, {}>(thunk)
-    );
-    store.dispatch(setThemePreference("light"));
+    useLocalStore.setState(() => ({ themePreference: "light" }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <ControlPanel />
-      </Provider>
-    );
+    const { getByLabelText } = render(<ControlPanel />);
 
     fireEvent.click(getByLabelText("Dark"));
 
-    expect(store.getState().themePreference).toBe("dark");
+    expect(useLocalStore.getState().themePreference).toBe("dark");
   });
 });

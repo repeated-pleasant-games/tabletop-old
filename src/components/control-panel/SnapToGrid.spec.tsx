@@ -1,11 +1,9 @@
 import React from "react";
-import { combineReducers, createStore } from "redux";
-import { Provider } from "react-redux";
 import { fireEvent, render } from "@testing-library/react";
 
-import { snapToGrid } from "~/reducers/tabletop"
+import { useLocalStore } from "~/store/local";
+
 import SnapToGrid, { SnapToGrid as DisconnectedSnapToGrid } from "./SnapToGrid";
-import { setSnapToGrid } from "~/actions/tabletop";
 
 describe("Disconnected SnapToGrid", () =>
 {
@@ -23,61 +21,41 @@ describe("Connected SnapToGrid", () =>
 {
   it("Is unchecked when snapToGrid state is false.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }))
-    store.dispatch(setSnapToGrid(false));
+    useLocalStore.setState(() => ({ snapToGrid: false }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <SnapToGrid />
-      </Provider>
-    );
+    const { getByLabelText } = render(<SnapToGrid />);
 
     expect((getByLabelText(/snap to grid/i) as HTMLInputElement).checked).toBe(false);
   });
 
   it("Is checked when snapToGrid state is true.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }))
-    store.dispatch(setSnapToGrid(true));
+    useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <SnapToGrid />
-      </Provider>
-    );
+    const { getByLabelText } = render(<SnapToGrid />);
 
     expect((getByLabelText(/snap to grid/i) as HTMLInputElement).checked).toBe(true);
   });
 
   it("Sets snapToGrid to true when checked.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }))
-    store.dispatch(setSnapToGrid(false));
+    useLocalStore.setState(() => ({ snapToGrid: false }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <SnapToGrid />
-      </Provider>
-    );
+    const { getByLabelText } = render(<SnapToGrid />);
 
     fireEvent.click(getByLabelText(/snap to grid/i));
 
-    expect(store.getState().snapToGrid).toBe(true);
+    expect(useLocalStore.getState().snapToGrid).toBe(true);
   });
 
   it("Sets snapToGrid to false when unchecked.", () =>
   {
-    const store = createStore(combineReducers({ snapToGrid }))
-    store.dispatch(setSnapToGrid(true));
+    useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(
-      <Provider store={store}>
-        <SnapToGrid />
-      </Provider>
-    );
+    const { getByLabelText } = render(<SnapToGrid />);
 
     fireEvent.click(getByLabelText(/snap to grid/i));
 
-    expect(store.getState().snapToGrid).toBe(false);
+    expect(useLocalStore.getState().snapToGrid).toBe(false);
   });
 });
