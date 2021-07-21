@@ -1,35 +1,27 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { setSnapToGrid } from "~/actions/tabletop";
+import { useLocalStore } from "~/store/local";
 
 import { Checkbox } from "../util/Checkbox";
 
-export const SnapToGrid = ({
-  setSnapToGrid = (value: boolean) => null,
-  snapToGrid = false
-}: {
-  setSnapToGrid?: (value: boolean) => void
-  snapToGrid?: boolean
-}) =>
-(
-  <Checkbox
-    checked={snapToGrid}
-    onChecked={() => setSnapToGrid(true)}
-    onUnchecked={() => setSnapToGrid(false)}
-  >
-    Snap to Grid
-  </Checkbox>
-);
+export const SnapToGrid = () =>
+{
+  const { snapToGrid, setSnapToGrid } = useLocalStore(
+    ({ snapToGrid, setSnapToGrid }) =>
+    ({
+      snapToGrid,
+      setSnapToGrid,
+    })
+  );
 
-const stateToProps = ({ snapToGrid }: { snapToGrid: boolean }) =>
-({
-  snapToGrid,
-});
+  return (
+    <Checkbox
+      checked={snapToGrid}
+      onChecked={() => setSnapToGrid(true)}
+      onUnchecked={() => setSnapToGrid(false)}
+    >
+      Snap to Grid
+    </Checkbox>
+  );
+};
 
-const dispatchToProps = (dispatch: Dispatch) =>
-({
-  setSnapToGrid: (value: boolean) => dispatch(setSnapToGrid(value)),
-});
-
-export default connect(stateToProps, dispatchToProps)(SnapToGrid);
+export default SnapToGrid;

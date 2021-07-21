@@ -1,17 +1,16 @@
 import * as React from "react";
-import { combineReducers, createStore } from "redux";
+import { act } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
-import { viewTransform } from "~/reducers/tabletop";
+import { useLocalStore } from "~/store/local";
+import { identityTransform } from "~/core/Transform";
 
 import RectangularGridPattern,
 {
   RectangularGridPattern as DisconnectedPattern,
   patternTestId
 } from "./RectangularGridPattern";
-import { Provider } from "react-redux";
-import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
 
 describe("Disconnected RectangularGridPattern component", () =>
 {
@@ -61,27 +60,26 @@ describe("Connected RectangularGridPattern component", () =>
 {
   it("Uses view transform as patternTransform.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.setState(() => ({ viewTransform: identityTransform() }));
 
     const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <RectangularGridPattern id={null} cellSize={16} />
-      </Provider>
+      <RectangularGridPattern id={null} cellSize={16} />
     );
 
     expect(getByTestId(patternTestId)).toHaveAttribute(
       "patternTransform",
       "matrix(1,0,0,1,0,0)");
 
-    store.dispatch(
-      {
-        type: "set view transform",
+    act(() =>
+    {
+      useLocalStore.setState(() => ({
         viewTransform: [
           [ 1, 0, 2 ],
           [ 0, 1, 3 ],
           [ 0, 0, 1 ]
-        ],
-      } as SetViewTransformPayload);
+        ]
+      }));
+    });
 
     expect(getByTestId(patternTestId)).toHaveAttribute(
       "patternTransform",

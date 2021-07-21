@@ -1,6 +1,4 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 
@@ -8,9 +6,9 @@ import "@testing-library/jest-dom/extend-expect";
 import "~/pointer-event";
 
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
-import { viewTransform } from "~/reducers/tabletop";
-import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
 import { identityTransform, Transform } from "~/core/Transform";
+import { useLocalStore } from "~/store/local";
+import { act } from "react-dom/test-utils";
 
 describe("Disconnected Grid component", () =>
 { 
@@ -54,13 +52,9 @@ describe("Connected Grid component", () =>
 {
   it("Translates the view transform when users clicks and drags.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
     const pointerId = 0;
@@ -70,7 +64,7 @@ describe("Connected Grid component", () =>
       grid,
       { pointerId, clientX: 10, clientY: 13 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual([
         [ 1, 0, 10 ],
         [ 0, 1, 13 ],
@@ -80,32 +74,25 @@ describe("Connected Grid component", () =>
 
   it("Translates the view relative to the current transform.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
-
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
-
-    const grid = getByTestId(gridTestId);
-    const pointerId = 0;
-
-    store.dispatch({
-      type: "set view transform",
-      viewTransform: [
+    useLocalStore.getState().setViewTransform(
+      [
         [ 1, 0, 2 ],
         [ 0, 1, 2 ],
         [ 0, 0, 1 ]
-      ],
-    } as SetViewTransformPayload);
+      ]
+    );
+
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
+
+    const grid = getByTestId(gridTestId);
+    const pointerId = 0;
 
     fireEvent.pointerDown(grid, { pointerId });
     fireEvent.pointerMove(
       grid,
       { pointerId, clientX: 10, clientY: 13 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual(
         [
           [ 1, 0, 12 ],
@@ -116,13 +103,9 @@ describe("Connected Grid component", () =>
 
   it("Does not change view transform when user only drags.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
@@ -130,7 +113,7 @@ describe("Connected Grid component", () =>
       grid,
       { clientX: 10, clientY: 13 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual([
         [ 1, 0, 0 ],
         [ 0, 1, 0 ],
@@ -140,13 +123,9 @@ describe("Connected Grid component", () =>
 
   it("Does not change the view transform after the user releases the mouse", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
@@ -155,7 +134,7 @@ describe("Connected Grid component", () =>
     fireEvent.pointerUp(grid, { pointerId: 0 });
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 0, clientY: 0 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual([
         [ 1, 0, 10 ],
         [ 0, 1, 10 ],
@@ -165,13 +144,9 @@ describe("Connected Grid component", () =>
 
   it("Does not stop updating view transform when another pointer goes up.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
@@ -180,7 +155,7 @@ describe("Connected Grid component", () =>
     fireEvent.pointerUp(grid, { pointerId: 1 });
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 20, clientY: 20 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual([
         [ 1, 0, 20 ], 
         [ 0, 1, 20 ],
@@ -190,13 +165,9 @@ describe("Connected Grid component", () =>
 
   it("Only follows first pointer that goes down.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
@@ -204,7 +175,7 @@ describe("Connected Grid component", () =>
     fireEvent.pointerDown(grid, { pointerId: 1 })
     fireEvent.pointerMove(grid, { pointerId: 0, clientX: 10, clientY: 10 });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
       .toStrictEqual([
         [ 1, 0, 10 ],
         [ 0, 1, 10 ],
@@ -315,40 +286,30 @@ describe("Connected Grid component", () =>
     expectedTransform: Transform
   ) =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
-    store.dispatch(setViewTransform(initialTransform));
+    useLocalStore.getState().setViewTransform(initialTransform);
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
     fireEvent.wheel(grid, { deltaY });
 
-    expect(store.getState().viewTransform).toStrictEqual(expectedTransform);
+    expect(useLocalStore.getState().viewTransform).toStrictEqual(expectedTransform);
   });
 
   it("Zooms centered on cursor.", () =>
   {
     const clientX = 10, clientY = 12, deltaY = 100;
 
-    const store = createStore(combineReducers({ viewTransform }));
-    store.dispatch(setViewTransform(identityTransform()));
+    useLocalStore.getState().setViewTransform(identityTransform());
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Grid patternId={null} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
 
     const grid = getByTestId(gridTestId);
 
     fireEvent.wheel(grid, { deltaY, clientX, clientY });
 
-    expect(store.getState().viewTransform)
+    expect(useLocalStore.getState().viewTransform)
     .toStrictEqual([
       [ 0.9,   0, (clientX * (1 - 0.9)) ],
       [   0, 0.9, (clientY * (1 - 0.9)) ],

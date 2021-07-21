@@ -1,15 +1,11 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
-
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { actors } from "~/reducers/tabletop";
+import { useSharedStore } from "~/store/shared";
 
 import Tabletop, { Tabletop as DisconnectedTabletop } from "./Tabletop";
 import { tokenTestId } from "./Token";
-import { addActor } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
 
 describe("Disconnected Tabletop component", () =>
@@ -58,15 +54,20 @@ describe("Connected Tabletop component", () =>
     "Has a number of Tokens equal to the number of Actors in the app store",
     (actorList, expectedTokenCount) =>
     {
-      const store = createStore(combineReducers({ actors }));
 
       for (var actor of actorList)
-        store.dispatch(addActor(actor));
+        useSharedStore.setState(
+          (state) =>
+          ({
+            actors: [
+              ...state.actors,
+              actor
+            ]
+          })
+        );
 
       const { queryAllByTestId } = render(
-        <Provider store={store}>
-          <Tabletop grid={null} />
-        </Provider>
+        <Tabletop grid={null} />
       );
 
       expect(queryAllByTestId(tokenTestId).length).toBe(expectedTokenCount);

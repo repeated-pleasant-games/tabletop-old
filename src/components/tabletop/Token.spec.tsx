@@ -1,16 +1,14 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
-
 import "@testing-library/jest-dom/extend-expect";
+
 import "~/pointer-event";
 
+import { useLocalStore } from "~/store/local";
+import { identityTransform, scale, translation } from "~/core/Transform";
+
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
-import { viewTransform, snapToGrid } from "~/reducers/tabletop";
-import { setSnapToGrid, setViewTransform } from "~/actions/tabletop";
-import { scale, translation } from "~/core/Transform";
 
 describe("Disconnected Token", () =>
 {
@@ -191,12 +189,8 @@ describe("Connected Token", () =>
 {
   it("Has transform attribute equal to viewTransform.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
-
     const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Token x={0} y={0} cellSize={16} />
-      </Provider>
+      <Token x={0} y={0} cellSize={16} />
     );
 
     expect(getByTestId(tokenTestId))
@@ -205,14 +199,9 @@ describe("Connected Token", () =>
 
   it("Adjusts pointer x and y using viewTransform.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
-    store.dispatch(setViewTransform(translation(10, 20)));
+    useLocalStore.getState().setViewTransform(translation(10, 20));
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Token x={0} y={0} cellSize={16} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
 
     const token = getByTestId(tokenTestId);
 
@@ -225,14 +214,9 @@ describe("Connected Token", () =>
 
   it("Follows pointer when user clicks and drags.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
-    store.dispatch(setViewTransform(translation(0, 0)));
+    useLocalStore.getState().setViewTransform(translation(10, 20));
 
-    const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <Token x={0} y={0} cellSize={16} />
-      </Provider>
-    );
+    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
 
     const token = getByTestId(tokenTestId);
 
@@ -272,14 +256,9 @@ describe("Connected Token", () =>
     "Follows pointer when user clicks and drags, relative to cursor.",
     (transform, [ initX, initY ], [ endX, endY ], [ expectedX, expectedY ]) =>
     {
-      const store = createStore(combineReducers({ viewTransform }));
-      store.dispatch(setViewTransform(transform));
+      useLocalStore.getState().setViewTransform(transform);
 
-      const { getByTestId } = renderSVG(
-        <Provider store={store}>
-          <Token x={0} y={0} cellSize={16} />
-        </Provider>
-      );
+      const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
 
       const token = getByTestId(tokenTestId);
 
@@ -306,14 +285,10 @@ describe("Connected Token", () =>
 
   it("Snaps to grid when snapToGrid is true", () =>
   {
-		const store = createStore(combineReducers({ snapToGrid }));
-		store.dispatch(setSnapToGrid(true));
+    useLocalStore.getState().setViewTransform(identityTransform());
+    useLocalStore.getState().setSnapToGrid(true);
 
-		const { getByTestId } = renderSVG(
-			<Provider store={store}>
-				<Token x={0} y={0} cellSize={16} />
-			</Provider>
-		);
+		const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
 
 		const token = getByTestId(tokenTestId);
 
