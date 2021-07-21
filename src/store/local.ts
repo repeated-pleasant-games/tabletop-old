@@ -1,6 +1,7 @@
 import create from "zustand";
 
 import { identityTransform, Transform } from "~/core/Transform";
+import { getColorMode, getThemePreference, setColors } from "~/utility/theme";
 
 type LocalState =
 {
@@ -17,10 +18,14 @@ type LocalState =
 export const useLocalStore = create<LocalState>(
   (set) =>
   ({
-    themePreference: "system",
+    themePreference: (getThemePreference() as "system" | "light" | "dark"),
     setThemePreference:
       (themePreference: "system" | "light" | "dark") =>
-        set((_) => ({ themePreference })),
+      {
+        window.localStorage.setItem("themePreference", themePreference);
+        setColors(getColorMode(themePreference));
+        return set((_) => ({ themePreference }));
+      },
 
     viewTransform: identityTransform(),
     setViewTransform:
