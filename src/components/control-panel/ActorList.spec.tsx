@@ -11,7 +11,6 @@ import ActorList, {
   actorListItemTestId,
   actorListTestId
 } from "./ActorList";
-import { act } from "react-dom/test-utils";
 
 describe("Disconnected ActorList", () =>
 {
