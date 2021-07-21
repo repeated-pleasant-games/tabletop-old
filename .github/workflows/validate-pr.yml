@@ -76,7 +76,7 @@ jobs:
             libhyphen0 \
             libgles2 \
             gstreamer1.0-libav \
-            libevdev
+            libevdev2
       
       - name: Setup Node
         uses: actions/setup-node@v2
