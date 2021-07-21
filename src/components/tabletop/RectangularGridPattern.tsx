@@ -1,6 +1,6 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { Transform, toSvgMatrix } from "~/core/Transform";
+import { toSvgMatrix } from "~/core/Transform";
+import { useLocalStore } from "~/store/local";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -8,37 +8,35 @@ export const patternTestId = "grid-pattern";
 type RectangularGridPatternProps = React.HTMLAttributes<{}> &
 {
   cellSize: number,
-  viewTransform?: Transform
 };
 
 export const RectangularGridPattern = (
-  { id, cellSize, viewTransform }: RectangularGridPatternProps
+  { id, cellSize }: RectangularGridPatternProps
 ) =>
-(
-  <defs data-testid={rectangularPatternTestId}>
-    <pattern
-      data-testid={patternTestId}
-      id={id}
-      width={cellSize}
-      height={cellSize}
-      patternUnits="userSpaceOnUse"
-      patternTransform={
-        viewTransform
-        ? toSvgMatrix(viewTransform)
-        : ""}
-    >
-      <path
-        className="day grid-pattern"
-        d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
-        strokeWidth="1"
-      />
-    </pattern>
-  </defs>
-);
+{
+  const viewTransform = useLocalStore((state) => state.viewTransform);
 
-const stateToProps = ({ viewTransform }: { viewTransform: Transform }) =>
-({
-  viewTransform
-});
+  return (
+    <defs data-testid={rectangularPatternTestId}>
+      <pattern
+        data-testid={patternTestId}
+        id={id}
+        width={cellSize}
+        height={cellSize}
+        patternUnits="userSpaceOnUse"
+        patternTransform={
+          viewTransform
+          ? toSvgMatrix(viewTransform)
+          : ""}
+      >
+        <path
+          className="day grid-pattern"
+          d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
+          strokeWidth="1"
+        />
+      </pattern>
+    </defs>
+  );
+};
 
-export default connect(stateToProps)(RectangularGridPattern);
+export default RectangularGridPattern;

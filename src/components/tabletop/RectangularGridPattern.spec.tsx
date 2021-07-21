@@ -12,6 +12,9 @@ import RectangularGridPattern,
 } from "./RectangularGridPattern";
 import { Provider } from "react-redux";
 import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
+import { useLocalStore } from "~/store/local";
+import { identityTransform } from "~/core/Transform";
+import { act } from "react-dom/test-utils";
 
 describe("Disconnected RectangularGridPattern component", () =>
 {
@@ -61,27 +64,26 @@ describe("Connected RectangularGridPattern component", () =>
 {
   it("Uses view transform as patternTransform.", () =>
   {
-    const store = createStore(combineReducers({ viewTransform }));
+    useLocalStore.setState(() => ({ viewTransform: identityTransform() }));
 
     const { getByTestId } = renderSVG(
-      <Provider store={store}>
-        <RectangularGridPattern id={null} cellSize={16} />
-      </Provider>
+      <RectangularGridPattern id={null} cellSize={16} />
     );
 
     expect(getByTestId(patternTestId)).toHaveAttribute(
       "patternTransform",
       "matrix(1,0,0,1,0,0)");
 
-    store.dispatch(
-      {
-        type: "set view transform",
+    act(() =>
+    {
+      useLocalStore.setState(() => ({
         viewTransform: [
           [ 1, 0, 2 ],
           [ 0, 1, 3 ],
           [ 0, 0, 1 ]
-        ],
-      } as SetViewTransformPayload);
+        ]
+      }));
+    });
 
     expect(getByTestId(patternTestId)).toHaveAttribute(
       "patternTransform",
