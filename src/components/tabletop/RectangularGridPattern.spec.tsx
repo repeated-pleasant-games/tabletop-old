@@ -1,20 +1,16 @@
 import * as React from "react";
-import { combineReducers, createStore } from "redux";
+import { act } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
-import { viewTransform } from "~/reducers/tabletop";
+import { useLocalStore } from "~/store/local";
+import { identityTransform } from "~/core/Transform";
 
 import RectangularGridPattern,
 {
   RectangularGridPattern as DisconnectedPattern,
   patternTestId
 } from "./RectangularGridPattern";
-import { Provider } from "react-redux";
-import { setViewTransform, SetViewTransformPayload } from "~/actions/tabletop";
-import { useLocalStore } from "~/store/local";
-import { identityTransform } from "~/core/Transform";
-import { act } from "react-dom/test-utils";
 
 describe("Disconnected RectangularGridPattern component", () =>
 {
