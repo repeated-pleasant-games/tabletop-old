@@ -1,17 +1,12 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
-
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { actors } from "~/reducers/tabletop";
+import { useSharedStore } from "~/store/shared";
 
 import Tabletop, { Tabletop as DisconnectedTabletop } from "./Tabletop";
 import { tokenTestId } from "./Token";
-import { addActor } from "~/actions/tabletop";
 import { Actor } from "~/core/Actor";
-import { useSharedStore } from "~/store/shared";
 
 describe("Disconnected Tabletop component", () =>
 {

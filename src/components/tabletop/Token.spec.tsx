@@ -1,17 +1,14 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
-
 import "@testing-library/jest-dom/extend-expect";
+
 import "~/pointer-event";
 
-import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
-import { viewTransform, snapToGrid } from "~/reducers/tabletop";
-import { setSnapToGrid, setViewTransform } from "~/actions/tabletop";
-import { identityTransform, scale, translation } from "~/core/Transform";
 import { useLocalStore } from "~/store/local";
+import { identityTransform, scale, translation } from "~/core/Transform";
+
+import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
 
 describe("Disconnected Token", () =>
 {

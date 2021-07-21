@@ -1,14 +1,10 @@
 import React from "react";
-import { AnyAction, applyMiddleware, combineReducers, createStore } from "redux";
-import thunk, { ThunkDispatch } from "redux-thunk";
-import { Provider } from "react-redux";
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { themePreference } from "~/reducers/app";
-import { setThemePreference } from "~/actions/app";
-import ThemeSelect, { ThemeSelect as DisconnectedThemeSelect } from "./ThemeSelect";
 import { useLocalStore } from "~/store/local";
+
+import ThemeSelect, { ThemeSelect as DisconnectedThemeSelect } from "./ThemeSelect";
 
 describe("Disconnected ThemeSelect", () =>
 {
