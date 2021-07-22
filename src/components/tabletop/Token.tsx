@@ -36,6 +36,8 @@ export const Token = ({
     <rect
       data-testid={tokenTestId}
 
+      className="token"
+
       x={x}
       y={y}
       width={cellSize}
