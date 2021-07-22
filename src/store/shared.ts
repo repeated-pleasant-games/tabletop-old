@@ -18,7 +18,7 @@ new WebrtcProvider("repeated-pleasant-games", doc);
 
 export const useSharedStore = create<SharedState>(
   yjs(
-    new Y.Doc(),
+    doc,
     "shared-state",
     (set) =>
     ({
