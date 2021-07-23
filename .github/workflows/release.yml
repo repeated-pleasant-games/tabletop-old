@@ -30,6 +30,11 @@ jobs:
           npm run build
           zip ./dist -o ./dist.zip
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: ./dist
+
       - name: Release
         uses: cycjimmy/semantic-release-action@v2
         id: release
