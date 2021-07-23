@@ -1,6 +1,8 @@
 import React, { InputHTMLAttributes } from "react";
 import { v4 as uuid } from "uuid";
 
+import "./Radio.module.css";
+
 type TRadio = React.FunctionComponent<RadioProps> &
 {
   Option?: React.FunctionComponent<OptionProps>
