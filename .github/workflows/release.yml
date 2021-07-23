@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           npm run build
-          zip ./dist -o ./dist.zip
+          zip ./dist
 
       - uses: actions/upload-artifact@v2
         with:
