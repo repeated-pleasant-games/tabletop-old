@@ -16,3 +16,13 @@ ul > li {
 ul > li + li {
     margin-top: 0.5rem;
 }
+
+.no-actors {
+    font-weight: normal;
+    font-style: italic;
+
+    color: var(--gray-5);
+
+    width: 100%;
+    text-align: center;
+}
