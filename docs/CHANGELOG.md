@@ -1,3 +1,5 @@
+# [1.0.0-alpha.6](https://github.com/repeated-pleasant-games/tabletop/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2021-07-23)
+
 # [1.0.0-alpha.5](https://github.com/repeated-pleasant-games/tabletop/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2021-07-23)
 
 # [1.0.0-alpha.4](https://github.com/repeated-pleasant-games/tabletop/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2021-07-23)
