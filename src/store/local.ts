@@ -13,6 +13,9 @@ type LocalState =
 
   snapToGrid: boolean,
   setSnapToGrid: (snapToGrid: boolean) => void,
+
+  room: string,
+  setRoom: (roomName: string) => void,
 };
 
 export const useLocalStore = create<LocalState>(
@@ -36,5 +39,9 @@ export const useLocalStore = create<LocalState>(
     setSnapToGrid:
       (snapToGrid: boolean) =>
         set((_) => ({ snapToGrid })),
+
+    room: "",
+    setRoom: (roomName) =>
+      set(() => ({ room: roomName })),
   })
 );
