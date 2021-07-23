@@ -14,7 +14,7 @@ export const AddActor = () =>
         onClick={
           () => addActor({
             id: uuid(),
-            name: "",
+            name: "Actor",
             initiative: 0,
             x: 0,
             y: 0,

@@ -8,12 +8,14 @@ type TokenProps =
 {
   x: number,
   y: number,
+  setPosition: (x: number, y: number) => void,
   cellSize: number,
 }
 
 export const Token = ({
-  x: _x,
-  y: _y,
+  x,
+  y,
+  setPosition,
   cellSize,
 }: TokenProps) =>
 {
@@ -27,7 +29,6 @@ export const Token = ({
     }));
 
   const [ isDragging, setDragging ] = React.useState(false);
-  const [ [ x, y ], setPosition ] = React.useState([ _x, _y ]);
   const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
 
   const snap = (value: number) => Math.floor(value / cellSize) * cellSize;
@@ -35,6 +36,8 @@ export const Token = ({
   return (
     <rect
       data-testid={tokenTestId}
+
+      className="token"
 
       x={x}
       y={y}
@@ -84,13 +87,14 @@ export const Token = ({
               apply(
                 inverseOf(viewTransform || identityTransform()),
                 [ tokenX, tokenY ]
-              )
+              );
 
-            setPosition(
-              snapToGrid
-              ? tokenPosition.map(snap) as [ number, number ]
-              : tokenPosition
-            );
+            const [ x, y ] =
+                snapToGrid
+                ? tokenPosition.map(snap) as [ number, number ]
+                : tokenPosition
+
+            setPosition(x, y);
           }
         }
       }

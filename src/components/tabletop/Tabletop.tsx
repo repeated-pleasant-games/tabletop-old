@@ -12,7 +12,12 @@ export const Tabletop = ({ grid, }: TabletopProps) =>
 {
   const {
     actors,
-  } = useSharedStore();
+    setActorPosition
+  } = useSharedStore((state) =>
+  ({
+    actors: state.actors,
+    setActorPosition: state.setActorPosition,
+  }));
 
   return (
     <svg id="tabletop">
@@ -23,7 +28,13 @@ export const Tabletop = ({ grid, }: TabletopProps) =>
           actors.map(
             (actor) =>
             (
-              <Token key={actor.id} x={actor.x} y={actor.y} cellSize={16} />
+              <Token
+                key={actor.id}
+                x={actor.x}
+                y={actor.y}
+                setPosition={(x, y) => setActorPosition(actor.id, x, y)}
+                cellSize={16}
+              />
             )
           )
         }

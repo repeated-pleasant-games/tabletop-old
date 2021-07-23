@@ -13,25 +13,28 @@ export const ActorList = () =>
   }));
 
   return (
-    <ul data-testid={actorListTestId}>
-      {
-        actors &&
-        actors
-        .sort(
-          (a, b) => Math.sign(b.initiative - a.initiative)
-        )
-        .map(
-          (actor) =>
-          <li
-            key={actor.id}
-            data-testid={actorListItemTestId}
-            onClick={() => removeActor(actor.id)}
-          >
-            {actor.name}
-          </li>
-        )
-      }
-    </ul>
+    <>
+      <span>Actors:</span>
+      <ul data-testid={actorListTestId}>
+        {
+          actors &&
+          actors
+          .sort(
+            (a, b) => Math.sign(b.initiative - a.initiative)
+          )
+          .map(
+            (actor) =>
+            <li
+              key={actor.id}
+              data-testid={actorListItemTestId}
+              onClick={() => removeActor(actor.id)}
+            >
+              {actor.name}
+            </li>
+          )
+        }
+      </ul>
+    </>
   );
 };
 

@@ -9,19 +9,36 @@ import { useLocalStore } from "~/store/local";
 import { identityTransform, scale, translation } from "~/core/Transform";
 
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
+import { useSharedStore } from "~/store/shared";
+import { Actor } from "~/core/Actor";
+import create from "zustand";
 
 describe("Disconnected Token", () =>
 {
   it("Has a SVG rect.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={1} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={1}
+      />
+    );
 
     expect(getByTestId(tokenTestId).nodeName).toEqual("rect");
   });
 
   it("Has given x and y coordinates.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={10} y={11} cellSize={1} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={10}
+        y={11}
+        setPosition={() => {}}
+        cellSize={1}
+      />
+    );
 
     expect(getByTestId(tokenTestId)).toHaveAttribute("x", "10");
     expect(getByTestId(tokenTestId)).toHaveAttribute("y", "11");
@@ -29,7 +46,14 @@ describe("Disconnected Token", () =>
 
   it("Has a width and height equal to the given cell size.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     expect(getByTestId(tokenTestId)).toHaveAttribute("width", "16");
     expect(getByTestId(tokenTestId)).toHaveAttribute("height", "16");
@@ -37,45 +61,78 @@ describe("Disconnected Token", () =>
 
   it("Follows pointer when user clicks and drags.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
     fireEvent.pointerDown(token, { button: 0 });
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "20");
-    expect(token).toHaveAttribute("y", "20");
+    expect(setPosition).toHaveBeenCalledWith(20, 20);
   });
 
   it("Follows pointer when user clicks and drags, relative to cursor.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
     fireEvent.pointerDown(token, { button: 0, clientX: 8, clientY: 4 });
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "12");
-    expect(token).toHaveAttribute("y", "16");
+    expect(setPosition).toHaveBeenCalledWith(12, 16);
   });
 
   it("Does not follow pointer when pointer is not down.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+    
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "0");
-    expect(token).toHaveAttribute("y", "0");
+    expect(setPosition).not.toHaveBeenCalled();
   });
 
   it("Does not follow pointer after pointer is released.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
@@ -83,26 +140,42 @@ describe("Disconnected Token", () =>
     fireEvent.pointerUp(token);
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "0");
-    expect(token).toHaveAttribute("y", "0");
+    expect(setPosition).not.toHaveBeenCalled();
   });
 
   it("Does not follow pointer if button 0 is not pressed.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
     fireEvent.pointerDown(token, { button: 1 });
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "0");
-    expect(token).toHaveAttribute("y", "0");
+    expect(setPosition).not.toHaveBeenCalled();
   });
 
   it("Does not stop following pointer if button release is not 0.", () =>
   {
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
@@ -110,8 +183,7 @@ describe("Disconnected Token", () =>
     fireEvent.pointerUp(token, { button: 1 });
     fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
 
-    expect(token).toHaveAttribute("x", "20");
-    expect(token).toHaveAttribute("y", "20");
+    expect(setPosition).toHaveBeenCalledWith(20, 20);
   });
 
   beforeEach(() =>
@@ -124,7 +196,14 @@ describe("Disconnected Token", () =>
   {
     const pointerId = 12;
 
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     const f = jest.fn();
     global.Element.prototype.setPointerCapture = f;
@@ -140,7 +219,14 @@ describe("Disconnected Token", () =>
   {
     const pointerId = 12;
 
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     const f = jest.fn();
     global.Element.prototype.setPointerCapture = f;
@@ -155,7 +241,14 @@ describe("Disconnected Token", () =>
   {
     const pointerId = 12;
 
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     const f = jest.fn();
     global.Element.prototype.releasePointerCapture = f;
@@ -172,7 +265,14 @@ describe("Disconnected Token", () =>
   {
     const pointerId = 12;
 
-    const { getByTestId } = renderSVG(<DisconnectedToken x={0} y={0} cellSize={16} />);
+    const { getByTestId } = renderSVG(
+      <DisconnectedToken
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
+    );
 
     const f = jest.fn();
     global.Element.prototype.releasePointerCapture = f;
@@ -183,14 +283,16 @@ describe("Disconnected Token", () =>
 
     expect(f).not.toHaveBeenCalled();
   });
-});
 
-describe("Connected Token", () =>
-{
   it("Has transform attribute equal to viewTransform.", () =>
   {
     const { getByTestId } = renderSVG(
-      <Token x={0} y={0} cellSize={16} />
+      <Token
+        x={0}
+        y={0}
+        setPosition={() => {}}
+        cellSize={16}
+      />
     );
 
     expect(getByTestId(tokenTestId))
@@ -201,30 +303,26 @@ describe("Connected Token", () =>
   {
     useLocalStore.getState().setViewTransform(translation(10, 20));
 
-    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
+    const setPosition = jest.fn();
+
+    const { getByTestId } = renderSVG(
+      <Token
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
     const token = getByTestId(tokenTestId);
 
     fireEvent.pointerDown(token, { clientX: 10, clientY: 20 });
     fireEvent.pointerMove(token, { clientX: 4, clientY: 3 });
 
-    expect(token).toHaveAttribute("x", /* 4 - 10 = */ "-6");
-    expect(token).toHaveAttribute("y", /* 3 - 20 = */ "-17");
-  });
-
-  it("Follows pointer when user clicks and drags.", () =>
-  {
-    useLocalStore.getState().setViewTransform(translation(10, 20));
-
-    const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
-
-    const token = getByTestId(tokenTestId);
-
-    fireEvent.pointerDown(token, { button: 0 });
-    fireEvent.pointerMove(token, { clientX: 20, clientY: 20 });
-
-    expect(token).toHaveAttribute("x", "20");
-    expect(token).toHaveAttribute("y", "20");
+    expect(setPosition).toHaveBeenCalledWith(
+      /* 4 - 10 = */ -6,
+      /* 3 - 20 = */ -17
+    );
   });
 
   it.each([
@@ -253,12 +351,39 @@ describe("Connected Token", () =>
       [ 32, 36 ]
     ]
   ])(
-    "Follows pointer when user clicks and drags, relative to cursor.",
+    "Follows pointer when user clicks and drags, relative to cursor. (#%#)",
     (transform, [ initX, initY ], [ endX, endY ], [ expectedX, expectedY ]) =>
     {
+      useSharedStore.setState(() => ({ actors: [] }));
+      useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
       useLocalStore.getState().setViewTransform(transform);
 
-      const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
+      const Component = () =>
+      {
+        const { x, y } = useSharedStore((state) =>
+        {
+          const index = state.actors.findIndex(({ id }) => id === "1");
+          
+          return {
+            x: state.actors[index].x,
+            y: state.actors[index].y,
+          }
+        });
+
+        return (
+          <Token
+            x={x}
+            y={y}
+            setPosition={
+              (x, y) =>
+                useSharedStore.getState().setActorPosition("1", x, y)
+            }
+            cellSize={16}
+          />
+        );
+      };
+
+      const { getByTestId } = renderSVG(<Component />);
 
       const token = getByTestId(tokenTestId);
 
@@ -285,10 +410,38 @@ describe("Connected Token", () =>
 
   it("Snaps to grid when snapToGrid is true", () =>
   {
+    useSharedStore.setState(() => ({ actors: [] }));
+    useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
+
     useLocalStore.getState().setViewTransform(identityTransform());
     useLocalStore.getState().setSnapToGrid(true);
 
-		const { getByTestId } = renderSVG(<Token x={0} y={0} cellSize={16} />);
+    const Component = () =>
+    {
+      const { x, y } = useSharedStore((state) =>
+      {
+        const index = state.actors.findIndex(({ id }) => id === "1");
+        
+        return {
+          x: state.actors[index].x,
+          y: state.actors[index].y,
+        }
+      });
+
+      return (
+        <Token
+          x={x}
+          y={y}
+          setPosition={
+            (x, y) =>
+              useSharedStore.getState().setActorPosition("1", x, y)
+          }
+          cellSize={16}
+        />
+      );
+    };
+
+    const { getByTestId } = renderSVG(<Component />);
 
 		const token = getByTestId(tokenTestId);
 
