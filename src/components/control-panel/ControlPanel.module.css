@@ -5,6 +5,10 @@ section {
     border: 1px solid var(--gray-5);
 }
 
+section > * + *:not([type="radio"]) {
+    margin-top: 0.5rem;
+}
+
 section + section {
     margin-top: 0.5rem;
 }

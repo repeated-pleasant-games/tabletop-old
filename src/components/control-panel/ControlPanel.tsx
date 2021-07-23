@@ -14,8 +14,6 @@ export const ControlPanel = () =>
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
       <AddActor />
-    </section>
-    <section>
       <ActorList />
     </section>
     <section>

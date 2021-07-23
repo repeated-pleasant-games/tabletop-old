@@ -14,7 +14,7 @@ export const ActorList = () =>
 
   return (
     <>
-      <span>Actors:</span>
+      <span style={{ display: "block" }}>Actors:</span>
       <ul data-testid={actorListTestId}>
         {
           actors &&
