@@ -5,7 +5,7 @@
     border: none;
     outline: none;
     
-    color: var(--color-fg);
+    color: var(--white);
     background-color: var(--brand-primary);
 
     padding: 0.5rem 1rem;
