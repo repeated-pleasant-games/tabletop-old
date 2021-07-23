@@ -1,0 +1,28 @@
+span {
+    display: block;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+}
+
+ul > li {
+    border: 1px solid var(--gray-5);
+
+    padding: 0.5ch 1ch;
+}
+
+ul > li + li {
+    margin-top: 0.5rem;
+}
+
+.no-actors {
+    font-weight: normal;
+    font-style: italic;
+
+    color: var(--gray-5);
+
+    width: 100%;
+    text-align: center;
+}

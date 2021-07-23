@@ -4,6 +4,8 @@ import { v4 as uuid } from "uuid";
 
 import { Button } from "~/components/util/Button";
 
+import "./AddActor.module.css";
+
 export const AddActor = () =>
 {
   const addActor = useSharedStore((state) => state.addActor);

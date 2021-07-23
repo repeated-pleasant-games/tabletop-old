@@ -1,5 +1,5 @@
 import * as React from "react";
-import { toSvgMatrix } from "~/core/Transform";
+import { getScale, inverseOf, toSvgMatrix } from "~/core/Transform";
 import { useLocalStore } from "~/store/local";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
@@ -32,7 +32,7 @@ export const RectangularGridPattern = (
         <path
           className="day grid-pattern"
           d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
-          strokeWidth="1"
+          strokeWidth={1 * getScale(inverseOf(viewTransform))[0]}
         />
       </pattern>
     </defs>

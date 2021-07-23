@@ -1,6 +1,8 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
 
+import "./Checkbox.module.css";
+
 type CheckboxProps = React.HTMLAttributes<{}> &
 {
   checked?: boolean,
