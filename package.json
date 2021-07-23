@@ -322,8 +322,14 @@
       [
         "@semantic-release/github",
         {
-          "assets": [],
-          "successComments": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue'} is resolved in ${nextRelease.version}!",
+          "assets": [
+            {
+              "path": "dist/**",
+              "name": "Distribution",
+              "label": "Deployable package of RPG Tabletop."
+            }
+          ],
+          "successComment": ":postal_horn: Huzzah! :postal_horn:\n\nThis ${issue.pull_request ? 'pull request' : 'issue'} is resolved in ${nextRelease.version}!",
           "failTitle": ":crossed_swords: To arms! The automated release calls for aid!",
           "failComment": "The release from branch `${branch.name}` has failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
           "labels": [
@@ -343,7 +349,6 @@
           "message": ":sunrise_over_mountains: Behold! ${nextRelease.version}! [skip ci]\n\n${nextRelease.notes}",
           "assets": [
             "package.json",
-            "package-lock.json",
             "docs/CHANGELOG.md"
           ]
         }
