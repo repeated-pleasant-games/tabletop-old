@@ -6,33 +6,17 @@ import "@testing-library/jest-dom/extend-expect";
 import { useSharedStore } from "~/store/shared";
 import { Actor } from "~/core/Actor";
 
-import ActorList, {
-  ActorList as DisconnectedActorList,
-  actorListItemTestId,
-  actorListTestId
-} from "./ActorList";
-
-describe("Disconnected ActorList", () =>
-{
-  it("Is a <ul> element.", () =>
-  {
-    const { getByTestId } = render(
-      <DisconnectedActorList />
-    );
-
-    expect(getByTestId(actorListTestId).tagName.toLowerCase()).toBe("ul");
-  });
-});
+import ActorList, { actorListItemTestId, } from "./ActorList";
 
 describe("Connected ActorList", () =>
 {
-  it("Is empty when there are no actors in state.", () =>
+  it("Displays 'no actors' when there are no actors in state.", () =>
   {
     useSharedStore.setState(() => ({ actors: [] }));
 
-    const { queryAllByTestId } = render(<ActorList />);
+    const { getByText } = render(<ActorList />);
 
-    expect(queryAllByTestId(actorListItemTestId)).toHaveLength(0);
+    expect(getByText(/no actors/i)).toBeInTheDocument();
   });
 
   it.each([
