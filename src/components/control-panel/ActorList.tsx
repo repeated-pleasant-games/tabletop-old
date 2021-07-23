@@ -1,6 +1,8 @@
 import React from "react";
 import { useSharedStore } from "~/store/shared";
 
+import "./ActorList.module.css";
+
 export const actorListTestId = "actor-list";
 export const actorListItemTestId = "actor-list-item";
 
@@ -14,7 +16,7 @@ export const ActorList = () =>
 
   return (
     <>
-      <span style={{ display: "block" }}>Actors:</span>
+      <span>Actors:</span>
       <ul data-testid={actorListTestId}>
         {
           actors &&
