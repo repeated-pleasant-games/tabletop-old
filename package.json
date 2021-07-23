@@ -324,7 +324,7 @@
         {
           "assets": [
             {
-              "path": "dist/**",
+              "path": "dist.zip",
               "name": "Distribution",
               "label": "Deployable package of RPG Tabletop."
             }
