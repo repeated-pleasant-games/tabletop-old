@@ -26,10 +26,10 @@ html, html.light {
 
 html.dark {
   --color-fg: var(--white);
-  --color-bg: var(--black);
+  --color-bg: var(--gray-9);
 
   --color-grid-fg: var(--gray-5);
-  --color-grid-bg: var(--gray-9);
+  --color-grid-bg: var(--color-bg);
 }
 
 * {

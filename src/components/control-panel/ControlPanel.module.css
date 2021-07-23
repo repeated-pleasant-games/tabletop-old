@@ -1,0 +1,10 @@
+section {
+    padding: 0.5rem;
+    background: var(--color-bg);
+
+    border: 1px solid var(--gray-5);
+}
+
+section + section {
+    margin-top: 0.5rem;
+}

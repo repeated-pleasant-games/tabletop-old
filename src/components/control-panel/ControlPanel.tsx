@@ -5,6 +5,8 @@ import ActorList from "./ActorList";
 import SnapToGrid from "./SnapToGrid";
 import ThemeSelect from "./ThemeSelect";
 
+import "./ControlPanel.module.css";
+
 export const controlPanelTestId = "control-panel";
 
 export const ControlPanel = () =>
