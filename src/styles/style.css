@@ -63,6 +63,8 @@ body {
 }
 
 .control-panel {
+  place-self: start;
+
   position: absolute;
   z-index: 1;
 
