@@ -7,7 +7,7 @@ import Tabletop from "~/components/tabletop/Tabletop";
 import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
 
 import ControlPanel from "./components/control-panel/ControlPanel";
-import { Button } from "./components/util/Button";
+import JoinForm from "./components/join-form/JoinForm";
 
 export const SharedStoreContext = React.createContext(
   useSharedStoreFactory("repeated-pleasant-games")
@@ -29,18 +29,7 @@ export const App = () =>
       {
         room === ""
         ? (
-          <section
-            style={{
-              width: "50%",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Room to join"
-              style={{ color: "black" }}
-            />
-            <Button>Join!</Button>
-          </section>
+          <JoinForm />
         )
         : (
           <SharedStoreContext.Provider value={useSharedStoreFactory(room)}>

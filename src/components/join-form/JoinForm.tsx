@@ -8,8 +8,14 @@ export const JoinForm = () =>
   const { setRoom } = useLocalStore();
   const [ roomName, setRoomName ] = React.useState("");
 
+  const submitHandler = () =>
+  {
+    console.log(roomName);
+    setRoom(roomName);
+  };
+
   return (
-    <form data-testid={joinFormTestId} onSubmit={() => setRoom(roomName)}>
+    <form data-testid={joinFormTestId} onSubmit={submitHandler}>
       <label
         id="room-name-label"
       >
@@ -24,7 +30,7 @@ export const JoinForm = () =>
         value={roomName}
         onChange={({ target }) => setRoomName(target.value)}
       />
-      <input type="submit" value="Join!" />
+      <input type="submit" value="Join!"/>
     </form>
   );
 }
