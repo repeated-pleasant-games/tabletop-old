@@ -2,9 +2,12 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useSharedStore } from "~/store/shared";
+import { useSharedStoreFactory } from "~/store/shared";
+
+import { v4 as uuidv4 } from "uuid";
 
 import AddActor, { AddActor as DisconnectedAddActor} from "./AddActor";
+import { SharedStoreContext } from "~/App";
 
 describe("Disconnected AddActor", () =>
 {
@@ -23,10 +26,13 @@ describe("Connected AddActor", () =>
 {
   it("Adds an actor when clicked.", () =>
   {
+    const useSharedStore = useSharedStoreFactory(uuidv4());
     useSharedStore.setState(() => ({ actors: [] }));
 
     const { getByText } = render(
-      <AddActor />
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <AddActor />
+      </SharedStoreContext.Provider>
     );
 
     const button = getByText("Add Actor");
