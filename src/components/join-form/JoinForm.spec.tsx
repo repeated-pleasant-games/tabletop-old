@@ -1,8 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 
 import JoinForm, { joinFormTestId } from "./JoinForm";
+import { useLocalStore } from "~/store/local";
 
 describe("JoinForm component", () =>
 {
@@ -22,5 +24,21 @@ describe("JoinForm component", () =>
   {
     const { getByText } = render(<JoinForm />);
     expect((getByText("Join!") as HTMLInputElement).type).toBe("submit")
+  });
+
+  it.each([
+    [ "room" ],
+    [ "antechamber" ]
+  ])("Sets room code ('%s') when you press 'Join!'.", (roomName) =>
+  {
+    useLocalStore.setState(() => ({ room: "", }));
+    
+    global.HTMLFormElement.prototype.submit = jest.fn();
+    const { getByLabelText, getByTestId } = render(<JoinForm />);
+
+    userEvent.type(getByLabelText(/room name/i), roomName);
+    fireEvent.submit(getByTestId(joinFormTestId));
+
+    expect(useLocalStore.getState().room).toBe(roomName);
   });
 });
