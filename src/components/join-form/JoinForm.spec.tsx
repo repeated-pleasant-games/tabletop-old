@@ -12,9 +12,15 @@ describe("JoinForm component", () =>
     expect(getByTestId(joinFormTestId).tagName.toLowerCase()).toBe("form");
   });
 
-  it("Has an input field.", () =>
+  it("Has an input field labelled 'Room Name'.", () =>
   {
     const { getByLabelText } = render(<JoinForm />);
     expect((getByLabelText("Room Name") as HTMLInputElement).type).toBe("text");
+  });
+
+  it("Has a submit button that says 'Join!'.", () =>
+  {
+    const { getByText } = render(<JoinForm />);
+    expect((getByText("Join!") as HTMLInputElement).type).toBe("submit")
   });
 });

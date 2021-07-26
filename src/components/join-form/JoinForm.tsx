@@ -16,6 +16,7 @@ export const JoinForm = () =>
       aria-labelledby="room-name-label"
       id="room-name-input"
     />
+    <input type="submit" value="Join!" />
   </form>
 );
 
