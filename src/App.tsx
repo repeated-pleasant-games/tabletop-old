@@ -1,4 +1,5 @@
 import * as React from "react"
+import { v4 as uuidv4 } from "uuid";
 
 import { useLocalStore } from "./store/local";
 import { useSharedStoreFactory } from "./store/shared";
@@ -10,7 +11,7 @@ import ControlPanel from "./components/control-panel/ControlPanel";
 import JoinForm from "./components/join-form/JoinForm";
 
 export const SharedStoreContext = React.createContext(
-  useSharedStoreFactory("repeated-pleasant-games")
+  useSharedStoreFactory(uuidv4())
 );
 
 export const App = () =>

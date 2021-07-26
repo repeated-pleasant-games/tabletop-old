@@ -1,5 +1,6 @@
 import React from "react";
-import { useSharedStore } from "~/store/shared";
+import { SharedStoreContext } from "~/App";
+// import { useSharedStore } from "~/store/shared";
 
 import "./ActorList.module.css";
 import styles from "./ActorList.module.css";
@@ -9,6 +10,8 @@ export const actorListItemTestId = "actor-list-item";
 
 export const ActorList = () =>
 {
+  const useSharedStore = React.useContext(SharedStoreContext);
+
   const { actors, removeActor } = useSharedStore(({ actors, removeActor }) =>
   ({
     actors,

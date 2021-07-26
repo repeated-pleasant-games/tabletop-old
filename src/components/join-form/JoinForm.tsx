@@ -24,7 +24,7 @@ export const JoinForm = () =>
         value={roomName}
         onChange={({ target }) => setRoomName(target.value)}
       />
-      <input type="submit" value="Join!"/>
+      <input type="submit" value="Join!" />
     </form>
   );
 }
