@@ -18,6 +18,11 @@ export const App = () =>
 {
   const { room } = useLocalStore();
 
+  const useSharedStore = React.useMemo(
+    () => useSharedStoreFactory(room),
+    [ room ]
+  );
+
   return (
     <main
       style={{
@@ -33,7 +38,7 @@ export const App = () =>
           <JoinForm />
         )
         : (
-          <SharedStoreContext.Provider value={useSharedStoreFactory(room)}>
+          <SharedStoreContext.Provider value={useSharedStore}>
             <ControlPanel />
             <Tabletop grid={<RectangularGrid />} />
           </SharedStoreContext.Provider>
