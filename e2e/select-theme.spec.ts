@@ -13,10 +13,7 @@ describe.each([
 
   beforeAll(async () =>
   {
-    browser = await driver.launch({
-      headless: false,
-      slowMo: 100,
-    });
+    browser = await driver.launch();
   });
 
   afterAll(async () =>
