@@ -1,6 +1,5 @@
 import React from "react";
 import { SharedStoreContext } from "~/App";
-// import { useSharedStore } from "~/store/shared";
 
 import "./ActorList.module.css";
 import styles from "./ActorList.module.css";

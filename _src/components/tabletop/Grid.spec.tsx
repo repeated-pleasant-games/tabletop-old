@@ -8,7 +8,6 @@ import "~/pointer-event";
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
 import { identityTransform, Transform } from "~/core/Transform";
 import { useLocalStore } from "~/store/local";
-import { act } from "react-dom/test-utils";
 
 describe("Disconnected Grid component", () =>
 { 

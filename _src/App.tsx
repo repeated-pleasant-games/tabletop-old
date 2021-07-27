@@ -7,8 +7,8 @@ import { useSharedStoreFactory } from "./store/shared";
 import Tabletop from "~/components/tabletop/Tabletop";
 import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
 
-import ControlPanel from "./components/control-panel/ControlPanel";
-import JoinForm from "./components/join-form/JoinForm";
+import ControlPanel from "~/components/control-panel/ControlPanel";
+import JoinForm from "~/components/join-form/JoinForm";
 
 export const SharedStoreContext = React.createContext(
   useSharedStoreFactory(uuidv4())
