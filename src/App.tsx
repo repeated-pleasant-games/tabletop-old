@@ -3,11 +3,9 @@ import * as React from "react"
 import { useLocalStore } from "@/hook/useLocalStore";
 import { SharedStore } from "@/context/SharedStore";
 
-import Tabletop from "~/components/tabletop/Tabletop";
-import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
-
-import ControlPanel from "~/components/control-panel/ControlPanel";
-import JoinForm from "~/components/join-form/JoinForm";
+import { Tabletop, RectangularGrid, } from "@/feature/tabletop";
+import { ControlPanel, } from "@/feature/control-panel";
+import { JoinForm } from "@/feature/room";
 
 export const App = () =>
 {
