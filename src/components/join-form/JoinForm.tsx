@@ -3,6 +3,8 @@ import { useLocalStore } from "~/store/local";
 
 export const joinFormTestId = "join-form"
 
+import "./JoinForm.module.css";
+
 export const JoinForm = () =>
 {
   const { setRoom } = useLocalStore();
