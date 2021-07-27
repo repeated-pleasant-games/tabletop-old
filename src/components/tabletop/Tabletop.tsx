@@ -1,8 +1,6 @@
 import * as React from "react";
 import { SharedStoreContext } from "~/App";
 
-import { useSharedStore } from "~/store/shared";
-
 import Token from "./Token";
 
 type TabletopProps = React.HTMLAttributes<{}> &

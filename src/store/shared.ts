@@ -14,52 +14,6 @@ export type SharedState =
   setActorPosition: (actorId: string, x: number, y: number) => void,
 };
 
-const doc = new Y.Doc();
-new WebrtcProvider("repeated-pleasant-games", doc);
-
-export const useSharedStore = create<SharedState>(
-  yjs(
-    doc,
-    "shared-state",
-    (set) =>
-    ({
-      actors: [],
-      addActor:
-        (actor: Actor) =>
-          set((state) => ({ actors: [ ...state.actors, actor ] })),
-      removeActor:
-        (actorId: string) =>
-          set(
-            (state) =>
-            ({
-              actors: state.actors.filter(({ id }) => id !== actorId)
-            })
-          ),
-      setActorPosition:
-        (actorId: string, x: number, y: number) =>
-          set(
-            (state) =>
-            ({
-              actors: state.actors.map(
-                (actor) =>
-                {
-                  if (actor.id === actorId)
-                    return {
-                      ...actor,
-                      x,
-                      y,
-                    };
-
-                  else
-                    return actor;
-                }
-              )
-            })
-          )
-    })
-  )
-);
-
 export const useSharedStoreFactory = (roomName: string) =>
 {
   const doc = new Y.Doc();
