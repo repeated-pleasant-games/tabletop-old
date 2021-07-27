@@ -97,6 +97,7 @@ describe.each([
         await page.close();
       });
 
+      // Flaky test, fails on random expects in random browsers.
       it("Selects that theme regardless of browser preference.", async () =>
       {
         const selector = `input[type=radio]:left-of(:text("Dark"))`;
