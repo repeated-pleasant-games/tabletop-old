@@ -1,5 +1,6 @@
 import React from "react";
 import create from "zustand";
+import createContext from "zustand/context";
 import yjs from "zustand-middleware-yjs";
 
 import * as Y from "yjs";
@@ -17,7 +18,9 @@ export type SharedState =
   setActorPosition: (actorId: string, x: number, y: number) => void,
 };
 
-const useSharedStoreFactory = (roomName: string) =>
+const { Provider, useStore } = createContext<SharedState>();
+
+const createSharedStore = (roomName: string) =>
 {
   const doc = new Y.Doc();
   new WebrtcProvider(roomName, doc);
@@ -66,34 +69,28 @@ const useSharedStoreFactory = (roomName: string) =>
   );
 };
 
-const SharedStoreContext = React.createContext(
-  useSharedStoreFactory(uuidv4())
-);
-
-export const useUseSharedStore = () => React.useContext(SharedStoreContext);
-
-type SharedStoreProps = React.HTMLAttributes<{}> &
+type SharedStoreProviderProps = React.HTMLAttributes<{}> &
 {
-  room: string
+  room: string,
 };
 
-export const SharedStore = ({
+export const SharedStoreProvider = ({
   room,
-  children,
-}: SharedStoreProps =
-{
+  children
+}: SharedStoreProviderProps = {
   room: uuidv4()
 }) =>
 {
-  const useSharedStore = React.useMemo(
-    () =>
-      useSharedStoreFactory(room),
+  const createStore = React.useCallback(
+    () => createSharedStore(room),
     [ room ]
   );
 
   return (
-    <SharedStoreContext.Provider value={useSharedStore}>
+    <Provider createStore={createStore}>
       {children}
-    </SharedStoreContext.Provider>
+    </Provider>
   );
-};
+}
+
+export { useStore as useSharedStore };
