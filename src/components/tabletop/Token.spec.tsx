@@ -3,17 +3,19 @@ import { fireEvent } from "@testing-library/react";
 import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
+import { v4 as uuidv4 } from "uuid";
+
 import "~/pointer-event";
 
 import { useLocalStore } from "~/store/local";
 import { identityTransform, scale, translation } from "~/core/Transform";
 
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
-import { useSharedStore } from "~/store/shared";
 import { Actor } from "~/core/Actor";
-import create from "zustand";
+import { useSharedStoreFactory } from "~/store/shared";
+import { SharedStoreContext } from "~/App";
 
-describe("Disconnected Token", () =>
+describe("Token", () =>
 {
   it("Has a SVG rect.", () =>
   {
@@ -354,12 +356,16 @@ describe("Disconnected Token", () =>
     "Follows pointer when user clicks and drags, relative to cursor. (#%#)",
     (transform, [ initX, initY ], [ endX, endY ], [ expectedX, expectedY ]) =>
     {
+      const useSharedStore = useSharedStoreFactory(uuidv4());
+
       useSharedStore.setState(() => ({ actors: [] }));
       useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
       useLocalStore.getState().setViewTransform(transform);
 
       const Component = () =>
       {
+        const useSharedStore = React.useContext(SharedStoreContext);
+
         const { x, y } = useSharedStore((state) =>
         {
           const index = state.actors.findIndex(({ id }) => id === "1");
@@ -383,7 +389,11 @@ describe("Disconnected Token", () =>
         );
       };
 
-      const { getByTestId } = renderSVG(<Component />);
+      const { getByTestId } = renderSVG(
+        <SharedStoreContext.Provider value={useSharedStore}>
+          <Component />
+        </SharedStoreContext.Provider>
+      );
 
       const token = getByTestId(tokenTestId);
 
@@ -410,6 +420,8 @@ describe("Disconnected Token", () =>
 
   it("Snaps to grid when snapToGrid is true", () =>
   {
+    const useSharedStore = useSharedStoreFactory(uuidv4());
+
     useSharedStore.setState(() => ({ actors: [] }));
     useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
 
@@ -418,6 +430,8 @@ describe("Disconnected Token", () =>
 
     const Component = () =>
     {
+      const useSharedStore = React.useContext(SharedStoreContext);
+
       const { x, y } = useSharedStore((state) =>
       {
         const index = state.actors.findIndex(({ id }) => id === "1");
@@ -441,7 +455,11 @@ describe("Disconnected Token", () =>
       );
     };
 
-    const { getByTestId } = renderSVG(<Component />);
+    const { getByTestId } = renderSVG(
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <Component />
+      </SharedStoreContext.Provider>
+    );
 
 		const token = getByTestId(tokenTestId);
 

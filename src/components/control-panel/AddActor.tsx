@@ -1,13 +1,15 @@
 import React from "react";
-import { useSharedStore } from "~/store/shared";
 import { v4 as uuid } from "uuid";
 
+import { SharedStoreContext } from "~/App";
 import { Button } from "~/components/util/Button";
 
 import "./AddActor.module.css";
 
 export const AddActor = () =>
 {
+  const useSharedStore = React.useContext(SharedStoreContext);
+
   const addActor = useSharedStore((state) => state.addActor);
 
   return (

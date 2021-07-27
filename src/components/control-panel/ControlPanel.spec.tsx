@@ -2,10 +2,15 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useSharedStore } from "~/store/shared";
+import { v4 as uuidv4 } from "uuid";
+
+import { useSharedStoreFactory, SharedState } from "~/store/shared";
+import { UseStore } from "zustand";
 import { useLocalStore } from "~/store/local";
 
 import ControlPanel from "./ControlPanel";
+import { SharedStoreContext } from "~/App";
+import { act } from "react-dom/test-utils";
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -23,11 +28,35 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe("Connected ControlPanel", () =>
 {
+  let useSharedStore: UseStore<SharedState>;
+
+  beforeEach(() =>
+  {
+    act(() =>
+    {
+      useLocalStore.setState(() => ({ room: uuidv4() }));
+    });
+
+    useSharedStore = useSharedStoreFactory(useLocalStore.getState().room);
+  });
+
+  afterEach(() =>
+  {
+    act(() =>
+    {
+      useLocalStore.setState(() => ({ room: "" }));
+    });
+  });
+
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
     useSharedStore.setState(() => ({ actors: [] }));
 
-    const { getByText } = render(<ControlPanel />);
+    const { getByText } = render(
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <ControlPanel />
+      </SharedStoreContext.Provider>
+    );
 
     fireEvent.click(getByText("Add Actor"));
 
@@ -44,7 +73,11 @@ describe("Connected ControlPanel", () =>
       y: 0
     })
 
-    const { getByText } = render(<ControlPanel />);
+    const { getByText } = render(
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <ControlPanel />
+      </SharedStoreContext.Provider>
+    );
 
     expect(getByText("Actor 1")).toBeInTheDocument();
   });
@@ -103,7 +136,11 @@ describe("Connected ControlPanel", () =>
     for (let actor of testActors)
       useSharedStore.getState().addActor(actor);
 
-    const { getAllByText } = render(<ControlPanel />);
+    const { getAllByText } = render(
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <ControlPanel />
+      </SharedStoreContext.Provider>
+    );
 
     const entries = getAllByText(/.*/i, { selector: "li" })
 
@@ -125,7 +162,11 @@ describe("Connected ControlPanel", () =>
       y: 0
     });
 
-    const { getByText } = render(<ControlPanel />);
+    const { getByText } = render(
+      <SharedStoreContext.Provider value={useSharedStore}>
+        <ControlPanel />
+      </SharedStoreContext.Provider>
+    );
 
     fireEvent.click(getByText("Actor 1"));
 

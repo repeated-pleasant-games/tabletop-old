@@ -2,11 +2,13 @@ import * as React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useSharedStore } from "~/store/shared";
+import { useSharedStoreFactory } from "~/store/shared";
+import { v4 as uuidv4 } from "uuid";
 
 import Tabletop, { Tabletop as DisconnectedTabletop } from "./Tabletop";
 import { tokenTestId } from "./Token";
 import { Actor } from "~/core/Actor";
+import { SharedStoreContext } from "~/App";
 
 describe("Disconnected Tabletop component", () =>
 {
@@ -54,6 +56,7 @@ describe("Connected Tabletop component", () =>
     "Has a number of Tokens equal to the number of Actors in the app store",
     (actorList, expectedTokenCount) =>
     {
+      const useSharedStore = useSharedStoreFactory(uuidv4());
 
       for (var actor of actorList)
         useSharedStore.setState(
@@ -67,7 +70,9 @@ describe("Connected Tabletop component", () =>
         );
 
       const { queryAllByTestId } = render(
-        <Tabletop grid={null} />
+        <SharedStoreContext.Provider value={useSharedStore}>
+          <Tabletop grid={null} />
+        </SharedStoreContext.Provider>
       );
 
       expect(queryAllByTestId(tokenTestId).length).toBe(expectedTokenCount);
