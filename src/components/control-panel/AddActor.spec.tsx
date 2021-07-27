@@ -29,11 +29,8 @@ describe("Connected AddActor", () =>
   {
     let useSharedStore: UseStore<SharedState>;
 
-    act(() =>
-    {
-      useSharedStore = useSharedStoreFactory(uuidv4());
-      useSharedStore.setState(() => ({ actors: [] }));
-    })
+    useSharedStore = useSharedStoreFactory(uuidv4());
+    useSharedStore.setState(() => ({ actors: [] }));
 
     const { getByText } = render(
       <SharedStoreContext.Provider value={useSharedStore}>
