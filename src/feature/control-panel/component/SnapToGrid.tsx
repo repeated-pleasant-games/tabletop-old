@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "~/store/local";
 
-import { Checkbox } from "../util/Checkbox";
+import { Checkbox } from "@/component/Checkbox";
 
 export const SnapToGrid = () =>
 {
