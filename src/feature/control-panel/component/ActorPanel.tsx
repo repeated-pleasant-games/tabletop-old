@@ -9,7 +9,7 @@ export const ActorPanel = (): any =>
 {
   const useSharedStore = useUseSharedStore();
 
-  const { actors, addActor } = useSharedStore();
+  const { actors, addActor, removeActor } = useSharedStore();
 
   return (
     <>
@@ -36,7 +36,12 @@ export const ActorPanel = (): any =>
             {
               actors.map((actor) =>
                 (
-                  <li key={actor.id}>{actor.name}</li>
+                  <li
+                    key={actor.id}
+                    onClick={() => removeActor(actor.id)}
+                  >
+                    {actor.name}
+                  </li>
                 )
               )
             }
