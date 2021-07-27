@@ -2,13 +2,11 @@ import React from "react";
 
 import { v4 as uuid } from "uuid";
 
-import { useUseSharedStore } from "@/context/SharedStore";
+import { useSharedStore } from "@/context/SharedStore";
 import { Button } from "@/component/Button";
 
 export const ActorPanel = (): any =>
 {
-  const useSharedStore = useUseSharedStore();
-
   const { actors, addActor, removeActor } = useSharedStore();
 
   return (

@@ -4,7 +4,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { SharedStore } from "@/context/SharedStore";
+import { SharedStoreProvider } from "@/context/SharedStore";
 
 import ActorPanel from "./ActorPanel";
 
@@ -12,14 +12,22 @@ describe("Actor Panel", () =>
 {
   it("Shows 'no actors' when there are no actors.", () =>
   {
-    const { getByText, } = render(<ActorPanel />);
+    const { getByText, } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ActorPanel />
+      </SharedStoreProvider>
+    );
 
     expect(getByText(/no actors/i)).toBeInTheDocument();
   });
 
   it("Adds an actor when the 'add actor' button is pressed.", () =>
   {
-    const { getByText, getAllByText, } = render(<ActorPanel />);
+    const { getByText, getAllByText, } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ActorPanel />
+      </SharedStoreProvider>
+    );
 
     fireEvent.click(getByText(/add actor/i));
 
@@ -29,9 +37,9 @@ describe("Actor Panel", () =>
   it("Removes an actor when its entry is clicked.", () =>
   {
     const { getByText, getAllByText, } = render(
-      <SharedStore room={uuidv4()}>
+      <SharedStoreProvider room={uuidv4()}>
         <ActorPanel />
-      </SharedStore>
+      </SharedStoreProvider>
     );
 
     const addActorButton = getByText(/add actor/i);
