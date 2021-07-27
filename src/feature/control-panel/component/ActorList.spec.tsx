@@ -4,14 +4,10 @@ import { UseStore } from "zustand";
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useLocalStore } from "~/store/local";
-import { SharedState, useSharedStoreFactory } from "~/store/shared";
-import { Actor } from "~/core/Actor";
+import { useUseSharedStore, SharedState } from "@/context/SharedStore";
+import { Actor } from "@/lib/Actor";
 
 import ActorList, { actorListItemTestId, } from "./ActorList";
-import { SharedStoreContext } from "~/App";
-
-import { v4 as uuidv4 } from "uuid";
 
 describe("Connected ActorList", () =>
 {
@@ -19,24 +15,14 @@ describe("Connected ActorList", () =>
 
   beforeEach(() =>
   {
-    useLocalStore.setState(() => ({ room: uuidv4() }));
-    useSharedStore = useSharedStoreFactory(useLocalStore.getState().room);
-  });
-
-  afterEach(() =>
-  {
-    useLocalStore.setState(() => ({ room: "" }));
+    useSharedStore = useUseSharedStore();
   });
 
   it("Displays 'no actors' when there are no actors in state.", () =>
   {
     useSharedStore.setState(() => ({ actors: [] }));
 
-    const { getByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ActorList />
-      </SharedStoreContext.Provider>
-    );
+    const { getByText } = render(<ActorList />);
 
     expect(getByText(/no actors/i)).toBeInTheDocument();
   });
@@ -58,11 +44,7 @@ describe("Connected ActorList", () =>
     for (let actorNumber of actorList)
       useSharedStore.getState().addActor({ id: `${actorNumber}` } as Actor);
 
-    const { getAllByTestId } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ActorList />
-      </SharedStoreContext.Provider>
-    );
+    const { getAllByTestId } = render(<ActorList />);
 
     expect(getAllByTestId(actorListItemTestId)).toHaveLength(actorList.length);
   });
@@ -72,11 +54,7 @@ describe("Connected ActorList", () =>
     useSharedStore.setState(() => ({ actors: [] }));
     useSharedStore.getState().addActor({ id: `1`, name: `Actor 1` } as Actor);
 
-    const { queryByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ActorList />
-      </SharedStoreContext.Provider>
-    );
+    const { queryByText } = render(<ActorList />);
 
     expect(queryByText("Actor 1")).toBeInTheDocument();
   });
@@ -87,11 +65,7 @@ describe("Connected ActorList", () =>
     useSharedStore.getState().addActor({ id: `1`, name: `Actor 1`, initiative: 1 } as Actor);
     useSharedStore.getState().addActor({ id: `2`, name: `Actor 2`, initiative: 2 } as Actor);
 
-    const { getAllByTestId } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ActorList />
-      </SharedStoreContext.Provider>
-    );
+    const { getAllByTestId } = render(<ActorList />);
 
     expect(getAllByTestId(actorListItemTestId)[0]).toHaveTextContent("Actor 2");
     expect(getAllByTestId(actorListItemTestId)[1]).toHaveTextContent("Actor 1");
@@ -104,11 +78,7 @@ describe("Connected ActorList", () =>
     useSharedStore.getState().addActor({ id: "1", name: "Actor 1", initiative: 2 } as Actor);
     useSharedStore.getState().addActor({ id: "2", name: "Actor 2", initiative: 1 } as Actor);
 
-    const { getAllByTestId } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ActorList />
-      </SharedStoreContext.Provider>
-    );
+    const { getAllByTestId } = render(<ActorList />);
 
     fireEvent.click(getAllByTestId(actorListItemTestId)[0]);
 
