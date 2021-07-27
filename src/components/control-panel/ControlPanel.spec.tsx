@@ -32,21 +32,25 @@ describe("Connected ControlPanel", () =>
 
   beforeEach(() =>
   {
-    useLocalStore.setState(() => ({ room: uuidv4() }));
+    act(() =>
+    {
+      useLocalStore.setState(() => ({ room: uuidv4() }));
+    });
+
     useSharedStore = useSharedStoreFactory(useLocalStore.getState().room);
   });
 
   afterEach(() =>
   {
-    useLocalStore.setState(() => ({ room: "" }));
+    act(() =>
+    {
+      useLocalStore.setState(() => ({ room: "" }));
+    });
   });
 
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
-    act(() =>
-    {
-      useSharedStore.setState(() => ({ actors: [] }));
-    });
+    useSharedStore.setState(() => ({ actors: [] }));
 
     const { getByText } = render(
       <SharedStoreContext.Provider value={useSharedStore}>
