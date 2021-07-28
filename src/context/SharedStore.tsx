@@ -8,17 +8,9 @@ import { WebrtcProvider } from "y-webrtc";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { Actor } from "@/lib/Actor";
+import { ActorState, createActorState } from "@/feature/actor";
 
-export type SharedState =
-{
-  actors: Actor[],
-  addActor: (actor: Actor) => void,
-  removeActor: (actorId: string) => void,
-  setActorPosition: (actorId: string, x: number, y: number) => void,
-};
-
-const { Provider, useStore } = createContext<SharedState>();
+export type SharedState = ActorState;
 
 const createSharedStore = (roomName: string) =>
 {
@@ -31,43 +23,13 @@ const createSharedStore = (roomName: string) =>
       "shared-state",
       (set) =>
       ({
-        actors: [],
-        addActor:
-          (actor: Actor) =>
-            set((state) => ({ actors: [ ...state.actors, actor ] })),
-        removeActor:
-          (actorId: string) =>
-            set(
-              (state) =>
-              ({
-                actors: state.actors.filter(({ id }) => id !== actorId)
-              })
-            ),
-        setActorPosition:
-          (actorId: string, x: number, y: number) =>
-            set(
-              (state) =>
-              ({
-                actors: state.actors.map(
-                  (actor) =>
-                  {
-                    if (actor.id === actorId)
-                      return {
-                        ...actor,
-                        x,
-                        y,
-                      };
-
-                    else
-                      return actor;
-                  }
-                )
-              })
-            )
+        ...createActorState(set),
       })
     )
   );
 };
+
+const { Provider, useStore } = createContext<SharedState>();
 
 type SharedStoreProviderProps = React.HTMLAttributes<{}> &
 {
