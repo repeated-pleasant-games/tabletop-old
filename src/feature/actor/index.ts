@@ -1,6 +1,7 @@
 import { SetState } from "zustand";
-import { Actor } from "@/lib/Actor";
+import { Actor } from "./type/Actor";
 
+export * from "./type/Actor";
 export * from "./component/ActorPanel";
 
 export type ActorState =
