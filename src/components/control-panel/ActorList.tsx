@@ -18,7 +18,7 @@ export const ActorList = () =>
     removeActor,
   }));
 
-  if (actors.length === 0)
+  if (!actors || actors.length === 0)
   {
     return (
       <span className={styles["no-actors"]}>...No actors...</span>
