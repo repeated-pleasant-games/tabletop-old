@@ -3,6 +3,7 @@ import { Actor } from "./type/Actor";
 
 export * from "./type/Actor";
 export * from "./component/ActorPanel";
+export * from "./component/Actors";
 
 export type ActorState =
 {
