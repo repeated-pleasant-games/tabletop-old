@@ -3,9 +3,10 @@ import * as React from "react"
 import { useLocalStore } from "@/hook/useLocalStore";
 import { SharedStoreProvider } from "@/context/SharedStore";
 
-import { Tabletop, RectangularGrid, } from "@/feature/tabletop";
+import { RectangularGrid, } from "@/feature/grid";
+import { Tabletop, } from "@/feature/tabletop";
 import { ControlPanel, } from "@/feature/control-panel";
-import { JoinForm } from "@/feature/room";
+import { JoinForm, } from "@/feature/room";
 
 export const App = () =>
 {
