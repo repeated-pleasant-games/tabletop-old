@@ -1,4 +1,4 @@
-import { useSharedStore } from "@/context/SharedStore";
+import { useSharedStore } from "@/hook/useSharedStore";
 import { Token } from "@/feature/tabletop";
 import React from "react";
 

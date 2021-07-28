@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { renderSVG } from "@/test/render-svg";
 
-import { SharedStoreProvider, useSharedStore } from "@/context/SharedStore";
+import { SharedStoreProvider } from "@/context/SharedStore";
+import { useSharedStore } from "@/hook/useSharedStore";
 import { Actor } from "@/feature/actor";
 import { tokenTestId } from "@/feature/tabletop";
 

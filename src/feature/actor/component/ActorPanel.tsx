@@ -2,7 +2,7 @@ import React from "react";
 
 import { v4 as uuid } from "uuid";
 
-import { useSharedStore } from "@/context/SharedStore";
+import { useSharedStore } from "@/hook/useSharedStore";
 import { Button } from "@/component/Button";
 
 import "./ActorPanel.module.css";
