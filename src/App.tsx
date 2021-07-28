@@ -1,27 +1,16 @@
 import * as React from "react"
-import { v4 as uuidv4 } from "uuid";
 
-import { useLocalStore } from "./store/local";
-import { useSharedStoreFactory } from "./store/shared";
+import { useLocalStore } from "@/hook/useLocalStore";
+import { SharedStoreProvider } from "@/context/SharedStore";
 
-import Tabletop from "~/components/tabletop/Tabletop";
-import { RectangularGrid } from "~/components/tabletop/RectangularGrid";
-
-import ControlPanel from "./components/control-panel/ControlPanel";
-import JoinForm from "./components/join-form/JoinForm";
-
-export const SharedStoreContext = React.createContext(
-  useSharedStoreFactory(uuidv4())
-);
+import { RectangularGrid, } from "@/feature/grid";
+import { Tabletop, } from "@/feature/tabletop";
+import { ControlPanel, } from "@/feature/control-panel";
+import { JoinForm, } from "@/feature/room";
 
 export const App = () =>
 {
   const { room } = useLocalStore();
-
-  const useSharedStore = React.useMemo(
-    () => useSharedStoreFactory(room),
-    [ room ]
-  );
 
   return (
     <main
@@ -38,10 +27,10 @@ export const App = () =>
           <JoinForm />
         )
         : (
-          <SharedStoreContext.Provider value={useSharedStore}>
+          <SharedStoreProvider room={room}>
             <ControlPanel />
             <Tabletop grid={<RectangularGrid />} />
-          </SharedStoreContext.Provider>
+          </SharedStoreProvider>
         )
       }
     </main>

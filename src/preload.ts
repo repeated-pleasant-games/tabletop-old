@@ -1,14 +1,4 @@
-import { getThemePreference, getColorMode, setColors } from "./utility/theme";
-
-const detectAndSetTheme = () =>
-{
-  const themePreference = getThemePreference();
-
-  setColors(getColorMode(themePreference));
-
-  window.document.documentElement.style
-  .setProperty(`--theme-preference`, themePreference);
-};
+import { detectAndSetTheme } from "@/feature/theme-select";
 
 detectAndSetTheme();
 

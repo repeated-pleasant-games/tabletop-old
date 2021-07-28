@@ -1,0 +1,1 @@
+export { SharedStoreProvider } from "@/feature/store-shared";
