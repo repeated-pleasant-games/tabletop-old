@@ -2,17 +2,15 @@ import create from "zustand";
 
 import { identityTransform, Transform } from "@/lib/Transform";
 import { getColorMode, getThemePreference, setColors } from "@/util/theme";
+import { createGridSnapState, GridSnapState } from "@/feature/grid-snap";
 
-type LocalState =
+type LocalState = GridSnapState &
 {
   themePreference: "system" | "light" | "dark",
   setThemePreference: (themePreference: "system" | "light" | "dark") => void,
 
   viewTransform: Transform,
   setViewTransform: (viewTransform: Transform) => void,
-
-  snapToGrid: boolean,
-  setSnapToGrid: (snapToGrid: boolean) => void,
 
   room: string,
   setRoom: (roomName: string) => void,
@@ -21,6 +19,8 @@ type LocalState =
 export const useLocalStore = create<LocalState>(
   (set) =>
   ({
+    ...createGridSnapState(set),
+
     themePreference: (getThemePreference() as "system" | "light" | "dark"),
     setThemePreference:
       (themePreference: "system" | "light" | "dark") =>
@@ -34,11 +34,6 @@ export const useLocalStore = create<LocalState>(
     setViewTransform:
       (viewTransform: Transform) =>
         set((_) => ({ viewTransform })),
-
-    snapToGrid: false,
-    setSnapToGrid:
-      (snapToGrid: boolean) =>
-        set((_) => ({ snapToGrid })),
 
     room: "",
     setRoom: (roomName) =>
