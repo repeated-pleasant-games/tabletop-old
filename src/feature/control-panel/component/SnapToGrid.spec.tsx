@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 
-import { useLocalStore } from "~/store/local";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 import SnapToGrid, { SnapToGrid as DisconnectedSnapToGrid } from "./SnapToGrid";
 
