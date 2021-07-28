@@ -9,7 +9,8 @@
         "esModuleInterop": true,
         "baseUrl": "./",
         "paths": {
-          "~/*": [ "src/*" ]
+          "~/*": [ "_src/*" ],
+          "@/*": [ "src/*" ]
         }
     },
     "exclude": [ "node_modules", "dist" ]

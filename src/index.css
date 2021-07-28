@@ -1,0 +1,77 @@
+:root {
+  --brand-primary: #0074D9;
+
+  --gray-0: #f9f9fa;
+  --gray-1: #eceeef;
+  --gray-2: #dee1e4;
+  --gray-3: #cfd3d7;
+  --gray-4: #bfc2ca;
+  --gray-5: #adb4bb;
+  --gray-6: #98a1a9;
+  --gray-7: #7f8a95;
+  --gray-8: #606e7b;
+  --gray-9: #384048;
+
+  --black: #111;
+  --white: #fff;
+}
+
+html, html.light {
+  --color-fg: var(--black);
+  --color-bg: var(--white);
+
+  --color-grid-fg: var(--gray-5);
+  --color-grid-bg: var(--color-bg);
+}
+
+html.dark {
+  --color-fg: var(--white);
+  --color-bg: var(--gray-9);
+
+  --color-grid-fg: var(--gray-5);
+  --color-grid-bg: var(--color-bg);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color: var(--color-fg);
+  background: var(--color-bg);
+}
+
+html *:not(button) {
+  color: var(--color-fg)
+}
+
+body {
+  font-family: Lato, system-ui, sans-serif;
+}
+
+#tabletop {
+  place-self: start;
+  width: 100vw;
+  height: 100vh;
+}
+
+.grid-pattern {
+  stroke: var(--color-grid-fg);
+  fill: var(--color-grid-bg);
+}
+
+.control-panel {
+  place-self: start;
+
+  position: absolute;
+  z-index: 1;
+
+  right: 0;
+  margin: 1em 1em 0 0;
+}
+
+.token {
+  fill: var(--color-fg);
+}
