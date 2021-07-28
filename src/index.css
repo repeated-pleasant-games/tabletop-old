@@ -52,7 +52,7 @@ body {
 }
 
 #tabletop {
-  position: absolute;
+  place-self: start;
   width: 100vw;
   height: 100vh;
 }
