@@ -1,6 +1,6 @@
 import React from "react";
 
-import ActorPanel from "./ActorPanel";
+import { ActorPanel } from "@/feature/actor";
 import SnapToGrid from "./SnapToGrid";
 import ThemeSelect from "./ThemeSelect";
 
