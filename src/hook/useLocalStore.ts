@@ -1,7 +1,7 @@
 import create from "zustand";
 
-import { identityTransform, Transform } from "~/core/Transform";
-import { getColorMode, getThemePreference, setColors } from "~/utility/theme";
+import { identityTransform, Transform } from "@/lib/Transform";
+import { getColorMode, getThemePreference, setColors } from "@/util/theme";
 
 type LocalState =
 {
