@@ -4,13 +4,10 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { useSharedStoreFactory, SharedState } from "~/store/shared";
-import { UseStore } from "zustand";
-import { useLocalStore } from "~/store/local";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 import ControlPanel from "./ControlPanel";
-import { SharedStoreContext } from "~/App";
-import { act } from "react-dom/test-utils";
+import { SharedStoreProvider } from "@/context/SharedStore";
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -28,149 +25,31 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe("Connected ControlPanel", () =>
 {
-  let useSharedStore: UseStore<SharedState>;
-
-  beforeEach(() =>
-  {
-    act(() =>
-    {
-      useLocalStore.setState(() => ({ room: uuidv4() }));
-    });
-
-    useSharedStore = useSharedStoreFactory(useLocalStore.getState().room);
-  });
-
-  afterEach(() =>
-  {
-    act(() =>
-    {
-      useLocalStore.setState(() => ({ room: "" }));
-    });
-  });
-
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
-    useSharedStore.setState(() => ({ actors: [] }));
-
-    const { getByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
+    const { getByText, getAllByText } = render(
+      <SharedStoreProvider room={uuidv4()}>
         <ControlPanel />
-      </SharedStoreContext.Provider>
+      </SharedStoreProvider>
     );
 
-    fireEvent.click(getByText("Add Actor"));
+    fireEvent.click(getByText(/add actor/i));
 
-    expect(useSharedStore.getState().actors.length).toBe(1);
-  });
-
-  it("Shows a list of actors when there is an actor in the store.", () =>
-  {
-    useSharedStore.getState().addActor({
-      id: "",
-      name: "Actor 1",
-      initiative: 0,
-      x: 0,
-      y: 0
-    })
-
-    const { getByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ControlPanel />
-      </SharedStoreContext.Provider>
-    );
-
-    expect(getByText("Actor 1")).toBeInTheDocument();
-  });
-
-  it.each([
-    [
-      [
-        {
-          id: "1",
-          name: "Actor 1",
-          initiative: 2,
-          x: 0,
-          y: 0
-        },
-        {
-          id: "2",
-          name: "Actor 2",
-          initiative: 1,
-          x: 0,
-          y: 0
-        }
-      ],
-      [
-        "Actor 1",
-        "Actor 2"
-      ]
-    ],
-    [
-      [
-        {
-          id: "1",
-          name: "Actor 1",
-          initiative: 10,
-          x: 0,
-          y: 0
-        },
-        {
-          id: "2",
-          name: "Actor 2",
-          initiative: 15,
-          x: 0,
-          y: 0
-        }
-      ],
-      [
-        "Actor 2",
-        "Actor 1"
-      ]
-    ]
-  ])(
-    "Orders actors by their initiative from greatest to least.",
-    (testActors, expectedOrder) =>
-  {
-    useSharedStore.setState(() => ({ actors: [] }));
-
-    for (let actor of testActors)
-      useSharedStore.getState().addActor(actor);
-
-    const { getAllByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
-        <ControlPanel />
-      </SharedStoreContext.Provider>
-    );
-
-    const entries = getAllByText(/.*/i, { selector: "li" })
-
-    expect(entries.map(
-      (entry) => entry.textContent.trim()
-    )).toStrictEqual(
-      expectedOrder
-    );
+    expect(getAllByText(/^actor$/i).length).toBe(1);
   });
 
   it("Removes the actor associated with the clicked initiative entry.", () =>
   {
-    useSharedStore.setState(() => ({ actors: [] }));
-    useSharedStore.getState().addActor({
-      id: "1",
-      name: "Actor 1",
-      initiative: 0,
-      x: 0,
-      y: 0
-    });
-
     const { getByText } = render(
-      <SharedStoreContext.Provider value={useSharedStore}>
+      <SharedStoreProvider room={uuidv4()}>
         <ControlPanel />
-      </SharedStoreContext.Provider>
+      </SharedStoreProvider>
     );
 
-    fireEvent.click(getByText("Actor 1"));
+    fireEvent.click(getByText(/add actor/i));
+    fireEvent.click(getByText(/^actor$/i));
 
-    expect(() => getByText("Actor 1")).toThrow();
+    expect(() => getByText(/^actor$/i)).toThrow();
   });
 
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
@@ -178,7 +57,9 @@ describe("Connected ControlPanel", () =>
     useLocalStore.setState(() => ({ snapToGrid: false }));
 
     const { getByLabelText } = render(
-      <ControlPanel />
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
     );
 
     fireEvent.click(getByLabelText("Snap to Grid"));
@@ -190,7 +71,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ snapToGrid: false }))
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     expect(getByLabelText("Snap to Grid")).not.toHaveAttribute("checked");
   });
@@ -199,7 +84,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     expect(getByLabelText("Snap to Grid")).toHaveAttribute("checked");
   });
@@ -208,7 +97,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ snapToGrid: true }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     fireEvent.click(getByLabelText("Snap to Grid"));
 
@@ -219,7 +112,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ themePreference: 'light' }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(true);
   });
@@ -228,7 +125,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ themePreference: 'dark' }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(true);
   });
@@ -245,7 +146,11 @@ describe("Connected ControlPanel", () =>
     {
       useLocalStore.setState(() => ({ themePreference: themeName }));
 
-      const { getByLabelText } = render(<ControlPanel />);
+      const { getByLabelText } = render(
+        <SharedStoreProvider room={uuidv4()}>
+          <ControlPanel />
+        </SharedStoreProvider>
+      );
 
       expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(dayState);
       expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
@@ -256,7 +161,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ themePreference: "dark" }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     fireEvent.click(getByLabelText("Light"));
 
@@ -267,7 +176,11 @@ describe("Connected ControlPanel", () =>
   {
     useLocalStore.setState(() => ({ themePreference: "light" }));
 
-    const { getByLabelText } = render(<ControlPanel />);
+    const { getByLabelText } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <ControlPanel />
+      </SharedStoreProvider>
+    );
 
     fireEvent.click(getByLabelText("Dark"));
 

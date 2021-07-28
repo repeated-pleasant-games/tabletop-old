@@ -1,7 +1,6 @@
 import React from "react";
 
-import AddActor from "./AddActor";
-import ActorList from "./ActorList";
+import ActorPanel from "./ActorPanel";
 import SnapToGrid from "./SnapToGrid";
 import ThemeSelect from "./ThemeSelect";
 
@@ -13,8 +12,7 @@ export const ControlPanel = () =>
 (
   <div className="control-panel" data-testid={controlPanelTestId}>
     <section>
-      <AddActor />
-      <ActorList />
+      <ActorPanel />
     </section>
     <section>
       <SnapToGrid />
