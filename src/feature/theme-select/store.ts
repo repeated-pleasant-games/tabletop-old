@@ -1,5 +1,5 @@
 import { SetState } from "zustand";
-import { getThemePreference, setColors, getColorMode } from "@/util/theme";
+import { getThemePreference, setColors, getColorMode } from "./util";
 
 export type ThemeState =
 {
