@@ -1,7 +1,7 @@
 import React from "react";
-import { useLocalStore } from "~/store/local";
+import { useLocalStore } from "@/hook/useLocalStore";
 
-import { Radio } from "~/components/util/Radio";
+import { Radio } from "@/component/Radio";
 
 export const ThemeSelect = () =>
 {
