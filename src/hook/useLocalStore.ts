@@ -1,14 +1,11 @@
 import create from "zustand";
 
 import { identityTransform, Transform } from "@/lib/Transform";
-import { getColorMode, getThemePreference, setColors } from "@/util/theme";
 import { createGridSnapState, GridSnapState } from "@/feature/grid-snap";
+import { createThemeState, ThemeState } from "@/feature/theme-select";
 
-type LocalState = GridSnapState &
+type LocalState = GridSnapState & ThemeState &
 {
-  themePreference: "system" | "light" | "dark",
-  setThemePreference: (themePreference: "system" | "light" | "dark") => void,
-
   viewTransform: Transform,
   setViewTransform: (viewTransform: Transform) => void,
 
@@ -20,15 +17,7 @@ export const useLocalStore = create<LocalState>(
   (set) =>
   ({
     ...createGridSnapState(set),
-
-    themePreference: (getThemePreference() as "system" | "light" | "dark"),
-    setThemePreference:
-      (themePreference: "system" | "light" | "dark") =>
-      {
-        window.localStorage.setItem("themePreference", themePreference);
-        setColors(getColorMode(themePreference));
-        return set((_) => ({ themePreference }));
-      },
+    ...createThemeState(set),
 
     viewTransform: identityTransform(),
     setViewTransform:
