@@ -1,16 +1,14 @@
 import * as React from "react";
 import { fireEvent } from "@testing-library/react";
-import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
-import "~/pointer-event";
+import { renderSVG } from "@/test/render-svg";
+import "@/test/pointer-event";
 
 import { useLocalStore } from "@/hook/useLocalStore";
-import { identityTransform, scale, translation } from "@/lib/Transform";
+import { identityTransform, translation } from "@/lib/Transform";
 
 import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
-import { Actor } from "@/lib/Actor";
-import { useUseSharedStore } from "@/context/SharedStore";
 
 describe("Token", () =>
 {
@@ -324,131 +322,21 @@ describe("Token", () =>
     );
   });
 
-  it.each([
-    [
-      translation(0, 0),
-      [ 8, 4 ],
-      [ 20, 20 ],
-      [ 12, 16 ]
-    ],
-    [
-      translation(0, 10),
-      [ 8, 14 ],
-      [ 20, 30 ],
-      [ 12, 16 ]
-    ],
-    [
-      scale(2),
-      [ 8, 4 ],
-      [ 20, 20 ],
-      [ 6, 8 ]
-    ],
-    [
-      scale(0.5),
-      [ 4, 2 ],
-      [ 20, 20 ],
-      [ 32, 36 ]
-    ]
-  ])(
-    "Follows pointer when user clicks and drags, relative to cursor. (#%#)",
-    (transform, [ initX, initY ], [ endX, endY ], [ expectedX, expectedY ]) =>
-    {
-      const useSharedStore = useUseSharedStore();
-
-      useSharedStore.setState(() => ({ actors: [] }));
-      useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
-      useLocalStore.getState().setViewTransform(transform);
-
-      const Component = () =>
-      {
-        const useSharedStore = useUseSharedStore();
-
-        const { x, y } = useSharedStore((state) =>
-        {
-          const index = state.actors.findIndex(({ id }) => id === "1");
-          
-          return {
-            x: state.actors[index].x,
-            y: state.actors[index].y,
-          }
-        });
-
-        return (
-          <Token
-            x={x}
-            y={y}
-            setPosition={
-              (x, y) =>
-                useSharedStore.getState().setActorPosition("1", x, y)
-            }
-            cellSize={16}
-          />
-        );
-      };
-
-      const { getByTestId } = renderSVG(<Component />);
-
-      const token = getByTestId(tokenTestId);
-
-      fireEvent.pointerDown(
-        token,
-        {
-          button: 0,
-          clientX: initX,
-          clientY: initY
-        }
-      );
-      fireEvent.pointerMove(
-        token,
-        {
-          clientX: endX,
-          clientY: endY
-        }
-      );
-
-      expect(token).toHaveAttribute("x", expectedX.toString());
-      expect(token).toHaveAttribute("y", expectedY.toString());
-    }
-  );
-
   it("Snaps to grid when snapToGrid is true", () =>
   {
-    const useSharedStore = useUseSharedStore();
-
-    useSharedStore.setState(() => ({ actors: [] }));
-    useSharedStore.getState().addActor({ id: "1", x: 0, y: 0 } as Actor);
-
     useLocalStore.getState().setViewTransform(identityTransform());
     useLocalStore.getState().setSnapToGrid(true);
 
-    const Component = () =>
-    {
-      const useSharedStore = useUseSharedStore();
+    const setPosition = jest.fn();
 
-      const { x, y } = useSharedStore((state) =>
-      {
-        const index = state.actors.findIndex(({ id }) => id === "1");
-        
-        return {
-          x: state.actors[index].x,
-          y: state.actors[index].y,
-        }
-      });
-
-      return (
-        <Token
-          x={x}
-          y={y}
-          setPosition={
-            (x, y) =>
-              useSharedStore.getState().setActorPosition("1", x, y)
-          }
-          cellSize={16}
-        />
-      );
-    };
-
-    const { getByTestId } = renderSVG(<Component />);
+    const { getByTestId } = renderSVG(
+      <Token
+        x={0}
+        y={0}
+        setPosition={setPosition}
+        cellSize={16}
+      />
+    );
 
 		const token = getByTestId(tokenTestId);
 
@@ -468,7 +356,6 @@ describe("Token", () =>
 			}
 		);
 
-		expect(token).toHaveAttribute("x", "16");
-		expect(token).toHaveAttribute("y", "16");
+    expect(setPosition).toHaveBeenCalledWith(16, 16);
   });
 });

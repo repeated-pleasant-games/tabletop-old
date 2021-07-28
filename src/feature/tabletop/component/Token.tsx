@@ -1,6 +1,6 @@
 import * as React from "react";
-import { apply, identityTransform, inverseOf, toSvgMatrix } from "~/core/Transform";
-import { useLocalStore } from "~/store/local";
+import { apply, identityTransform, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 export const tokenTestId = "token";
 
