@@ -1,3 +1,7 @@
+button {
+    width: 100%;
+}
+
 span {
     display: block;
     font-weight: bold;

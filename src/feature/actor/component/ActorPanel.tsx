@@ -5,6 +5,9 @@ import { v4 as uuid } from "uuid";
 import { useSharedStore } from "@/context/SharedStore";
 import { Button } from "@/component/Button";
 
+import "./ActorPanel.module.css";
+import styles from "./ActorPanel.module.css";
+
 export const ActorPanel = (): any =>
 {
   const { actors, addActor, removeActor } = useSharedStore();
@@ -27,7 +30,7 @@ export const ActorPanel = (): any =>
       {
         actors.length === 0
         ? (
-          <p>... No actors ...</p>
+          <p className={styles["no-actors"]}>... No actors ...</p>
         )
         : (
           <ul>
