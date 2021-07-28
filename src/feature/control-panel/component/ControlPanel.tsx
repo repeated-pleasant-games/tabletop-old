@@ -2,7 +2,7 @@ import React from "react";
 
 import { ActorPanel } from "@/feature/actor";
 import { SnapToGrid } from "@/feature/grid-snap";
-import ThemeSelect from "./ThemeSelect";
+import { ThemeSelect } from "@/feature/theme-select";
 
 import "./ControlPanel.module.css";
 
