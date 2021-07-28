@@ -28,7 +28,7 @@ export const ActorPanel = (): any =>
         Add Actor
       </Button>
       {
-        actors.length === 0
+        (!actors || actors.length === 0)
         ? (
           <p className={styles["no-actors"]}>... No actors ...</p>
         )
