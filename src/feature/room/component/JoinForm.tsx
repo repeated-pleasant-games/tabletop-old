@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocalStore } from "~/store/local";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 export const joinFormTestId = "join-form"
 

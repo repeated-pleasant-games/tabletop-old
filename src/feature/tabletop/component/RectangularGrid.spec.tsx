@@ -1,6 +1,7 @@
 import * as React from "react";
-import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
+
+import { renderSVG } from "@/test/render-svg";
 
 import { rectangularPatternTestId } from "./RectangularGridPattern";
 import { gridTestId } from "./Grid";

@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { useLocalStore } from "@/hook/useLocalStore";
-import { SharedStore } from "@/context/SharedStore";
+import { SharedStoreProvider } from "@/context/SharedStore";
 
 import { Tabletop, RectangularGrid, } from "@/feature/tabletop";
 import { ControlPanel, } from "@/feature/control-panel";
@@ -26,10 +26,10 @@ export const App = () =>
           <JoinForm />
         )
         : (
-          <SharedStore room={room}>
+          <SharedStoreProvider room={room}>
             <ControlPanel />
             <Tabletop grid={<RectangularGrid />} />
-          </SharedStore>
+          </SharedStoreProvider>
         )
       }
     </main>

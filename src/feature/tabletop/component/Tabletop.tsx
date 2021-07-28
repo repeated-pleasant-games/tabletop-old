@@ -1,5 +1,6 @@
 import * as React from "react";
-import { SharedStoreContext } from "~/App";
+
+import { useSharedStore } from "@/context/SharedStore";
 
 import Token from "./Token";
 
@@ -9,8 +10,6 @@ type TabletopProps = React.HTMLAttributes<{}> &
 };
 export const Tabletop = ({ grid, }: TabletopProps) =>
 {
-  const useSharedStore = React.useContext(SharedStoreContext);
-
   const {
     actors,
     setActorPosition

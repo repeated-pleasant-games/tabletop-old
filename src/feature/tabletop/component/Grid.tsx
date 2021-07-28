@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { getScale, scale, transformerOf, translateBy, translation } from "~/core/Transform";
-import { useLocalStore } from "~/store/local";
+import { getScale, scale, transformerOf, translateBy, translation } from "@/lib/Transform";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 type GridProps = React.HTMLAttributes<{}> &
 {

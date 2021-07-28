@@ -1,10 +1,11 @@
 import * as React from "react";
 import { act } from "@testing-library/react";
-import { renderSVG } from "~/test-utilities";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useLocalStore } from "~/store/local";
-import { identityTransform } from "~/core/Transform";
+import { renderSVG } from "@/test/render-svg";
+
+import { useLocalStore } from "@/hook/useLocalStore";
+import { identityTransform } from "@/lib/Transform";
 
 import RectangularGridPattern,
 {

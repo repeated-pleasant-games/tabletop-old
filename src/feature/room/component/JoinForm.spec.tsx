@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 
 import JoinForm, { joinFormTestId } from "./JoinForm";
-import { useLocalStore } from "~/store/local";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 describe("JoinForm component", () =>
 {

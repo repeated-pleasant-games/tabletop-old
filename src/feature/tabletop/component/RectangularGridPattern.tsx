@@ -1,6 +1,6 @@
 import * as React from "react";
-import { getScale, inverseOf, toSvgMatrix } from "~/core/Transform";
-import { useLocalStore } from "~/store/local";
+import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";

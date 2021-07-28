@@ -1,13 +1,13 @@
 import * as React from "react";
 import { fireEvent } from "@testing-library/react";
-import { renderSVG } from "~/test-utilities";
-
 import "@testing-library/jest-dom/extend-expect";
-import "~/pointer-event";
+
+import "@/test/pointer-event";
+import { renderSVG } from "@/test/render-svg";
 
 import Grid, { Grid as DisconnectedGrid, gridTestId } from "./Grid";
-import { identityTransform, Transform } from "~/core/Transform";
-import { useLocalStore } from "~/store/local";
+import { identityTransform, Transform } from "@/lib/Transform";
+import { useLocalStore } from "@/hook/useLocalStore";
 
 describe("Disconnected Grid component", () =>
 { 
