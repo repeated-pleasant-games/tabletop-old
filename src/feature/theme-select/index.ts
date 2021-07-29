@@ -10,5 +10,5 @@ export const detectAndSetTheme = () =>
   .setProperty(`--theme-preference`, themePreference);
 };
 
-export * from "./component/ThemeSelect";
 export * from "./store";
+export * from "./component/ThemeSelect";
