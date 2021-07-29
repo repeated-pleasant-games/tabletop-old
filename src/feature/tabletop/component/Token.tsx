@@ -31,7 +31,8 @@ export const Token = ({
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
 
-  const snap = (value: number) => Math.floor(value / cellSize) * cellSize;
+  const snap = (value: number) =>
+    Math.floor(value / cellSize) * cellSize;
 
   return (
     <rect
@@ -80,8 +81,8 @@ export const Token = ({
         {
           if (isDragging)
           {
-            const tokenX = clientX + dX;
-            const tokenY = clientY + dY;
+            const tokenX = clientX + (snapToGrid ? 0 : dX);
+            const tokenY = clientY + (snapToGrid ? 0 : dY);
 
             const tokenPosition: [ number, number ] =
               apply(
