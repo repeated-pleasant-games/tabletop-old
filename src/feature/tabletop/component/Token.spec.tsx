@@ -322,40 +322,63 @@ describe("Token", () =>
     );
   });
 
-  it("Snaps to grid when snapToGrid is true", () =>
-  {
-    useLocalStore.getState().setViewTransform(identityTransform());
-    useLocalStore.getState().setSnapToGrid(true);
+  it.each([
+    [
+      [ 0, 0 ],
+      [ 18, 20 ],
+      [ 16, 16 ]
+    ],
+    [
+      [ 8, 9 ],
+      [ 18, 20 ],
+      [ 16, 16 ]
+    ],
+    [
+      [ 8, 8 ],
+      [ 18, 8 ],
+      [ 16, 0 ],
+    ]
+  ])(
+    "Snaps to grid when snapToGrid is true. (#%#)",
+    (
+      [ startX, startY ],
+      [ endX, endY ],
+      [ expectedX, expectedY ]
+    ) =>
+    {
+      useLocalStore.getState().setViewTransform(identityTransform());
+      useLocalStore.getState().setSnapToGrid(true);
 
-    const setPosition = jest.fn();
+      const setPosition = jest.fn();
 
-    const { getByTestId } = renderSVG(
-      <Token
-        x={0}
-        y={0}
-        setPosition={setPosition}
-        cellSize={16}
-      />
-    );
+      const { getByTestId } = renderSVG(
+        <Token
+          x={0}
+          y={0}
+          setPosition={setPosition}
+          cellSize={16}
+        />
+      );
 
-		const token = getByTestId(tokenTestId);
+      const token = getByTestId(tokenTestId);
 
-		fireEvent.pointerDown(
-			token,
-			{
-				button: 0,
-				clientX: 0,
-				clientY: 0,
-			}
-		);
-		fireEvent.pointerMove(
-			token,
-			{
-				clientX: 18,
-				clientY: 20,
-			}
-		);
+      fireEvent.pointerDown(
+        token,
+        {
+          button: 0,
+          clientX: startX,
+          clientY: startY,
+        }
+      );
+      fireEvent.pointerMove(
+        token,
+        {
+          clientX: endX,
+          clientY: endY,
+        }
+      );
 
-    expect(setPosition).toHaveBeenCalledWith(16, 16);
-  });
+      expect(setPosition).toHaveBeenCalledWith(expectedX, expectedY);
+    }
+  );
 });
