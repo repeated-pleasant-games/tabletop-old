@@ -22,17 +22,19 @@ describe.each([
   });
 
   describe.each([
-    { preferredTheme: "light", option: "System", },
-    { preferredTheme: "dark", option: "System", },
-    { preferredTheme: "no-preference", option: "System", },
+    { preferredTheme: "light", colorMode: "light", option: "System", },
+    { preferredTheme: "dark", colorMode: "dark", option: "System", },
+    { preferredTheme: "no-preference", colorMode: "light", option: "System", },
   ])(
     "When user opens page with no cache and theme preference of '$preferredTheme'.",
     (
       {
         preferredTheme,
+        colorMode,
         option,
       }: {
         preferredTheme: "light" | "dark" | "no-preference",
+        colorMode: "light" | "dark"
         option: string,
       }
     ) =>
@@ -43,14 +45,6 @@ describe.each([
       {
         page = await browser.newPage({ colorScheme: preferredTheme });
         await page.goto("http://localhost:8080");
-
-        const roomNameInput = await page.waitForSelector(
-          "input[type=text]:near(:text('Room Name'))"
-        );
-
-        await roomNameInput.type(uuidv4());
-
-        await (await page.$("input[type=submit]:text('Join!')")).click();
       });
 
       afterEach(async () =>
@@ -58,17 +52,41 @@ describe.each([
         await page.close();
       });
 
-      it(
-        `Checks option '${option}'.`,
-        async () =>
+      it(`Sets HTML class to ${colorMode}.`, async () =>
+      {
+        expect(
+          await page.evaluate(() =>
+          {
+            return document.documentElement.className;
+          })
+        ).toBe(colorMode);
+      });
+
+      describe("After user joins room", () =>
+      {
+        beforeEach(async () =>
         {
-          const element = await page.waitForSelector(
-            `input[type=radio]:left-of(:text("${option}"))`
+          const roomNameInput = await page.waitForSelector(
+            "input[type=text]:near(:text('Room Name'))"
           );
 
-          expect(await element.isChecked()).toBe(true);
-        }
-      );
+          await roomNameInput.type(uuidv4());
+
+          await (await page.$("input[type=submit]:text('Join!')")).click();
+        });
+
+        it(
+          `Checks option '${option}'.`,
+          async () =>
+          {
+            const element = await page.waitForSelector(
+              `input[type=radio]:left-of(:text("${option}"))`
+            );
+
+            expect(await element.isChecked()).toBe(true);
+          }
+        );
+      });
     }
   );
 

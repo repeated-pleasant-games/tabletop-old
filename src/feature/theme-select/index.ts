@@ -1,8 +1,5 @@
 import { getThemePreference, getColorMode, setColors } from "./util";
 
-export * from "./component/ThemeSelect";
-export * from "./store";
-
 export const detectAndSetTheme = () =>
 {
   const themePreference = getThemePreference();
@@ -12,3 +9,6 @@ export const detectAndSetTheme = () =>
   window.document.documentElement.style
   .setProperty(`--theme-preference`, themePreference);
 };
+
+export * from "./store";
+export * from "./component/ThemeSelect";
