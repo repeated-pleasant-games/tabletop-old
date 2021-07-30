@@ -1,6 +1,7 @@
 import * as React from "react";
 import { apply, identityTransform, inverseOf, toSvgMatrix } from "@/lib/Transform";
 import { useLocalStore } from "@/hook/useLocalStore";
+import { useColorModeValue } from "@chakra-ui/react";
 
 export const tokenTestId = "token";
 
@@ -30,6 +31,11 @@ export const Token = ({
       "snapToGrid": state.snapToGrid,
     }));
 
+  const fill = useColorModeValue(
+    "var(--rpg-colors-gray-900)",
+    "var(--rpg-colors-gray-300)"
+  );
+
   const [ isDragging, setDragging ] = React.useState(false);
   const [ [ dX, dY ], setDelta ] = React.useState([ 0, 0 ]);
 
@@ -37,7 +43,10 @@ export const Token = ({
     Math.floor(value / cellSize) * cellSize;
 
   return (
-    <g transform={viewTransform && toSvgMatrix(viewTransform)}>
+    <g
+      fill={fill}
+      transform={viewTransform && toSvgMatrix(viewTransform)}
+    >
       <rect
         data-testid={tokenTestId}
 
