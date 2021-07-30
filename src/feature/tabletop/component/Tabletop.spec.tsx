@@ -20,17 +20,6 @@ describe("Tabletop", () =>
     expect(container.firstChild.nodeName).toBe("svg");
   });
 
-  it("Has an id of 'tabletop'.", () =>
-  {
-    const { container } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <Tabletop grid={null} />
-      </SharedStoreProvider>
-    );
-
-    expect(container.firstChild).toHaveAttribute("id", "tabletop");
-  });
-
   it("Renders the Grid component passed to it.", () =>
   {
     const Grid = () => (<rect data-testid="grid" />);
