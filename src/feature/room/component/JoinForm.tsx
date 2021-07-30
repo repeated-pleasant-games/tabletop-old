@@ -31,7 +31,7 @@ export const JoinForm = () =>
                 ({ field, form }: FieldProps) =>
                 (
                   <FormControl>
-                    <FormLabel id="room-name-label">Room name</FormLabel>
+                    <FormLabel id="room-name-label">Room Name</FormLabel>
                     <Input
                       {...field}
                       id="room-name"
