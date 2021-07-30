@@ -49,24 +49,4 @@ export const JoinForm = () =>
   );
 }
 
-/*
-    <form data-testid={joinFormTestId} onSubmit={() => setRoom(roomName)}>
-      <label
-        id="room-name-label"
-      >
-        Room Name
-      </label>
-      <input
-        type="text"
-        name="room-name"
-        aria-labelledby="room-name-label"
-        id="room-name-input"
-
-        value={roomName}
-        onChange={({ target }) => setRoomName(target.value)}
-      />
-      <input type="submit" value="Join!" />
-    </form>
-*/
-
 export default JoinForm;
