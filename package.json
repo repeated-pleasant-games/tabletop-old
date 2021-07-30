@@ -37,6 +37,7 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "classnames": "^2.3.1",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
