@@ -33,20 +33,22 @@ export const ActorPanel = (): any =>
           <p className={styles["no-actors"]}>... No actors ...</p>
         )
         : (
-          <ul>
-            {
-              actors.map((actor) =>
-                (
-                  <li
-                    key={actor.id}
-                    onClick={() => removeActor(actor.id)}
-                  >
-                    {actor.name}
-                  </li>
+          <div className={styles["list-container"]}>
+            <ul>
+              {
+                actors.map((actor) =>
+                  (
+                    <li
+                      key={actor.id}
+                      onClick={() => removeActor(actor.id)}
+                    >
+                      {actor.name}
+                    </li>
+                  )
                 )
-              )
-            }
-          </ul>
+              }
+            </ul>
+          </div>
         )
       }
     </>

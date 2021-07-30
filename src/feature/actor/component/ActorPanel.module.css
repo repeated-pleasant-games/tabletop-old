@@ -7,6 +7,11 @@ span {
     font-weight: bold;
 }
 
+.list-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 ul {
     list-style: none;
 }
