@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { SharedStoreProvider } from "@/context/SharedStore";
 
 import ActorPanel from "./ActorPanel";
+import userEvent from "@testing-library/user-event";
 
 describe("Actor Panel", () =>
 {
@@ -23,12 +24,13 @@ describe("Actor Panel", () =>
 
   it("Adds an actor when the 'add actor' button is pressed.", () =>
   {
-    const { getByText, getAllByText, } = render(
+    const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
         <ActorPanel />
       </SharedStoreProvider>
     );
 
+    userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
     expect(getAllByText(/^actor$/i).length).toBe(1);
@@ -36,7 +38,7 @@ describe("Actor Panel", () =>
 
   it("Removes an actor when its entry is clicked.", () =>
   {
-    const { getByText, getAllByText, } = render(
+    const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
         <ActorPanel />
       </SharedStoreProvider>
@@ -44,6 +46,7 @@ describe("Actor Panel", () =>
 
     const addActorButton = getByText(/add actor/i);
 
+    userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(addActorButton);
     fireEvent.click(addActorButton);
 

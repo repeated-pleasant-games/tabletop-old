@@ -12,13 +12,24 @@ export const ActorPanel = (): any =>
 {
   const { actors, addActor, removeActor } = useSharedStore();
 
+  const [ actorName, setActorName ] = React.useState("");
+
   return (
     <>
+      <label id="actor-name-label">Actor Name</label>
+      <input
+        aria-labelledby="actor-name-label"
+        type="text"
+        value={actorName}
+        onChange={
+          ({ target }) => setActorName((target as HTMLInputElement).value)
+        }
+      />
       <Button
         onClick={() =>
           addActor({
             id: uuid(),
-            name: "Actor",
+            name: actorName,
             initiative: 0,
             x: 0,
             y: 0,

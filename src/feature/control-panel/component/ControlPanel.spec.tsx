@@ -8,6 +8,7 @@ import { useLocalStore } from "@/hook/useLocalStore";
 
 import ControlPanel from "./ControlPanel";
 import { SharedStoreProvider } from "@/context/SharedStore";
+import userEvent from "@testing-library/user-event";
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -27,12 +28,13 @@ describe("Connected ControlPanel", () =>
 {
   it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
   {
-    const { getByText, getAllByText } = render(
+    const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
         <ControlPanel />
       </SharedStoreProvider>
     );
 
+    userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
     expect(getAllByText(/^actor$/i).length).toBe(1);
@@ -40,12 +42,13 @@ describe("Connected ControlPanel", () =>
 
   it("Removes the actor associated with the clicked initiative entry.", () =>
   {
-    const { getByText } = render(
+    const { getByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
         <ControlPanel />
       </SharedStoreProvider>
     );
 
+    userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
     fireEvent.click(getByText(/^actor$/i));
 
