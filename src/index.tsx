@@ -9,6 +9,10 @@ const theme = extendTheme({
     cssVarPrefix: "rpg",
     initialColorMode: "light",
     useSystemColorMode: true,
+  },
+  fonts: {
+    body: "Lato, system-ui, sans-serif",
+    heading: "Germania One, Impact, system-ui, sans-serif",
   }
 })
 
