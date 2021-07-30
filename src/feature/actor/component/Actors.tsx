@@ -26,6 +26,8 @@ export const Actors = (): any =>
               x={actor.x}
               y={actor.y}
 
+              label={actor.name}
+
               setPosition={
                 (x, y) => setActorPosition(actor.id, x, y)
               }
