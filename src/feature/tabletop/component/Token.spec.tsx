@@ -281,21 +281,6 @@ describe("Token", () =>
     expect(f).not.toHaveBeenCalled();
   });
 
-  it("Has transform attribute equal to viewTransform.", () =>
-  {
-    const { getByTestId } = renderSVG(
-      <Token
-        x={0}
-        y={0}
-        setPosition={() => {}}
-        cellSize={16}
-      />
-    );
-
-    expect(getByTestId(tokenTestId))
-      .toHaveAttribute("transform", "matrix(1,0,0,1,0,0)");
-  });
-
   it("Adjusts pointer x and y using viewTransform.", () =>
   {
     useLocalStore.getState().setViewTransform(translation(10, 20));
@@ -381,4 +366,19 @@ describe("Token", () =>
       expect(setPosition).toHaveBeenCalledWith(expectedX, expectedY);
     }
   );
+
+  it("Has a label", () =>
+  {
+    const { getByText } = renderSVG(
+      <Token
+        x={0}
+        y={0}
+        setPosition={jest.fn()}
+        cellSize={16}
+        label={"Alice"}
+      />
+    );
+
+    expect(getByText(/alice/i)).toBeInTheDocument();
+  });
 });

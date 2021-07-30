@@ -10,6 +10,7 @@ type TokenProps =
   y: number,
   setPosition: (x: number, y: number) => void,
   cellSize: number,
+  label?: string,
 }
 
 export const Token = ({
@@ -17,6 +18,7 @@ export const Token = ({
   y,
   setPosition,
   cellSize,
+  label,
 }: TokenProps) =>
 {
   const {
@@ -35,71 +37,76 @@ export const Token = ({
     Math.floor(value / cellSize) * cellSize;
 
   return (
-    <rect
-      data-testid={tokenTestId}
+    <g transform={viewTransform && toSvgMatrix(viewTransform)}>
+      <rect
+        data-testid={tokenTestId}
 
-      className="token"
+        className="token"
 
-      x={x}
-      y={y}
-      width={cellSize}
-      height={cellSize}
+        x={x}
+        y={y}
+        width={cellSize}
+        height={cellSize}
 
-      transform={viewTransform && toSvgMatrix(viewTransform)}
-
-      onPointerDown={
-        ({ button, target, pointerId, clientX, clientY }) =>
-        {
-          if (button === 0)
+        onPointerDown={
+          ({ button, target, pointerId, clientX, clientY }) =>
           {
-            (target as Element).setPointerCapture(pointerId);
+            if (button === 0)
+            {
+              (target as Element).setPointerCapture(pointerId);
 
-            const [ viewX, viewY ] = apply(
-                viewTransform || identityTransform(),
-                [ x, y ]
-              );
+              const [ viewX, viewY ] = apply(
+                  viewTransform || identityTransform(),
+                  [ x, y ]
+                );
 
-            setDelta([ viewX - clientX, viewY - clientY ]);
-            setDragging(true);
+              setDelta([ viewX - clientX, viewY - clientY ]);
+              setDragging(true);
+            }
           }
         }
-      }
-      onPointerUp={
-        ({ button, target, pointerId }) =>
-        (
-          button === 0 &&
+        onPointerUp={
+          ({ button, target, pointerId }) =>
           (
-            (target as Element).releasePointerCapture(pointerId),
-            setDelta([ 0, 0 ]),
-            setDragging(false)
+            button === 0 &&
+            (
+              (target as Element).releasePointerCapture(pointerId),
+              setDelta([ 0, 0 ]),
+              setDragging(false)
+            )
           )
-        )
-      }
+        }
 
-      onPointerMove={
-        ({ clientX, clientY }) =>
-        {
-          if (isDragging)
+        onPointerMove={
+          ({ clientX, clientY }) =>
           {
-            const tokenX = clientX + (snapToGrid ? 0 : dX);
-            const tokenY = clientY + (snapToGrid ? 0 : dY);
+            if (isDragging)
+            {
+              const tokenX = clientX + (snapToGrid ? 0 : dX);
+              const tokenY = clientY + (snapToGrid ? 0 : dY);
 
-            const tokenPosition: [ number, number ] =
-              apply(
-                inverseOf(viewTransform || identityTransform()),
-                [ tokenX, tokenY ]
-              );
+              const tokenPosition: [ number, number ] =
+                apply(
+                  inverseOf(viewTransform || identityTransform()),
+                  [ tokenX, tokenY ]
+                );
 
-            const [ x, y ] =
-                snapToGrid
-                ? tokenPosition.map(snap) as [ number, number ]
-                : tokenPosition
+              const [ x, y ] =
+                  snapToGrid
+                  ? tokenPosition.map(snap) as [ number, number ]
+                  : tokenPosition
 
-            setPosition(x, y);
+              setPosition(x, y);
+            }
           }
         }
+      />
+      {
+        label
+        ? (<text x={x} y={y}>{label}</text>)
+        : null
       }
-    />
+    </g>
   );
 };
 
