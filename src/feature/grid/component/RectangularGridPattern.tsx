@@ -1,6 +1,8 @@
 import * as React from "react";
-import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import styled from "@emotion/styled";
+
 import { useLocalStore } from "@/hook/useLocalStore";
+import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -9,6 +11,11 @@ type RectangularGridPatternProps = React.HTMLAttributes<{}> &
 {
   cellSize: number,
 };
+
+const Path = styled.path`
+  fill: none;
+  stroke: var(--black);
+`;
 
 export const RectangularGridPattern = (
   { id, cellSize }: RectangularGridPatternProps
@@ -29,8 +36,7 @@ export const RectangularGridPattern = (
           ? toSvgMatrix(viewTransform)
           : ""}
       >
-        <path
-          className="day grid-pattern"
+        <Path
           d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
           strokeWidth={1 * getScale(inverseOf(viewTransform))[0]}
         />
