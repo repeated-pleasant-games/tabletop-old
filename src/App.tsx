@@ -7,6 +7,7 @@ import { RectangularGrid, } from "@/feature/grid";
 import { Tabletop, } from "@/feature/tabletop";
 import { ControlPanel, } from "@/feature/control-panel";
 import { JoinForm, } from "@/feature/room";
+import { Container, Heading } from "@chakra-ui/react";
 
 export const App = () =>
 {
@@ -24,7 +25,10 @@ export const App = () =>
       {
         room === ""
         ? (
-          <JoinForm />
+          <Container centerContent>
+            <Heading marginBottom={4}>Welcome, Adventurer</Heading>
+            <JoinForm />
+          </Container>
         )
         : (
           <SharedStoreProvider room={room}>
