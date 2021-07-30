@@ -33,7 +33,6 @@
     "develop": "webpack serve --open"
   },
   "dependencies": {
-    "@chakra-ui/css-reset": "^1.0.0",
     "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
