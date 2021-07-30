@@ -1,5 +1,5 @@
 import { firefox, chromium, webkit, Browser, Page } from "playwright";
-import { v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 jest.setTimeout(10000);
 
@@ -72,7 +72,7 @@ describe.each([
 
           await roomNameInput.type(uuidv4());
 
-          await (await page.$("input[type=submit]:text('Join!')")).click();
+          await (await page.$(":text('Join!')")).click();
         });
 
         it(
@@ -107,7 +107,7 @@ describe.each([
 
         await roomNameInput.type(uuidv4());
 
-        await (await page.$("input[type=submit]:text('Join!')")).click();
+        await (await page.$(":text('Join!')")).click();
       });
 
       afterEach(async () =>
@@ -118,7 +118,7 @@ describe.each([
       // Flaky test, fails on random expects in random browsers.
       it("Selects that theme regardless of browser preference.", async () =>
       {
-        const selector = `input[type=radio]:left-of(:text("Dark"))`;
+        const selector = `span:left-of(:text("Dark"))`;
 
         const initialOption = await page.waitForSelector(selector);
 
@@ -136,7 +136,7 @@ describe.each([
 
         await roomNameInput.type(uuidv4());
 
-        await (await page.$("input[type=submit]:text('Join!')")).click();
+        await (await page.$(":text('Join!')")).click();
 
         const reloadedOption = await page.waitForSelector(selector);
 

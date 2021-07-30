@@ -36,6 +36,7 @@ export const JoinForm = () =>
                       {...field}
                       id="room-name"
                       aria-labelledby="room-name-label"
+                      type="text"
                       placeholder="The Dungeon"
                     />
                   </FormControl>
