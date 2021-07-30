@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
@@ -37,10 +37,13 @@ describe("Connected ControlPanel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    expect(getAllByText(/^actor$/i).length).toBe(1);
+    waitFor(() =>
+    {
+      expect(getAllByText(/^actor$/i).length).toBe(1);
+    });
   });
 
-  it("Removes the actor associated with the clicked initiative entry.", () =>
+  it("Removes the actor associated with the clicked initiative entry.", async () =>
   {
     const { getByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -50,9 +53,12 @@ describe("Connected ControlPanel", () =>
 
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
-    fireEvent.click(getByText(/^actor$/i));
 
-    expect(() => getByText(/^actor$/i)).toThrow();
+    waitFor(() =>
+    {
+      fireEvent.click(getByText(/^actor$/i));
+      expect(() => getByText(/^actor$/i)).toThrow();
+    });
   });
 
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>

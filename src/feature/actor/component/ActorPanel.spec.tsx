@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
@@ -33,10 +33,13 @@ describe("Actor Panel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    expect(getAllByText(/^actor$/i).length).toBe(1);
+    waitFor(() =>
+    {
+      expect(getAllByText(/^actor$/i).length).toBe(1);
+    })
   });
 
-  it("Removes an actor when its entry is clicked.", () =>
+  it("Removes an actor when its entry is clicked.", async () =>
   {
     const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -50,10 +53,16 @@ describe("Actor Panel", () =>
     fireEvent.click(addActorButton);
     fireEvent.click(addActorButton);
 
-    expect(getAllByText(/^actor$/i).length).toBe(2);
+    await waitFor(() =>
+    {
+      expect(getAllByText(/^actor$/i).length).toBe(2);
+    });
 
     fireEvent.click(getAllByText(/^actor$/i)[0]);
 
-    expect(getAllByText(/^actor$/i).length).toBe(1);
+    await waitFor(() =>
+    {
+      expect(getAllByText(/^actor$/i).length).toBe(1);
+    })
   });
 });

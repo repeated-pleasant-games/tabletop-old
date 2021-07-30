@@ -1,67 +1,84 @@
 import React from "react";
+import { Formik, Form, Field, FieldProps } from "formik";
+import { FormControl, FormLabel, Input, Button, Table, Tbody, Tr, Td } from "@chakra-ui/react";
 
 import { v4 as uuid } from "uuid";
 
 import { useSharedStore } from "@/hook/useSharedStore";
-import { Button } from "@/component/Button";
-
-import "./ActorPanel.module.css";
-import styles from "./ActorPanel.module.css";
 
 export const ActorPanel = (): any =>
 {
   const { actors, addActor, removeActor } = useSharedStore();
 
-  const [ actorName, setActorName ] = React.useState("");
-
   return (
     <>
-      <label id="actor-name-label">Actor Name</label>
-      <input
-        aria-labelledby="actor-name-label"
-        type="text"
-        value={actorName}
-        onChange={
-          ({ target }) => setActorName((target as HTMLInputElement).value)
-        }
-      />
-      <Button
-        onClick={() =>
-          addActor({
-            id: uuid(),
-            name: actorName,
-            initiative: 0,
-            x: 0,
-            y: 0,
-          })
+      <Formik
+        initialValues={{
+          actorName: ""
+        }}
+        onSubmit={
+          ({ actorName }) =>
+            addActor({
+              id: uuid(),
+              name: actorName,
+              initiative: 0,
+              x: 0,
+              y: 0,
+            })
         }
       >
-        Add Actor
-      </Button>
-      {
-        (!actors || actors.length === 0)
-        ? (
-          <p className={styles["no-actors"]}>... No actors ...</p>
-        )
-        : (
-          <div className={styles["list-container"]}>
-            <ul>
-              {
-                actors.map((actor) =>
+        {
+          (props) =>
+          (
+            <Form>
+              <Field name="actorName">
+                {
+                  ({ field, form }: FieldProps) =>
                   (
-                    <li
-                      key={actor.id}
-                      onClick={() => removeActor(actor.id)}
-                    >
-                      {actor.name}
-                    </li>
+                    <FormControl>
+                      <FormLabel
+                        id="actor-name-label"
+                      >
+                        Actor Name
+                      </FormLabel>
+                      <Input
+                        {...field}
+                        id="actor-name"
+                        aria-labelledby="actor-name-label"
+                        placeholder="Actor"
+                      />
+                    </FormControl>
                   )
-                )
-              }
-            </ul>
-          </div>
-        )
-      }
+                }
+              </Field>
+              <Button type="submit">Add Actor</Button>
+            </Form>
+          )
+        }
+      </Formik>
+      <Table>
+        <Tbody>
+          {
+            (!actors || actors.length === 0)
+            ? (
+              <Tr>
+                <Td>
+                  ... No actors ...
+                </Td>
+              </Tr>
+            )
+            : actors.map((actor) =>
+              (
+                <Tr key={actor.id}>
+                  <Td onClick={() => removeActor(actor.id)}>
+                    {actor.name}
+                  </Td>
+                </Tr>
+              )
+            )
+          }
+        </Tbody>
+      </Table>
     </>
   );
 };
