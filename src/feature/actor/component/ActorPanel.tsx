@@ -1,6 +1,16 @@
 import React from "react";
 import { Formik, Form, Field, FieldProps } from "formik";
-import { FormControl, FormLabel, Input, Button, Table, Tbody, Tr, Td } from "@chakra-ui/react";
+import {
+  FormControl, 
+  FormLabel,
+  Input,
+  Button,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  Container
+} from "@chakra-ui/react";
 
 import { v4 as uuid } from "uuid";
 
@@ -56,29 +66,31 @@ export const ActorPanel = (): any =>
           )
         }
       </Formik>
-      <Table>
-        <Tbody>
-          {
-            (!actors || actors.length === 0)
-            ? (
-              <Tr>
-                <Td>
-                  ... No actors ...
-                </Td>
-              </Tr>
-            )
-            : actors.map((actor) =>
-              (
-                <Tr key={actor.id}>
-                  <Td onClick={() => removeActor(actor.id)}>
-                    {actor.name}
+      <Container maxHeight="300px" overflowY="auto">
+        <Table>
+          <Tbody>
+            {
+              (!actors || actors.length === 0)
+              ? (
+                <Tr>
+                  <Td>
+                    ... No actors ...
                   </Td>
                 </Tr>
               )
-            )
-          }
-        </Tbody>
-      </Table>
+              : actors.map((actor) =>
+                (
+                  <Tr key={actor.id}>
+                    <Td onClick={() => removeActor(actor.id)}>
+                      {actor.name}
+                    </Td>
+                  </Tr>
+                )
+              )
+            }
+          </Tbody>
+        </Table>
+      </Container>
     </>
   );
 };
