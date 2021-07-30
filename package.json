@@ -33,7 +33,11 @@
     "develop": "webpack serve --open"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.5",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
     "classnames": "^2.3.1",
+    "framer-motion": "^4.1.17",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.2",
