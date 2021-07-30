@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import { useLocalStore } from "@/hook/useLocalStore";
 import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import { useColorModeValue } from "@chakra-ui/react";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -23,6 +24,11 @@ export const RectangularGridPattern = (
 {
   const viewTransform = useLocalStore((state) => state.viewTransform);
 
+  const stroke = useColorModeValue(
+    "var(--rpg-colors-gray-700)",
+    "var(--rpg-colors-gray-500)"
+  );
+
   return (
     <defs data-testid={rectangularPatternTestId}>
       <pattern
@@ -36,7 +42,9 @@ export const RectangularGridPattern = (
           ? toSvgMatrix(viewTransform)
           : ""}
       >
-        <Path
+        <path
+          stroke={stroke}
+          fill="none"
           d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
           strokeWidth={1 * getScale(inverseOf(viewTransform))[0]}
         />
