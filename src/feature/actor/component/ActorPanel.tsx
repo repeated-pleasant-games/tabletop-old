@@ -67,7 +67,7 @@ export const ActorPanel = (): any =>
         }
       </Formik>
       <Container maxHeight="300px" overflowY="auto">
-        <Table>
+        <Table variant="simple">
           <Tbody>
             {
               (!actors || actors.length === 0)
