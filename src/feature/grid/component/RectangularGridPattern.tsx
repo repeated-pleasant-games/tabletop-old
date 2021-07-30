@@ -14,7 +14,7 @@ type RectangularGridPatternProps = React.HTMLAttributes<{}> &
 
 const Path = styled.path`
   fill: none;
-  stroke: var(--black);
+  stroke: #111111;
 `;
 
 export const RectangularGridPattern = (
