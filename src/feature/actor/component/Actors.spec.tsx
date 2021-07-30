@@ -14,7 +14,7 @@ import { Actors } from "./Actors";
 
 describe("Actors", () =>
 {
-  it("Should render a Token for each actor in shared state.", () =>
+  it("Renders a Token for each actor in shared state.", () =>
   {
     const Fixture = (): any =>
     {
@@ -42,5 +42,35 @@ describe("Actors", () =>
     );
 
     expect(getAllByTestId(tokenTestId)).toHaveLength(1);
+  });
+
+  it("Gives each token a label equal to actor name", () =>
+  {
+    const Fixture = (): any =>
+    {
+      const { addActor } = useSharedStore((state) =>
+      ({
+        addActor: state.addActor,
+      }));
+
+      React.useEffect(
+        () =>
+        {
+          addActor({ id: uuidv4(), name: "Actor", } as Actor);
+        },
+        []
+      );
+
+      return ( null );
+    };
+
+    const { getByText } = renderSVG(
+      <SharedStoreProvider room={uuidv4()}>
+        <Fixture />
+        <Actors />
+      </SharedStoreProvider>
+    );
+
+    expect(getByText(/actor/i)).toBeInTheDocument();
   });
 });
