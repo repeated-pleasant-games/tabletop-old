@@ -3,8 +3,6 @@ import { useLocalStore } from "@/hook/useLocalStore";
 
 export const joinFormTestId = "join-form"
 
-import "./JoinForm.module.css";
-
 import { Formik, Form, Field, FormikProps, FieldProps } from "formik";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 
