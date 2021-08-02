@@ -1,7 +1,12 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  CSSReset,
+  extendTheme
+} from "@chakra-ui/react";
 import App from "./App";
 
 const theme = extendTheme({
@@ -19,6 +24,7 @@ const theme = extendTheme({
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <CSSReset />
+    <ColorModeScript initialColorMode={"system"} />
     <App />
   </ChakraProvider>,
   document.getElementById("app")
