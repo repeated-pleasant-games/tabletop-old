@@ -4,7 +4,6 @@ import * as ReactDOM from "react-dom"
 import {
   ChakraProvider,
   ColorModeScript,
-  CSSReset,
   extendTheme
 } from "@chakra-ui/react";
 import App from "./App";
@@ -19,13 +18,14 @@ const theme = extendTheme({
     body: "Lato, system-ui, sans-serif",
     heading: "Germania One, Impact, system-ui, sans-serif",
   }
-})
+});
 
 ReactDOM.render(
-  <ChakraProvider theme={theme}>
-    <CSSReset />
+  <>
     <ColorModeScript initialColorMode={"system"} />
-    <App />
-  </ChakraProvider>,
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </>,
   document.getElementById("app")
 );
