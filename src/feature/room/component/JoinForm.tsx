@@ -41,7 +41,7 @@ export const JoinForm = () =>
                 )
               }
             </Field>
-            <Button type="submit">Join!</Button>
+            <Button mt="4" type="submit">Join!</Button>
           </Form>
         )
       }

@@ -9,7 +9,8 @@ import {
   Tbody,
   Tr,
   Td,
-  Container
+  Container,
+  Box
 } from "@chakra-ui/react";
 
 import { v4 as uuid } from "uuid";
@@ -61,35 +62,41 @@ export const ActorPanel = (): any =>
                   )
                 }
               </Field>
-              <Button type="submit">Add Actor</Button>
+              <Button mt="2" type="submit">Add Actor</Button>
             </Form>
           )
         }
       </Formik>
-      <Container maxHeight="300px" overflowY="auto">
-        <Table variant="simple">
-          <Tbody>
-            {
-              (!actors || actors.length === 0)
-              ? (
-                <Tr>
-                  <Td>
-                    ... No actors ...
-                  </Td>
-                </Tr>
-              )
-              : actors.map((actor) =>
-                (
-                  <Tr key={actor.id}>
-                    <Td onClick={() => removeActor(actor.id)}>
-                      {actor.name}
-                    </Td>
-                  </Tr>
-                )
-              )
-            }
-          </Tbody>
-        </Table>
+      <Container mt="4" maxHeight="300px" overflowY="auto">
+        {
+          (!actors || actors.length === 0)
+          ? (
+            <Box
+              textAlign="center"
+              textStyle="italic"
+              color="gray.500"
+            >
+              ... No actors ...
+            </Box>
+          )
+          : (
+            <Table variant="simple">
+              <Tbody>
+                {
+                  actors.map((actor) =>
+                    (
+                      <Tr key={actor.id}>
+                        <Td onClick={() => removeActor(actor.id)}>
+                          {actor.name}
+                        </Td>
+                      </Tr>
+                    )
+                  )
+                }
+              </Tbody>
+            </Table>
+          )
+        }
       </Container>
     </>
   );

@@ -27,15 +27,15 @@ export const ControlPanel = () =>
       `}
     >
       <Box bg={bg} p={4} borderRadius="sm">
-        <section>
+        <Box as={"section"}>
           <ActorPanel />
-        </section>
-        <section>
+        </Box>
+        <Box as={"section"} mt="4">
           <SnapToGrid />
-        </section>
-        <section>
+        </Box>
+        <Box as={"section"} mt="4">
           <ThemeSelect />
-        </section>
+        </Box>
       </Box>
     </Container>
   );
