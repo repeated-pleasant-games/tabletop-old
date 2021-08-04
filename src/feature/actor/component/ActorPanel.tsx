@@ -80,7 +80,7 @@ export const ActorPanel = (): any =>
             </Box>
           )
           : (
-            <Table variant="simple">
+            <Table variant="simple" size="sm">
               <Tbody>
                 {
                   actors.map((actor) =>
