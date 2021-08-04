@@ -1,36 +1,26 @@
 import React from "react";
-import { useLocalStore } from "@/hook/useLocalStore";
 
-import { Radio } from "@/component/Radio";
+import { Radio, RadioGroup, Stack, useColorMode } from "@chakra-ui/react";
 
 export const ThemeSelect = () =>
 {
-  const { themePreference, setThemePreference } = useLocalStore(
-    ({ themePreference, setThemePreference }) =>
-    ({
-      themePreference,
-      setThemePreference,
-    })
-  );
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Radio name="set-theme" onChange={setThemePreference}>
-      {
-        [ "Light", "System", "Dark", ]
-        .map(
-          (theme) =>
-          (
-            <Radio.Option
-              key={`theme-option-${theme.toLowerCase()}`}
-              value={theme.toLowerCase()}
-              checked={themePreference === theme.toLowerCase()}
-            >
-              {theme}
-            </Radio.Option>
-          )
-        )
+    <RadioGroup
+      onChange={
+        (value) =>
+        {
+          if (value !== colorMode) toggleColorMode()
+        }
       }
-    </Radio>
+      value={colorMode}
+    >
+      <Stack direction="row">
+        <Radio value="light">Light</Radio>
+        <Radio value="dark">Dark</Radio>
+      </Stack>
+    </RadioGroup>
   );
 };
 

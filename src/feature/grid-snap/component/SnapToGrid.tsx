@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "@/hook/useLocalStore";
 
-import { Checkbox } from "@/component/Checkbox";
+import { Checkbox } from "@chakra-ui/react";
 
 export const SnapToGrid = () =>
 {
@@ -15,9 +15,8 @@ export const SnapToGrid = () =>
 
   return (
     <Checkbox
-      checked={snapToGrid}
-      onChecked={() => setSnapToGrid(true)}
-      onUnchecked={() => setSnapToGrid(false)}
+      isChecked={snapToGrid}
+      onChange={({ target: { checked } }) => setSnapToGrid(checked)}
     >
       Snap to Grid
     </Checkbox>

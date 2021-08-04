@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
@@ -37,10 +37,13 @@ describe("Connected ControlPanel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    expect(getAllByText(/^actor$/i).length).toBe(1);
+    waitFor(() =>
+    {
+      expect(getAllByText(/^actor$/i).length).toBe(1);
+    });
   });
 
-  it("Removes the actor associated with the clicked initiative entry.", () =>
+  it("Removes the actor associated with the clicked initiative entry.", async () =>
   {
     const { getByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -50,9 +53,12 @@ describe("Connected ControlPanel", () =>
 
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
-    fireEvent.click(getByText(/^actor$/i));
 
-    expect(() => getByText(/^actor$/i)).toThrow();
+    waitFor(() =>
+    {
+      fireEvent.click(getByText(/^actor$/i));
+      expect(() => getByText(/^actor$/i)).toThrow();
+    });
   });
 
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
@@ -109,84 +115,5 @@ describe("Connected ControlPanel", () =>
     fireEvent.click(getByLabelText("Snap to Grid"));
 
     expect(useLocalStore.getState().snapToGrid).toBe(false);
-  });
-
-  it("Checks 'light' theme indicator when theme is set to 'light'.", () =>
-  {
-    useLocalStore.setState(() => ({ themePreference: 'light' }));
-
-    const { getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(true);
-  });
-
-  it("Checks 'dark' theme indicator when theme is set to 'dark'.", () =>
-  {
-    useLocalStore.setState(() => ({ themePreference: 'dark' }));
-
-    const { getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(true);
-  });
-
-  it.each([
-    [ 'light', [ true, false ] ],
-    [ 'dark', [ false, true ] ]
-  ])(
-    "Only checks one theme at a time.",
-    (
-      themeName: "light" | "dark",
-      [ dayState, darkState ]
-    ) =>
-    {
-      useLocalStore.setState(() => ({ themePreference: themeName }));
-
-      const { getByLabelText } = render(
-        <SharedStoreProvider room={uuidv4()}>
-          <ControlPanel />
-        </SharedStoreProvider>
-      );
-
-      expect((getByLabelText("Light") as HTMLInputElement).checked).toBe(dayState);
-      expect((getByLabelText("Dark") as HTMLInputElement).checked).toBe(darkState);
-    }
-  );
-
-  it("Sets theme to day when day theme is clicked.", () =>
-  {
-    useLocalStore.setState(() => ({ themePreference: "dark" }));
-
-    const { getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    fireEvent.click(getByLabelText("Light"));
-
-    expect(useLocalStore.getState().themePreference).toBe("light");
-  });
-
-  it("Sets theme to dark when dark theme is clicked.", () =>
-  {
-    useLocalStore.setState(() => ({ themePreference: "light" }));
-
-    const { getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    fireEvent.click(getByLabelText("Dark"));
-
-    expect(useLocalStore.getState().themePreference).toBe("dark");
   });
 });

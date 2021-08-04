@@ -1,6 +1,13 @@
 import * as React from "react";
 
 import { Actors } from "@/feature/actor";
+import styled from "@emotion/styled";
+
+const TabletopContainer = styled.svg`
+  place-self: start;
+  width: 100vw;
+  height: 100vh;
+`;
 
 type TabletopProps = React.HTMLAttributes<{}> &
 {
@@ -8,10 +15,10 @@ type TabletopProps = React.HTMLAttributes<{}> &
 };
 export const Tabletop = ({ grid, }: TabletopProps) =>
 (
-  <svg id="tabletop">
+  <TabletopContainer>
     {grid}
     <Actors />
-  </svg>
+  </TabletopContainer>
 );
 
 export default Tabletop;

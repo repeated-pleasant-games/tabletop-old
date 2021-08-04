@@ -1,5 +1,5 @@
-import { firefox, chromium, webkit, Browser, Page } from "playwright";
-import { v4 as uuidv4} from "uuid";
+import { firefox, chromium, webkit, Browser, Page, BrowserContext } from "playwright";
+import { v4 as uuidv4 } from "uuid";
 
 jest.setTimeout(10000);
 
@@ -13,7 +13,8 @@ describe.each([
 
   beforeAll(async () =>
   {
-    browser = await driver.launch();
+    browser = await driver.launch({
+    });
   });
 
   afterAll(async () =>
@@ -22,83 +23,83 @@ describe.each([
   });
 
   describe.each([
-    { preferredTheme: "light", colorMode: "light", option: "System", },
-    { preferredTheme: "dark", colorMode: "dark", option: "System", },
-    { preferredTheme: "no-preference", colorMode: "light", option: "System", },
+    { preferredTheme: "light", option: "Light", },
+    { preferredTheme: "no-preference", option: "Light", },
+    { preferredTheme: "dark", option: "Dark", }
   ])(
     "When user opens page with no cache and theme preference of '$preferredTheme'.",
     (
       {
         preferredTheme,
-        colorMode,
         option,
       }: {
         preferredTheme: "light" | "dark" | "no-preference",
-        colorMode: "light" | "dark"
         option: string,
       }
     ) =>
     {
+      let context: BrowserContext;
       let page: Page;
+
+      beforeAll(async () =>
+      {
+        context = await browser.newContext({ colorScheme: preferredTheme });
+      });
 
       beforeEach(async () =>
       {
-        page = await browser.newPage({ colorScheme: preferredTheme });
+        page = await context.newPage();
         await page.goto("http://localhost:8080");
+        
+        const roomNameInput = await page.waitForSelector(
+          "input[type=text]:near(:text('Room Name'))"
+        );
+
+        await roomNameInput.type(uuidv4());
+
+        await (await page.$(":text('Join!')")).click();
       });
 
       afterEach(async () =>
       {
+        await context.clearCookies();
         await page.close();
       });
 
-      it(`Sets HTML class to ${colorMode}.`, async () =>
+      afterAll(async () =>
       {
-        expect(
-          await page.evaluate(() =>
-          {
-            return document.documentElement.className;
-          })
-        ).toBe(colorMode);
+        await context.close();
       });
 
-      describe("After user joins room", () =>
-      {
-        beforeEach(async () =>
+      it(
+        `Checks option '${option}'.`,
+        async () =>
         {
-          const roomNameInput = await page.waitForSelector(
-            "input[type=text]:near(:text('Room Name'))"
+          const element = await page.waitForSelector(
+            `input[type=radio]:left-of(:text("${option}"))`
           );
 
-          await roomNameInput.type(uuidv4());
-
-          await (await page.$("input[type=submit]:text('Join!')")).click();
-        });
-
-        it(
-          `Checks option '${option}'.`,
-          async () =>
-          {
-            const element = await page.waitForSelector(
-              `input[type=radio]:left-of(:text("${option}"))`
-            );
-
-            expect(await element.isChecked()).toBe(true);
-          }
-        );
-      });
+          expect(await element.isChecked()).toBe(true);
+        }
+      );
     }
   );
 
-  describe(
+  describe.skip(
     "When a user selects a theme and refreshes the page.",
     () =>
     {
+      let context: BrowserContext;
       let page: Page;
+
+      beforeAll(async () =>
+      {
+        context = await browser.newContext({ colorScheme: "light" });
+      });
 
       beforeEach(async () =>
       {
-        page = await browser.newPage({ colorScheme: "light" });
+        page = await context.newPage();
         await page.goto("http://localhost:8080");
 
         const roomNameInput = await page.waitForSelector(
@@ -107,18 +108,24 @@ describe.each([
 
         await roomNameInput.type(uuidv4());
 
-        await (await page.$("input[type=submit]:text('Join!')")).click();
+        await (await page.$(":text('Join!')")).click();
       });
 
       afterEach(async () =>
       {
+        await context.clearCookies();
         await page.close();
+      });
+
+      afterAll(async () =>
+      {
+        await context.close();
       });
 
       // Flaky test, fails on random expects in random browsers.
       it("Selects that theme regardless of browser preference.", async () =>
       {
-        const selector = `input[type=radio]:left-of(:text("Dark"))`;
+        const selector = `span:left-of(:text("Dark"))`;
 
         const initialOption = await page.waitForSelector(selector);
 
@@ -136,7 +143,7 @@ describe.each([
 
         await roomNameInput.type(uuidv4());
 
-        await (await page.$("input[type=submit]:text('Join!')")).click();
+        await (await page.$(":text('Join!')")).click();
 
         const reloadedOption = await page.waitForSelector(selector);
 

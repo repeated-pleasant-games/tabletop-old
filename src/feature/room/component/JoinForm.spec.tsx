@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 
@@ -17,13 +17,13 @@ describe("JoinForm component", () =>
   it("Has an input field labelled 'Room Name'.", () =>
   {
     const { getByLabelText } = render(<JoinForm />);
-    expect((getByLabelText("Room Name") as HTMLInputElement).type).toBe("text");
+    expect((getByLabelText(/room name/i) as HTMLInputElement).type).toBe("text");
   });
 
   it("Has a submit button that says 'Join!'.", () =>
   {
     const { getByText } = render(<JoinForm />);
-    expect((getByText("Join!") as HTMLInputElement).type).toBe("submit")
+    expect((getByText(/join!/i) as HTMLInputElement).type).toBe("submit")
   });
 
   it.each([
@@ -31,14 +31,19 @@ describe("JoinForm component", () =>
     [ "antechamber" ]
   ])("Sets room code ('%s') when you press 'Join!'.", (roomName) =>
   {
-    useLocalStore.setState(() => ({ room: "", }));
+    act(() =>
+    {
+      useLocalStore.setState(() => ({ room: "", }));
+    });
     
-    global.HTMLFormElement.prototype.submit = jest.fn();
-    const { getByLabelText, getByTestId } = render(<JoinForm />);
+    const { getByLabelText, getByText } = render(<JoinForm />);
 
     userEvent.type(getByLabelText(/room name/i), roomName);
-    fireEvent.submit(getByTestId(joinFormTestId));
+    fireEvent.click(getByText(/join!/i));
 
-    expect(useLocalStore.getState().room).toBe(roomName);
+    waitFor(() =>
+    {
+      expect(useLocalStore.getState().room).toBe(roomName);
+    });
   });
 });

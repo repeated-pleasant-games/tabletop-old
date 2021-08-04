@@ -1,6 +1,9 @@
 import * as React from "react";
-import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import styled from "@emotion/styled";
+
 import { useLocalStore } from "@/hook/useLocalStore";
+import { getScale, inverseOf, toSvgMatrix } from "@/lib/Transform";
+import { useColorModeValue } from "@chakra-ui/react";
 
 export const rectangularPatternTestId = "rectangular-grid-pattern";
 export const patternTestId = "grid-pattern";
@@ -30,7 +33,8 @@ export const RectangularGridPattern = (
           : ""}
       >
         <path
-          className="day grid-pattern"
+          stroke="var(--rpg-colors-gray-500)"
+          fill="none"
           d={`M ${cellSize} 0 L 0 0 0 ${cellSize} ${cellSize} ${cellSize}`}
           strokeWidth={1 * getScale(inverseOf(viewTransform))[0]}
         />
