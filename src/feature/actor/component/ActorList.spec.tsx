@@ -36,6 +36,7 @@ describe("ActorList", () =>
               {
                 id: "1",
                 name: "Alice",
+                initiative: 12 
               } as Actor,
             ]
           })
@@ -57,5 +58,6 @@ describe("ActorList", () =>
     );
 
     expect(getByText(/alice/i)).toBeInTheDocument();
+    expect(getByText(/12/i)).toBeInTheDocument();
   });
 });

@@ -34,9 +34,12 @@ export const ActorList = () =>
           {
             actors.map((actor) =>
               (
-                <Tr key={actor.id}>
-                  <Td onClick={() => removeActor(actor.id)}>
+                <Tr key={actor.id} onClick={() => removeActor(actor.id)}>
+                  <Td>
                     {actor.name}
+                  </Td>
+                  <Td>
+                    {actor.initiative}
                   </Td>
                 </Tr>
               )

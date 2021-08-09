@@ -71,7 +71,7 @@ export const AddActorForm = () =>
                       id="initiative"
                       type="number"
                       aria-labelledby="initiative-label"
-                      value={0}
+                      value={field.value}
                     />
                   </FormControl>
                 )
