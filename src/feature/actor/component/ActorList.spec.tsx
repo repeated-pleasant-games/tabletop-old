@@ -60,4 +60,52 @@ describe("ActorList", () =>
     expect(getByText(/alice/i)).toBeInTheDocument();
     expect(getByText(/12/i)).toBeInTheDocument();
   });
+
+  it("Sorts actors from highest to lowest initiative.", () =>
+  {
+    const Fixture = () =>
+    {
+      const storeApi = useSharedStoreApi();
+
+      useEffect(
+        () =>
+        {
+          storeApi.setState({
+            actors: [
+              {
+                id: "1",
+                name: "Alice",
+                initiative: 12 
+              } as Actor,
+              {
+                id: "2",
+                name: "Bob",
+                initiative: 15 
+              } as Actor,
+            ]
+          })
+        },
+        [storeApi]
+      );
+
+      return (
+        <>
+          <ActorList />
+        </>
+      )
+    };
+
+    const { getAllByText, } = render(
+      <SharedStoreProvider room={uuidv4()}>
+        <Fixture />
+      </SharedStoreProvider>
+    );
+
+    expect(
+      getAllByText(/alice|bob/i).map(({ textContent }) => textContent)
+    ).toEqual([
+      "Bob",
+      "Alice"
+    ]);
+  });
 });

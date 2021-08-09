@@ -32,7 +32,12 @@ export const ActorList = () =>
       <Table variant="simple" size="sm">
         <Tbody>
           {
-            actors.map((actor) =>
+            actors
+            .sort(
+              ({ initiative: a }, { initiative: b }) =>
+                Math.sign(b - a)
+            )
+            .map((actor) =>
               (
                 <Tr key={actor.id} onClick={() => removeActor(actor.id)}>
                   <Td>
