@@ -1,1 +1,1 @@
-export { useSharedStore } from "@/feature/store-shared";
+export { useSharedStore, useSharedStoreApi } from "@/feature/store-shared";
