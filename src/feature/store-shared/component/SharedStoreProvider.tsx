@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { SharedState, createSharedStore } from "../util";
 
-const { Provider, useStore } = createContext<SharedState>();
+const { Provider, useStore, useStoreApi } = createContext<SharedState>();
 
-export { useStore as useSharedStore };
+export { useStore as useSharedStore, useStoreApi as useSharedStoreApi };
 
 type SharedStoreProviderProps = React.HTMLAttributes<{}> &
 {

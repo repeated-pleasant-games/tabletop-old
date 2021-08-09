@@ -17,6 +17,16 @@ const theme = extendTheme({
   fonts: {
     body: "Lato, system-ui, sans-serif",
     heading: "Germania One, Impact, system-ui, sans-serif",
+  },
+  components: {
+    Table: {
+      parts: [ "th" ],
+      baseStyle: {
+        th: {
+          fontWeight: "normal"
+        }
+      }
+    }
   }
 });
 
