@@ -5,7 +5,9 @@ import {
   Tbody,
   Tr,
   Td,
-  Box
+  Box,
+  Thead,
+  Th
 } from "@chakra-ui/react";
 
 import { useSharedStore } from "@/hook/useSharedStore";
@@ -30,6 +32,12 @@ export const ActorList = () =>
     )
     : (
       <Table variant="simple" size="sm">
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Initiative</Th>
+          </Tr>
+        </Thead>
         <Tbody>
           {
             actors
