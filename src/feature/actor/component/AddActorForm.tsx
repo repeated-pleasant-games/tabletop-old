@@ -18,14 +18,15 @@ export const AddActorForm = () =>
   return (
     <Formik
       initialValues={{
-        actorName: ""
+        actorName: "",
+        initiative: 0,
       }}
       onSubmit={
-        ({ actorName }) =>
+        ({ actorName, initiative }) =>
           addActor({
             id: uuid(),
             name: actorName,
-            initiative: 0,
+            initiative: initiative,
             x: 0,
             y: 0,
           })
@@ -50,6 +51,27 @@ export const AddActorForm = () =>
                       id="actor-name"
                       aria-labelledby="actor-name-label"
                       placeholder="Actor"
+                    />
+                  </FormControl>
+                )
+              }
+            </Field>
+            <Field name="initiative">
+              {
+                ({ field, form }: FieldProps) =>
+                (
+                  <FormControl>
+                    <FormLabel
+                      id="initiative-label"
+                    >
+                      Initiative
+                    </FormLabel>
+                    <Input
+                      {...field}
+                      id="initiative"
+                      type="number"
+                      aria-labelledby="initiative-label"
+                      value={0}
                     />
                   </FormControl>
                 )

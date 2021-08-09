@@ -50,13 +50,14 @@ describe("AddActorForm", () =>
     );
 
     userEvent.type(getByLabelText(/actor name/i), "Alice");
+    userEvent.type(getByLabelText(/initiative/i), "1");
     fireEvent.click(getByText(/add actor/i));
 
     await waitFor(() =>
     {
       expect(addActor).toBeCalledWith({
         id: "1",
-        initiative: 0,
+        initiative: 1,
         name: "Alice",
         x: 0,
         y: 0,
