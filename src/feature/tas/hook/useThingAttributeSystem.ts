@@ -59,5 +59,8 @@ export const useThingAttributeSystem = () =>
 
     getThingAttributes: (thingId: string): Attribute<string>[] =>
       Array.from(thingAttributeMap[thingId]),
+
+    addSystem: <T extends {} = {}>() =>
+      uuidv4(),
   };
 };

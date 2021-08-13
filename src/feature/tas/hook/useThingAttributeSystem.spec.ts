@@ -92,8 +92,17 @@ describe("useThingAttributeSystem", () =>
     });
   });
 
-  describe("", () =>
+  describe("addSystem", () =>
   {
-    // TODO
+    it("Returns a uuid.", () =>
+    {
+      const { result } = renderHook(() => useThingAttributeSystem());
+
+      const system = result.current.addSystem();
+
+      expect(system).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      );
+    });
   });
 });
