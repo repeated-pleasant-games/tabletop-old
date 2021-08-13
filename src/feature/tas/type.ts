@@ -1,4 +1,3 @@
-
 export type Attribute<T extends string> =
 {
   id: string,
