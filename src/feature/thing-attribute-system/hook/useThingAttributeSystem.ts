@@ -1,16 +1,18 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
+import {
+  ThingAttributeSystemContext,
+} from "../component/ThingAttributeSystemProvider";
 import { Attribute, System } from "../type";
 
 export const useThingAttributeSystem = () =>
 {
-  const [ thingAttributeMap, setThingAttributeMap ] =
-    React.useState<{ [s: string]: Attribute<string>[] }>({});
-
-  const [ systems, setSystems ] =
-    React.useState<System<any>[]>([]);
+  const {
+    thingAttributeMap, setThingAttributeMap,
+    systems, setSystems
+  } = React.useContext(ThingAttributeSystemContext);
 
   return {
     createThing: React.useCallback(
