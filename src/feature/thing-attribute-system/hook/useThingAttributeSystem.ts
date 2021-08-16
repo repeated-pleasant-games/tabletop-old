@@ -2,12 +2,14 @@ import React, { useLayoutEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { Attribute } from "../type";
+import { Attribute, System } from "../type";
 
 export const useThingAttributeSystem = () =>
 {
   const [ thingAttributeMap, setThingAttributeMap ] =
     React.useState<{ [s: string]: Attribute<string>[] }>({});
+  const [ systems, setSystems ] =
+    React.useState<System<any>[]>([]);
 
   return {
     createThing: () =>
@@ -60,7 +62,34 @@ export const useThingAttributeSystem = () =>
     getThingAttributes: (thingId: string): Attribute<string>[] =>
       Array.from(thingAttributeMap[thingId]),
 
-    addSystem: <T extends {} = {}>() =>
-      uuidv4(),
+    addSystem: <T extends {} = {}>(
+      systemProto: Omit<System<T>, "id" | "getNodes">
+    ) =>
+    {
+      const id = uuidv4();
+
+      setSystems(
+        (prevSystems) =>
+        [
+          ...prevSystems,
+          {
+            id,
+            getNodes: () => void null,
+            ...systemProto
+          }
+        ]
+      );
+
+      return id;
+    },
+
+    update: React.useCallback(
+      () =>
+        systems.forEach(
+          ({ onUpdate }) =>
+            onUpdate([])
+        ),
+      [ systems ]
+    ),
   };
 };

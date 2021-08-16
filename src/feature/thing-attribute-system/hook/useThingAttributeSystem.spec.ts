@@ -98,11 +98,38 @@ describe("useThingAttributeSystem", () =>
     {
       const { result } = renderHook(() => useThingAttributeSystem());
 
-      const system = result.current.addSystem();
+      let system;
+      act(() =>
+      {
+        system = result.current.addSystem({
+          onUpdate: () => void null,
+        });
+      });
 
       expect(system).toMatch(
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
       );
+    });
+  });
+
+  describe("update", () =>
+  {
+    it("Invokes all onUpdate callbacks for registered systems.", () =>
+    {
+      const { result } = renderHook(() => useThingAttributeSystem());
+
+      const onUpdate = jest.fn();
+
+      act(() =>
+      {
+        result.current.addSystem({
+          onUpdate,
+        });
+      });
+
+      result.current.update();
+
+      expect(onUpdate).toHaveBeenCalled();
     });
   });
 });
