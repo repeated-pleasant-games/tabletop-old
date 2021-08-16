@@ -12,76 +12,88 @@ export const useThingAttributeSystem = () =>
     React.useState<System<any>[]>([]);
 
   return {
-    createThing: () =>
-      uuidv4(),
+    createThing: React.useCallback(
+      () =>
+        uuidv4(),
+      []
+    ),
 
-    addAttributeToThing: <A extends Attribute<string>>(
-      thingId: string,
-      attribute: Omit<A, "id">
-    ) => 
-    {
-      const id = uuidv4();
-
-      if (thingAttributeMap[thingId])
+    addAttributeToThing: React.useCallback(
+      <A extends Attribute<string>>(
+        thingId: string,
+        attribute: Omit<A, "id">
+      ) => 
       {
-        const attributes = thingAttributeMap[thingId];
+        const id = uuidv4();
 
-        setThingAttributeMap(
-          (prevMap) =>
-          ({
-            ...prevMap,
-            [thingId]: [
-              ...attributes,
-              {
-                id,
-                ...attribute
-              }
-            ]
-          })
-        );
-      }
-      else
+        if (thingAttributeMap[thingId])
+        {
+          const attributes = thingAttributeMap[thingId];
+
+          setThingAttributeMap(
+            (prevMap) =>
+            ({
+              ...prevMap,
+              [thingId]: [
+                ...attributes,
+                {
+                  id,
+                  ...attribute
+                }
+              ]
+            })
+          );
+        }
+        else
+        {
+          setThingAttributeMap(
+            (prevMap) =>
+            ({
+              ...prevMap,
+              [thingId]: [
+                {
+                  id,
+                  ...attribute
+                }
+              ]
+            })
+          );
+        }
+
+        return id;
+      },
+      [ thingAttributeMap ]
+    ),
+
+    getThingAttributes: React.useCallback(
+      (thingId: string): Attribute<string>[] =>
+        Array.from(thingAttributeMap[thingId]),
+      [ thingAttributeMap ]
+    ),
+
+    addSystem: React.useCallback(
+      <T extends {} = {}>(
+        systemProto: Omit<System<T>, "id" | "getNodes">
+      ) =>
       {
-        setThingAttributeMap(
-          (prevMap) =>
-          ({
-            ...prevMap,
-            [thingId]: [
-              {
-                id,
-                ...attribute
-              }
-            ]
-          })
+        const id = uuidv4();
+
+        setSystems(
+          (prevSystems) =>
+          [
+            ...prevSystems,
+            {
+              id,
+              getNodes: () => void null,
+              ...systemProto
+            }
+          ]
         );
-      }
 
-      return id;
-    },
-
-    getThingAttributes: (thingId: string): Attribute<string>[] =>
-      Array.from(thingAttributeMap[thingId]),
-
-    addSystem: <T extends {} = {}>(
-      systemProto: Omit<System<T>, "id" | "getNodes">
-    ) =>
-    {
-      const id = uuidv4();
-
-      setSystems(
-        (prevSystems) =>
-        [
-          ...prevSystems,
-          {
-            id,
-            getNodes: () => void null,
-            ...systemProto
-          }
-        ]
-      );
-
-      return id;
-    },
+        return id;
+      },
+      []
+    ),
 
     update: React.useCallback(
       () =>
