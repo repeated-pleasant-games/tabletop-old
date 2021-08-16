@@ -8,6 +8,7 @@ export const useThingAttributeSystem = () =>
 {
   const [ thingAttributeMap, setThingAttributeMap ] =
     React.useState<{ [s: string]: Attribute<string>[] }>({});
+
   const [ systems, setSystems ] =
     React.useState<System<any>[]>([]);
 
@@ -72,8 +73,11 @@ export const useThingAttributeSystem = () =>
     ),
 
     addSystem: React.useCallback(
-      <T extends {} = {}>(
-        systemProto: Omit<System<T>, "id" | "getNodes">
+      <T extends { [s: string]: Attribute<string> } = {}>(
+        systemProto: Omit<System<T>, "id" | "getNodes">,
+        filters: {
+          [Property in keyof T]: (attributes: Attribute<string>[]) => T[Property]
+        }
       ) =>
       {
         const id = uuidv4();
@@ -84,7 +88,27 @@ export const useThingAttributeSystem = () =>
             ...prevSystems,
             {
               id,
-              getNodes: () => void null,
+              getNodes: (thingAttributeMap) =>
+                Object.entries(thingAttributeMap).map(
+                  ([ , attributes ]) =>
+                  {
+                    const node = {};
+
+                    Object.entries(filters).forEach(
+                      ([ nodeProp, filter ]) =>
+                      {
+                        Object.assign(
+                          node,
+                          {
+                            [nodeProp]: filter(attributes)
+                          }
+                        )
+                      }
+                    );
+
+                    return node;
+                  }
+                ),
               ...systemProto
             }
           ]
@@ -98,10 +122,10 @@ export const useThingAttributeSystem = () =>
     update: React.useCallback(
       () =>
         systems.forEach(
-          ({ onUpdate }) =>
-            onUpdate([])
+          ({ onUpdate, getNodes }) =>
+            onUpdate(getNodes(thingAttributeMap))
         ),
-      [ systems ]
+      [ systems, thingAttributeMap ]
     ),
   };
 };

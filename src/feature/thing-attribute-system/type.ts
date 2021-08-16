@@ -7,6 +7,6 @@ export type Attribute<T extends string> =
 export type System<T extends { [s: string]: Attribute<string> }> =
 {
   id: string,
-  getNodes: (attributes: Attribute<string>[]) => T[],
+  getNodes: (thingAttributeMap: { [s: string]: Attribute<string>[] }) => T[],
   onUpdate: (nodes: T[]) => void,
 };
