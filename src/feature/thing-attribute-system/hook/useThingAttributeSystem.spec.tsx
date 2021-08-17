@@ -85,6 +85,77 @@ describe("useThingAttributeSystem", () =>
     });
   });
 
+  describe("getThingsWithAttributeTypes", () =>
+  {
+    it("Returns a list of thing IDs.", () =>
+    {
+      const { result } = renderHook(
+        () => useThingAttributeSystem(),
+        {
+          wrapper: ({ children }) => {
+            const [ thingAttributeMap, setThingAttributeMap ] =
+              React.useState<{ [s: string]: Attribute<string>[] }>({})
+
+            const [ systems, setSystems ] = React.useState<System<any>[]>([]);
+            
+            return (
+              <ThingAttributeSystemProvider value={{
+                thingAttributeMap,
+                setThingAttributeMap,
+                systems,
+                setSystems,
+              }}>
+                {children}
+              </ThingAttributeSystemProvider>
+            );
+          }
+        }
+      );
+
+      let thing1;
+      let thing2;
+      let thing3;
+      act(() =>
+      {
+        thing1 = result.current.createThing();
+        result.current.addAttributeToThing(
+          thing1,
+          {
+            type: "test"
+          }
+        );
+
+        thing2 = result.current.createThing();
+        result.current.addAttributeToThing(
+          thing2,
+          {
+            type: "notTest"
+          }
+        );
+
+        thing3 = result.current.createThing();
+        result.current.addAttributeToThing(
+          thing3,
+          {
+            type: "test"
+          }
+        );
+      });
+
+      expect(
+        result.current.getThingsWithAttributeTypes<[
+          Attribute<"test">
+        ]>(
+          "test",
+          "test"
+        )
+      ).toEqual([
+        thing1,
+        thing3
+      ])
+    });
+  });
+
   describe("addAttributeToThing", () =>
   {
     it("Returns a uuid", () =>

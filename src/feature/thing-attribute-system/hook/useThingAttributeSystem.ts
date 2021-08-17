@@ -7,6 +7,14 @@ import {
 } from "../component/ThingAttributeSystemProvider";
 import { Attribute, System } from "../type";
 
+type UnionOfAttributeTypes<A extends any[]> =
+  A extends [ ...rest: infer R, last: Attribute<infer T> ]
+  ? UnionOfAttributeTypes<R> | T
+  :
+  A extends [ only: Attribute<infer T> ]
+  ? T
+  : never;
+
 export const useThingAttributeSystem = () =>
 {
   const {
@@ -31,6 +39,43 @@ export const useThingAttributeSystem = () =>
         return id;
       },
       []
+    ),
+
+    getThingsWithAttributeTypes: React.useCallback(
+      <A extends Attribute<string>[]>(
+        ...attributeTypes: UnionOfAttributeTypes<A>[]
+      ): string[] =>
+      {
+        const uniqueAttributeTypes = Array.from(new Set(attributeTypes));
+
+        return Object.entries(thingAttributeMap)
+        .filter(
+          ([ , attributes ]) =>
+          {
+            const matchingAttributes =
+              attributes
+              .filter(
+                ({ type }) =>
+                  uniqueAttributeTypes
+                  .find(
+                    (attributeType) =>
+                      type === attributeType
+                  ) !== undefined
+              );
+
+            return matchingAttributes.length === uniqueAttributeTypes.length;
+          }
+        )
+        .reduce(
+          (thingIds, [ thingId, ]) =>
+            [
+              ...thingIds,
+              thingId
+            ],
+          [] as string[]
+        )
+      },
+      [ thingAttributeMap ]
     ),
 
     addAttributeToThing: React.useCallback(
