@@ -1,7 +1,9 @@
 import React from "react";
 
-import { ThingContext } from "../component/ThingProvider";
+import { Attribute } from "../type";
 import { useThingAttributeSystem } from "./useThingAttributeSystem";
+
+import { ThingContext } from "../component/ThingProvider";
 
 export const useThing = () =>
 {
@@ -13,6 +15,15 @@ export const useThing = () =>
     attributes: React.useMemo(
       () =>
         getThingAttributes(thingId),
+      [ thingId ]
+    ),
+
+    getAttributeByType: React.useCallback(
+      <A extends Attribute<string>>(type: A["type"]): A =>
+        getThingAttributes(thingId).find(
+          ({ type: t }) =>
+            t === type
+        ) as A,
       [ thingId ]
     ),
   }

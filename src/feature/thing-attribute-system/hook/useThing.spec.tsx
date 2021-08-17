@@ -106,4 +106,45 @@ describe("useThing", () =>
       expect(result.current.attributes).toEqual(thingAttributeMap[thingId]);
     }
   );
+
+  it("Returns a function for finding attributes.", () =>
+  {
+    const { createThing, addAttributeToThing } = useThingAttributeSystem();
+
+    const thingId = createThing();
+
+    const attributeIds =
+      [
+        {
+          type: "test1",
+        },
+        {
+          type: "test2",
+        },
+        {
+          type: "test3",
+        }
+      ].map((attribute) => addAttributeToThing(thingId, attribute));
+
+    const { result, } = renderHook(
+      () => useThing(),
+      {
+        wrapper: ({ children }) =>
+        (
+          <ThingProvider thingId={thingId}>
+            {children}
+          </ThingProvider>
+        )
+      }
+    );
+
+    expect(
+      result.current.getAttributeByType<Attribute<"test2">>("test2")
+    ).toEqual(
+      {
+        id: attributeIds[1],
+        type: "test2",
+      }
+    );
+  });
 });
