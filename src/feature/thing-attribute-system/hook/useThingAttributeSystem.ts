@@ -70,7 +70,7 @@ export const useThingAttributeSystem = () =>
 
     getThingAttributes: React.useCallback(
       (thingId: string): Attribute<string>[] =>
-        Array.from(thingAttributeMap[thingId]),
+        thingAttributeMap[thingId],
       [ thingAttributeMap ]
     ),
 
