@@ -84,7 +84,20 @@ export const Grid = ({ patternId, }: GridProps) =>
             clientY * (1 - zoomFactor)
           ));
 
-          setViewTransform(pan(zoom(viewTransform)));
+          const [
+            [ newScale, , newX ],
+            [         , , newY ],
+          ] = pan(zoom(viewTransform));
+
+          const actualScale = Math.max(newScale, 0.1);
+
+          setViewTransform(
+            [
+              [ actualScale,           0, newX ],
+              [           0, actualScale, newY ],
+              [           0,           0,    1 ],
+            ]
+          );
         }
       }
     />
