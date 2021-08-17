@@ -5,8 +5,12 @@ import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 
 import { ActorState, createActorState } from "@/feature/actor";
+import {
+  createThingAttributeSystemState,
+  ThingAttributeSystemState
+} from "@/feature/thing-attribute-system";
 
-export type SharedState = ActorState;
+export type SharedState = ActorState & ThingAttributeSystemState;
 
 export const createSharedStore = (roomName: string) =>
 {
@@ -20,6 +24,7 @@ export const createSharedStore = (roomName: string) =>
       (set) =>
       ({
         ...createActorState(set),
+        ...createThingAttributeSystemState(set),
       })
     )
   );
