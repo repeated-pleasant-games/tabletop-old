@@ -17,7 +17,19 @@ export const useThingAttributeSystem = () =>
   return {
     createThing: React.useCallback(
       () =>
-        uuidv4(),
+      {
+        const id = uuidv4();
+
+        setThingAttributeMap(
+          (prevMap) =>
+          ({
+            ...prevMap,
+            [id]: []
+          })
+        );
+
+        return id;
+      },
       []
     ),
 

@@ -38,9 +38,50 @@ describe("useThingAttributeSystem", () =>
         }
       );
 
-      expect(result.current.createThing()).toMatch(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      act(() =>
+      {
+        expect(result.current.createThing()).toMatch(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+        );
+      })
+    });
+
+    it("Adds empty entry to thing attribute map.", () =>
+    {
+      let thingAttributeMap: { [s: string]: Attribute<string>[] };
+
+      const { result } = renderHook(
+        () => useThingAttributeSystem(),
+        {
+          wrapper: ({ children }) => {
+            const [ _thingAttributeMap, setThingAttributeMap ] =
+              React.useState<{ [s: string]: Attribute<string>[] }>({})
+
+            thingAttributeMap = _thingAttributeMap;
+
+            const [ systems, setSystems ] = React.useState<System<any>[]>([]);
+            
+            return (
+              <ThingAttributeSystemProvider value={{
+                thingAttributeMap: _thingAttributeMap,
+                setThingAttributeMap,
+                systems,
+                setSystems,
+              }}>
+                {children}
+              </ThingAttributeSystemProvider>
+            );
+          }
+        }
       );
+
+      let thingId: string;
+      act(() =>
+      {
+        thingId = result.current.createThing();
+      });
+
+      expect(thingAttributeMap[thingId]).toEqual([]);
     });
   });
 
@@ -71,11 +112,12 @@ describe("useThingAttributeSystem", () =>
         }
       );
 
-      const thing = result.current.createThing();
 
       let attribute;
       act(() =>
       {
+        const thing = result.current.createThing();
+
         attribute =
           result.current.addAttributeToThing<Attribute<"">>(
             thing,
@@ -116,11 +158,11 @@ describe("useThingAttributeSystem", () =>
         }
       );
 
-      const thing1 = result.current.createThing();
-
-      let attribute1;
+      let thing1, attribute1;
       act(() =>
       {
+        thing1 = result.current.createThing();
+
         attribute1 =
           result.current.addAttributeToThing<Attribute<"test">>(
             thing1,
@@ -128,11 +170,11 @@ describe("useThingAttributeSystem", () =>
           );
       });
 
-      const thing2 = result.current.createThing();
-
-      let attribute2;
+      let thing2, attribute2;
       act(() =>
       {
+        thing2 = result.current.createThing();
+
         attribute2 =
           result.current.addAttributeToThing<Attribute<"test">>(
             thing2,
