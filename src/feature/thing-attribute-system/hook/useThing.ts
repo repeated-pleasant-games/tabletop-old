@@ -9,7 +9,10 @@ export const useThing = () =>
 {
   const thingId = React.useContext(ThingContext);
 
-  const { getThingAttributes } = useThingAttributeSystem();
+  const {
+    getThingAttributes,
+    updateThingAttributeOfType,
+  } = useThingAttributeSystem();
 
   return {
     attributes: React.useMemo(
@@ -24,6 +27,15 @@ export const useThing = () =>
           ({ type: t }) =>
             t === type
         ) as A,
+      [ thingId ]
+    ),
+
+    updateAttributeOfType: React.useCallback(
+      <A extends Attribute<string>>(
+        attributeType: A["type"],
+        protoAttribute: Partial<Omit<A, "id" | "type">>
+      ) =>
+        updateThingAttributeOfType(thingId, attributeType, protoAttribute),
       [ thingId ]
     ),
   }

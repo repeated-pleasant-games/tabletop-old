@@ -25,12 +25,17 @@ type PositionAttribute = Attribute<"position"> &
 
 const TokenAdapter = () => 
 {
-  const { getAttributeByType } = useThing();
+  const { getAttributeByType, updateAttributeOfType } = useThing();
 
   const { x, y } = getAttributeByType<PositionAttribute>("position");
 
   return (
-    <Token x={x} y={y} cellSize={16} setPosition={() => void null} />
+    <Token x={x} y={y} cellSize={16}
+      setPosition={
+        (x, y) =>
+          updateAttributeOfType<PositionAttribute>("position", { x, y, })
+      }
+    />
   )
 };
 

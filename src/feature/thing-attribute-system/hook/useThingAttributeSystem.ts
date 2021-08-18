@@ -150,7 +150,7 @@ export const useThingAttributeSystem = () =>
             ({
               ...prevMap,
               [thingId]: [
-                ...attributes,
+                ...attributes.filter(({ type }) => type !== attributeType),
                 Object.assign(
                   attributeToUpdate,
                   protoAttribute

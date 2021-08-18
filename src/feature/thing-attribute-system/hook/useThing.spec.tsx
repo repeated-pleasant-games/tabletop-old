@@ -43,6 +43,30 @@ jest.doMock("./useThingAttributeSystem", () => ({
           ];
 
         return id;
+      },
+
+      updateThingAttributeOfType: <A extends Attribute<string>>(
+        thingId: string,
+        attributeType: A["type"],
+        protoAttribute: Partial<Omit<A, "id" | "type">>
+      ) =>
+      {
+        const attribute = thingAttributeMap[thingId].find(
+          ({ type }) => type === attributeType
+        );
+
+        thingAttributeMap[thingId] =
+          [
+            ...(
+              thingAttributeMap[thingId].filter(
+                ({ type }) => type !== attributeType
+              ) ?? []
+            ),
+            {
+              ...attribute,
+              ...protoAttribute
+            }
+          ];
       }
     })
   ),
@@ -51,6 +75,7 @@ import { useThingAttributeSystem } from "./useThingAttributeSystem";
 
 import { ThingProvider } from "../component/ThingProvider";
 import { useThing } from "./useThing";
+import { act } from "react-dom/test-utils";
 
 describe("useThing", () =>
 {
@@ -144,6 +169,60 @@ describe("useThing", () =>
       {
         id: attributeIds[1],
         type: "test2",
+      }
+    );
+  });
+
+  it("Returns a function for updating attributes.", () =>
+  {
+    const { createThing, addAttributeToThing } = useThingAttributeSystem();
+
+    type PositionAttribute = Attribute<"position"> &
+    {
+      x: number,
+      y: number,
+    };
+
+    const thingId = createThing();
+    const attributeId = addAttributeToThing<PositionAttribute>(
+      thingId,
+      {
+        type: "position",
+        x: 0,
+        y: 0,
+      }
+    );
+
+    const { result, } = renderHook(
+      () => useThing(),
+      {
+        wrapper: ({ children }) =>
+        (
+          <ThingProvider thingId={thingId}>
+            {children}
+          </ThingProvider>
+        )
+      }
+    );
+
+    act(() =>
+    {
+      result.current.updateAttributeOfType<PositionAttribute>(
+        "position",
+        {
+          x: 1,
+        }
+      );
+    });
+
+    expect(
+      result.current.getAttributeByType<PositionAttribute>("position")
+    ).toEqual(
+      {
+        id: attributeId,
+        type: "position",
+        x: 1,
+        y: 0,
       }
     );
   });
