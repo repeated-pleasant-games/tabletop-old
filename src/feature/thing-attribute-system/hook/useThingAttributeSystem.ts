@@ -131,6 +131,38 @@ export const useThingAttributeSystem = () =>
       [ thingAttributeMap ]
     ),
 
+    updateThingAttributeOfType: React.useCallback(
+      <A extends Attribute<string>>(
+        thingId: string,
+        attributeType: A["type"],
+        protoAttribute: Partial<Omit<A, "id" | "type">>
+      ) =>
+      {
+        const attributes = thingAttributeMap[thingId];
+
+        if (attributes !== undefined)
+        {
+          const attributeToUpdate =
+            attributes.find(({ type }) => type === attributeType);
+
+          setThingAttributeMap(
+            (prevMap) =>
+            ({
+              ...prevMap,
+              [thingId]: [
+                ...attributes,
+                Object.assign(
+                  attributeToUpdate,
+                  protoAttribute
+                )
+              ],
+            })
+          );
+        }
+      },
+      [ thingAttributeMap ]
+    ),
+
     addSystem: React.useCallback(
       <T extends { [s: string]: Attribute<string> } = {}>(
         systemProto: Omit<System<T>, "id" | "getNodes">,

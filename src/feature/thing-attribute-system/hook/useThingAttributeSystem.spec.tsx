@@ -272,6 +272,72 @@ describe("useThingAttributeSystem", () =>
     });
   });
 
+  describe("updateThingAttributeOfType", () =>
+  {
+    it("Updates an attribute.", async () =>
+    {
+      const { result, waitForNextUpdate } = renderHook(
+        () => useThingAttributeSystem(),
+        {
+          wrapper: ({ children }) => {
+            const [ thingAttributeMap, setThingAttributeMap ] =
+              React.useState<{ [s: string]: Attribute<string>[] }>({})
+
+            const [ systems, setSystems ] = React.useState<System<any>[]>([]);
+            
+            return (
+              <ThingAttributeSystemProvider value={{
+                thingAttributeMap,
+                setThingAttributeMap,
+                systems,
+                setSystems,
+              }}>
+                {children}
+              </ThingAttributeSystemProvider>
+            );
+          }
+        }
+      );
+
+      type PositionAttribute = Attribute<"position"> &
+      {
+        x: number,
+        y: number,
+      };
+
+      let thing: string;
+      let positionAttribute: PositionAttribute;
+      await act(async () =>
+      {
+        thing = result.current.createThing();
+        result.current.addAttributeToThing<PositionAttribute>(
+          thing,
+          {
+            type: "position",
+            x: 0,
+            y: 0,
+          }
+        );
+
+        await waitForNextUpdate();
+
+        result.current.updateThingAttributeOfType<PositionAttribute>(
+          thing,
+          "position",
+          {
+            x: 1,
+          }
+        );
+
+        positionAttribute =
+          (result.current.getThingAttributes(thing)[0] as PositionAttribute)
+      });
+
+      expect(positionAttribute.x).toBe(1);
+      expect(positionAttribute.y).toBe(0);
+    });
+  });
+
   describe("addSystem", () =>
   {
     it("Returns a uuid.", () =>
