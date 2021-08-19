@@ -8,14 +8,14 @@ import "@/test/pointer-event";
 import { useLocalStore } from "@/hook/useLocalStore";
 import { identityTransform, translation } from "@/lib/Transform";
 
-import Token, { Token as DisconnectedToken, tokenTestId } from "./Token";
+import Token, { tokenTestId } from "./Token";
 
 describe("Token", () =>
 {
   it("Has a SVG rect.", () =>
   {
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -29,7 +29,7 @@ describe("Token", () =>
   it("Has given x and y coordinates.", () =>
   {
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={10}
         y={11}
         setPosition={() => {}}
@@ -44,7 +44,7 @@ describe("Token", () =>
   it("Has a width and height equal to the given cell size.", () =>
   {
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -61,7 +61,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={setPosition}
@@ -82,7 +82,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={setPosition}
@@ -103,7 +103,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
     
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -123,7 +123,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={setPosition}
@@ -145,7 +145,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={setPosition}
@@ -166,7 +166,7 @@ describe("Token", () =>
     const setPosition = jest.fn();
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={setPosition}
@@ -194,7 +194,7 @@ describe("Token", () =>
     const pointerId = 12;
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -217,7 +217,7 @@ describe("Token", () =>
     const pointerId = 12;
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -239,7 +239,7 @@ describe("Token", () =>
     const pointerId = 12;
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}
@@ -263,7 +263,7 @@ describe("Token", () =>
     const pointerId = 12;
 
     const { getByTestId } = renderSVG(
-      <DisconnectedToken
+      <Token
         x={0}
         y={0}
         setPosition={() => {}}

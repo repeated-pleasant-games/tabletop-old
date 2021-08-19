@@ -45,32 +45,12 @@ type TabletopProps = React.HTMLAttributes<{}> &
 };
 export const Tabletop = ({ grid, }: TabletopProps) =>
 {
-  const {
-    getThingsWithAttributeTypes,
-    createThing,
-    addAttributeToThing
-  } = useThingAttributeSystem();
+  const { getThingsWithAttributeTypes, } = useThingAttributeSystem();
 
   const thingIds = React.useMemo(
     () =>
       getThingsWithAttributeTypes<[ Attribute<"position"> ]>("position"),
     [ getThingsWithAttributeTypes ]
-  );
-
-  React.useEffect(
-    () =>
-    {
-      const thing = createThing();
-      addAttributeToThing<PositionAttribute>(
-        thing,
-        {
-          type: "position",
-          x: 0,
-          y: 0,
-        }
-      );
-    },
-    []
   );
 
   return (
