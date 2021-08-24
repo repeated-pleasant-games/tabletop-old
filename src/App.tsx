@@ -8,7 +8,6 @@ import { Tabletop, } from "@/feature/tabletop";
 import { ControlPanel, } from "@/feature/control-panel";
 import { JoinForm, } from "@/feature/room";
 import { Container, Heading } from "@chakra-ui/react";
-import { DocumentProvider } from "@joebobmiles/y-react";
 
 export const App = () =>
 {
@@ -32,12 +31,10 @@ export const App = () =>
           </Container>
         )
         : (
-          <DocumentProvider>
-            <SharedStoreProvider room={room}>
-              <ControlPanel />
-              <Tabletop grid={<RectangularGrid />} />
-            </SharedStoreProvider>
-          </DocumentProvider>
+          <SharedStoreProvider room={room}>
+            <ControlPanel />
+            <Tabletop grid={<RectangularGrid />} />
+          </SharedStoreProvider>
         )
       }
     </main>

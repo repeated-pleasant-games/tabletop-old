@@ -1,6 +1,6 @@
 import React from "react";
 import createContext from "zustand/context";
-import { useDoc, useWebRtc } from "@joebobmiles/y-react";
+import { DocumentProvider, useDoc, useWebRtc } from "@joebobmiles/y-react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +14,8 @@ type SharedStoreProviderProps = React.HTMLAttributes<{}> &
 {
   room: string,
 };
-export const SharedStoreProvider = ({
+
+const InnerSharedStoreProvider = ({
   room,
   children
 }: SharedStoreProviderProps = {
@@ -35,3 +36,17 @@ export const SharedStoreProvider = ({
     </Provider>
   );
 }
+
+export const SharedStoreProvider = ({
+  room,
+  children
+}: SharedStoreProviderProps = {
+  room: uuidv4()
+}) =>
+(
+  <DocumentProvider>
+    <InnerSharedStoreProvider room={room}>
+      {children}
+    </InnerSharedStoreProvider>
+  </DocumentProvider>
+)
