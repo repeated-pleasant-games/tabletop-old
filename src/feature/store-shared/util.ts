@@ -8,12 +8,8 @@ import { ActorState, createActorState } from "@/feature/actor";
 
 export type SharedState = ActorState;
 
-export const createSharedStore = (roomName: string) =>
-{
-  const doc = new Y.Doc();
-  new WebrtcProvider(roomName, doc);
-
-  return create<SharedState>(
+export const createSharedStore = (doc: Y.Doc) =>
+  create<SharedState>(
     yjs(
       doc,
       "shared-state",
@@ -23,4 +19,3 @@ export const createSharedStore = (roomName: string) =>
       })
     )
   );
-};
