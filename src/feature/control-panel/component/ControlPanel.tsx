@@ -24,6 +24,8 @@ export const ControlPanel = () =>
         top: 0;
         right: 0;
         margin: 1em 1em 0 0;
+
+        max-width: 400px;
       `}
     >
       <Box bg={bg} p={4} borderRadius="sm">
