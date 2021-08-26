@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import createContext from "zustand/context";
-import { DocumentProvider, useDoc, useWebRtc } from "@joebobmiles/y-react";
+import { DocumentProvider, useAwareness, useDoc, useWebRtc } from "@joebobmiles/y-react";
 
 import { v4 as uuidv4 } from "uuid";
 
 import { SharedState, createSharedStore } from "../util";
+import { useSharedStore } from "@/hook/useSharedStore";
+import { useLocalStore } from "@/hook/useLocalStore";
+import { apply, inverseOf } from "@/lib/Transform";
 
 const { Provider, useStore, useStoreApi } = createContext<SharedState>();
 
@@ -23,7 +26,40 @@ const InnerSharedStoreProvider = ({
 }) =>
 {
   const doc = useDoc();
-  useWebRtc(room);
+  const provider = useWebRtc(room);
+
+  const { setLocalState } = useAwareness(provider.awareness);
+  const viewTransform = useLocalStore(({ viewTransform }) => viewTransform)
+
+  React.useEffect(
+    () =>
+    {
+      const updateUserPointerPosition = (event: PointerEvent) =>
+      {
+        const [ x, y ] = apply(inverseOf(viewTransform), [ event.clientX, event.clientY ])
+
+        setLocalState((prevState) =>
+        ({
+          ...prevState,
+          x,
+          y,
+        }))
+      };
+
+      window.addEventListener("pointermovecapture", updateUserPointerPosition);
+
+      setLocalState({
+        x: 0,
+        y: 0,
+      })
+
+      return () =>
+      {
+        window.removeEventListener("pointermovecapture", updateUserPointerPosition);
+      }
+    },
+    [viewTransform]
+  )
 
   const createStore = React.useCallback(
     () => createSharedStore(doc),
