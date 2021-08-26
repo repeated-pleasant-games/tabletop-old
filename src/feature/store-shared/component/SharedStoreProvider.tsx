@@ -4,7 +4,7 @@ import { DocumentProvider, useAwareness, useDoc, useWebRtc } from "@joebobmiles/
 
 import { v4 as uuidv4 } from "uuid";
 
-import { SharedState, createSharedStore } from "../util";
+import { SharedState, createSharedStore, createUserName } from "../util";
 import { useLocalStore } from "@/hook/useLocalStore";
 import { apply, inverseOf } from "@/lib/Transform";
 
@@ -48,6 +48,7 @@ const InnerSharedStoreProvider = ({
       window.addEventListener("pointermove", updateUserPointerPosition);
 
       setLocalState({
+        userName: createUserName(),
         x: 0,
         y: 0,
       })
