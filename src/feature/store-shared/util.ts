@@ -2,7 +2,6 @@ import create from "zustand";
 import yjs from "zustand-middleware-yjs";
 
 import * as Y from "yjs";
-import { WebrtcProvider } from "y-webrtc";
 
 import { ActorState, createActorState } from "@/feature/actor";
 

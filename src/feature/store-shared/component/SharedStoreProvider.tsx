@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import createContext from "zustand/context";
 import { DocumentProvider, useAwareness, useDoc, useWebRtc } from "@joebobmiles/y-react";
 
 import { v4 as uuidv4 } from "uuid";
 
 import { SharedState, createSharedStore } from "../util";
-import { useSharedStore } from "@/hook/useSharedStore";
 import { useLocalStore } from "@/hook/useLocalStore";
 import { apply, inverseOf } from "@/lib/Transform";
 
