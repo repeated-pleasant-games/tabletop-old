@@ -1,7 +1,7 @@
 import React from "react";
 import { useColorModeValue } from "@chakra-ui/react";
 
-export const Cursor = ({ x, y }: { x: number, y: number}) =>
+export const Cursor = ({ x, y, name }: { x: number, y: number, name: string}) =>
 {
   const fill = useColorModeValue(
     "var(--rpg-colors-gray-900)",
@@ -9,7 +9,12 @@ export const Cursor = ({ x, y }: { x: number, y: number}) =>
   );
 
   return (
-    <g transform={`translate(${x},${y})`}>
+    <g
+      transform={`translate(${x},${y})`}
+      style={{
+        fill
+      }}
+    >
       <g
         transform="
           scale(0.025)
@@ -25,11 +30,11 @@ export const Cursor = ({ x, y }: { x: number, y: number}) =>
             L 120.099,388.586
             Z
           "
-          style={{
-            fill
-          }}
         />
       </g>
+      <text x={10} y={24}>
+        {name}
+      </text>
     </g>
   );
 }

@@ -36,7 +36,7 @@ export const UserCursorOverlay = () =>
           ([id, state]) =>
           {
             const [ x, y ] = apply(viewTransform, [ state.x, state.y ])
-            return (<Cursor key={id} x={x} y={y} />);
+            return (<Cursor key={id} x={x} y={y} name={id.toString()} />);
           }
         )
       }
