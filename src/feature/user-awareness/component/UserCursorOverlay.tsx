@@ -1,8 +1,10 @@
 import React from "react"
 
-import { useAwareness, useWebRtc, useDoc } from "@joebobmiles/y-react"
+import { useAwareness, useWebRtc } from "@joebobmiles/y-react"
 import { useLocalStore } from "@/feature/store-local";
 import { apply } from "@/lib/Transform";
+
+import { Cursor } from "./Cursor";
 
 export const UserCursorOverlay = () =>
 {
@@ -34,16 +36,7 @@ export const UserCursorOverlay = () =>
           ([id, state]) =>
           {
             const [ x, y ] = apply(viewTransform, [ state.x, state.y ])
-
-            return (
-              <rect
-                key={id}
-                x={x} y={y}
-                width={10}
-                height={10}
-                fill={"red"}
-              />
-            )
+            return (<Cursor key={id} x={x} y={y} />);
           }
         )
       }
