@@ -46,7 +46,7 @@ const InnerSharedStoreProvider = ({
         }))
       };
 
-      window.addEventListener("pointermovecapture", updateUserPointerPosition);
+      window.addEventListener("pointermove", updateUserPointerPosition);
 
       setLocalState({
         x: 0,
@@ -55,7 +55,7 @@ const InnerSharedStoreProvider = ({
 
       return () =>
       {
-        window.removeEventListener("pointermovecapture", updateUserPointerPosition);
+        window.removeEventListener("pointermove", updateUserPointerPosition);
       }
     },
     [viewTransform]
