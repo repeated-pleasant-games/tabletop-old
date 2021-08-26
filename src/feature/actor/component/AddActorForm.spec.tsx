@@ -17,6 +17,7 @@ import { SharedStoreProvider } from "@/context/SharedStore";
 import { useSharedStoreApi } from "@/hook/useSharedStore";
 
 import AddActorForm from "./AddActorForm";
+import { DocumentProvider } from "@joebobmiles/y-react";
 
 describe("AddActorForm", () =>
 {

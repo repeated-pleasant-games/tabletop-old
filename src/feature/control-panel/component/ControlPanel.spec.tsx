@@ -26,7 +26,7 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe("Connected ControlPanel", () =>
 {
-  it("Adds an actor to app store when 'Add Actor' is pressed.", () =>
+  it("Adds an actor to app store when 'Add Actor' is pressed.", async () =>
   {
     const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -37,7 +37,7 @@ describe("Connected ControlPanel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    waitFor(() =>
+    await waitFor(() =>
     {
       expect(getAllByText(/^actor$/i).length).toBe(1);
     });
@@ -54,7 +54,7 @@ describe("Connected ControlPanel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    waitFor(() =>
+    await waitFor(() =>
     {
       fireEvent.click(getByText(/^actor$/i));
       expect(() => getByText(/^actor$/i)).toThrow();
