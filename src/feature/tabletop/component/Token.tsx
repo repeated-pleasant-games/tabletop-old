@@ -112,7 +112,7 @@ export const Token = ({
       />
       {
         label
-        ? (<text x={x} y={y}>{label}</text>)
+        ? (<text style={{ pointerEvents: "none" }} x={x} y={y}>{label}</text>)
         : null
       }
     </g>
