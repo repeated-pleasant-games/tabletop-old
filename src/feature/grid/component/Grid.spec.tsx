@@ -339,4 +339,28 @@ describe("Connected Grid component", () =>
       [   0,   0, 1 ],
     ]);
   });
+
+  it("Reaching max zoom does not wipe out x-y coordinates.", () =>
+  {
+    const clientX = 10, clientY = 12, deltaY = 100;
+
+    useLocalStore.getState().setViewTransform([
+      [ 0.1,   0, 3 ],
+      [   0, 0.1, 4 ],
+      [   0,   0, 0 ],
+    ]);
+
+    const { getByTestId } = renderSVG(<Grid patternId={null} />);
+
+    const grid = getByTestId(gridTestId);
+
+    fireEvent.wheel(grid, { deltaY, clientX, clientY });
+
+    expect(useLocalStore.getState().viewTransform)
+    .toStrictEqual([
+      [ 0.1,   0, 3 ],
+      [   0, 0.1, 4 ],
+      [   0,   0, 1 ],
+    ]);
+  });
 });
