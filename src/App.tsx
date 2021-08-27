@@ -13,7 +13,7 @@ import { UserCursorOverlay } from "./feature/user-awareness";
 
 export const App = () =>
 {
-  const { room } = useLocalStore();
+  const room = useLocalStore(({ room }) => room);
 
   return (
     <main
