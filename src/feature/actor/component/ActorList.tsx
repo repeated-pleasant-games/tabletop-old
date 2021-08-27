@@ -19,6 +19,14 @@ export const ActorList = () =>
     removeActor
   }));
 
+  React.useEffect(
+    () =>
+    {
+      console.log(actors)
+    },
+    [actors]
+  );
+
   return (
     (!actors || actors.length === 0)
     ? (
