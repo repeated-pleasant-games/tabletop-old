@@ -9,9 +9,11 @@ import { ControlPanel, } from "@/feature/control-panel";
 import { JoinForm, } from "@/feature/room";
 import { Container, Heading } from "@chakra-ui/react";
 
+import { UserCursorOverlay } from "./feature/user-awareness";
+
 export const App = () =>
 {
-  const { room } = useLocalStore();
+  const room = useLocalStore(({ room }) => room);
 
   return (
     <main

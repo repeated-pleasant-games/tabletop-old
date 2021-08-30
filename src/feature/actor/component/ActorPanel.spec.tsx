@@ -22,7 +22,7 @@ describe("Actor Panel", () =>
     expect(getByText(/no actors/i)).toBeInTheDocument();
   });
 
-  it("Adds an actor when the 'add actor' button is pressed.", () =>
+  it("Adds an actor when the 'add actor' button is pressed.", async () =>
   {
     const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -33,7 +33,7 @@ describe("Actor Panel", () =>
     userEvent.type(getByLabelText(/actor name/i), "Actor");
     fireEvent.click(getByText(/add actor/i));
 
-    waitFor(() =>
+    await waitFor(() =>
     {
       expect(getAllByText(/^actor$/i).length).toBe(1);
     })

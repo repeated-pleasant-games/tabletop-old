@@ -29,7 +29,7 @@ describe("JoinForm component", () =>
   it.each([
     [ "room" ],
     [ "antechamber" ]
-  ])("Sets room code ('%s') when you press 'Join!'.", (roomName) =>
+  ])("Sets room code ('%s') when you press 'Join!'.", async (roomName) =>
   {
     act(() =>
     {
@@ -41,7 +41,7 @@ describe("JoinForm component", () =>
     userEvent.type(getByLabelText(/room name/i), roomName);
     fireEvent.click(getByText(/join!/i));
 
-    waitFor(() =>
+    await waitFor(() =>
     {
       expect(useLocalStore.getState().room).toBe(roomName);
     });
