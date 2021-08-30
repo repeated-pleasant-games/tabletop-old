@@ -48,32 +48,34 @@ export const useThingAttributeSystem = () =>
       {
         const uniqueAttributeTypes = Array.from(new Set(attributeTypes));
 
-        return Object.entries(thingAttributeMap)
-        .filter(
-          ([ , attributes ]) =>
-          {
-            const matchingAttributes =
-              attributes
-              .filter(
-                ({ type }) =>
-                  uniqueAttributeTypes
-                  .find(
-                    (attributeType) =>
-                      type === attributeType
-                  ) !== undefined
-              );
+        return thingAttributeMap === undefined
+          ? []
+          : Object.entries(thingAttributeMap)
+          .filter(
+            ([ , attributes ]) =>
+            {
+              const matchingAttributes =
+                attributes
+                .filter(
+                  ({ type }) =>
+                    uniqueAttributeTypes
+                    .find(
+                      (attributeType) =>
+                        type === attributeType
+                    ) !== undefined
+                );
 
-            return matchingAttributes.length === uniqueAttributeTypes.length;
-          }
-        )
-        .reduce(
-          (thingIds, [ thingId, ]) =>
-            [
-              ...thingIds,
-              thingId
-            ],
-          [] as string[]
-        )
+              return matchingAttributes.length === uniqueAttributeTypes.length;
+            }
+          )
+          .reduce(
+            (thingIds, [ thingId, ]) =>
+              [
+                ...thingIds,
+                thingId
+              ],
+            [] as string[]
+          )
       },
       [ thingAttributeMap ]
     ),
