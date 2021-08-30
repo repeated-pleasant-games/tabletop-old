@@ -30,17 +30,15 @@ const InnerSharedStoreProvider = ({
   const { setLocalState } = useAwareness(provider.awareness);
   const viewTransform = useLocalStore(({ viewTransform }) => viewTransform)
 
-  const userName = React.useMemo(
-    () => createUserName(),
-    []
-  );
-
   React.useEffect(
     () =>
     {
       const updateUserPointerPosition = (event: PointerEvent) =>
       {
-        const [ x, y ] = apply(inverseOf(viewTransform), [ event.clientX, event.clientY ])
+        const [ x, y ] = apply(
+          inverseOf(viewTransform),
+          [ event.clientX, event.clientY ]
+        )
 
         setLocalState((prevState) =>
         ({
@@ -52,18 +50,24 @@ const InnerSharedStoreProvider = ({
 
       window.addEventListener("pointermove", updateUserPointerPosition);
 
-      setLocalState({
-        userName,
-        x: 0,
-        y: 0,
-      })
-
       return () =>
       {
         window.removeEventListener("pointermove", updateUserPointerPosition);
       }
     },
     [viewTransform]
+  )
+
+  React.useEffect(
+    () => 
+    {
+      setLocalState({
+        username: createUserName(),
+        x: 0,
+        y: 0,
+      })
+    },
+    []
   )
 
   const createStore = React.useCallback(
