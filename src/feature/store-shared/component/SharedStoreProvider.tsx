@@ -62,7 +62,7 @@ const InnerSharedStoreProvider = ({
     () => 
     {
       setLocalState({
-        username: createUserName(),
+        userName: createUserName(),
         x: 0,
         y: 0,
       })
