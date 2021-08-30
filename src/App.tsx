@@ -36,6 +36,7 @@ export const App = () =>
           <AppProvider room={room}>
             <ControlPanel />
             <Tabletop grid={<RectangularGrid />} />
+            <UserCursorOverlay />
           </AppProvider>
         )
       }
