@@ -3,13 +3,12 @@ import * as React from "react";
 import styled from "@emotion/styled";
 
 import {
-  Attribute,
   ThingProvider,
   useThing,
   useThingAttributeSystem
 } from "@/feature/thing-attribute-system";
 
-import { PositionAttribute } from "../type";
+import { PositionAttribute, NameAttribute } from "../type";
 import { Token } from "./Token";
 
 const TabletopContainer = styled.svg`
@@ -23,9 +22,13 @@ const TokenAdapter = () =>
   const { getAttributeByType, updateAttributeOfType } = useThing();
 
   const { x, y } = getAttributeByType<PositionAttribute>("position");
+  const { name } = getAttributeByType<NameAttribute>("name");
 
   return (
-    <Token x={x} y={y} cellSize={16}
+    <Token
+      label={name}
+      x={x} y={y}
+      cellSize={16}
       setPosition={
         (x, y) =>
           updateAttributeOfType<PositionAttribute>("position", { x, y, })
@@ -44,7 +47,13 @@ export const Tabletop = ({ grid, }: TabletopProps) =>
 
   const thingIds = React.useMemo(
     () =>
-      getThingsWithAttributeTypes<[ Attribute<"position"> ]>("position"),
+      getThingsWithAttributeTypes<[
+        PositionAttribute,
+        NameAttribute
+      ]>(
+        "position",
+        "name"
+      ),
     [ getThingsWithAttributeTypes ]
   );
 

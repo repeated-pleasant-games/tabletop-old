@@ -5,7 +5,7 @@ import { SnapToGrid } from "@/feature/grid-snap";
 import { ThemeSelect } from "@/feature/theme-select";
 import { useThingAttributeSystem } from "@/feature/thing-attribute-system";
 
-import { PositionAttribute } from "@/feature/tabletop";
+import { PositionAttribute, NameAttribute } from "@/feature/tabletop";
 
 export const controlPanelTestId = "control-panel";
 
@@ -25,6 +25,13 @@ export const ControlPanel = () =>
           type: 'position',
           x: 0,
           y: 0
+        }
+      );
+      addAttributeToThing<NameAttribute>(
+        thing,
+        {
+          type: 'name',
+          name: 'Actor'
         }
       );
     },

@@ -5,3 +5,8 @@ export type PositionAttribute = Attribute<"position"> &
   x: number,
   y: number,
 };
+
+export type NameAttribute = Attribute<"name"> &
+{
+  name: string,
+};
