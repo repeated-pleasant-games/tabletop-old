@@ -9,6 +9,7 @@ import {
   useThingAttributeSystem
 } from "@/feature/thing-attribute-system";
 
+import { PositionAttribute } from "../type";
 import { Token } from "./Token";
 
 const TabletopContainer = styled.svg`
@@ -16,12 +17,6 @@ const TabletopContainer = styled.svg`
   width: 100vw;
   height: 100vh;
 `;
-
-type PositionAttribute = Attribute<"position"> &
-{
-  x: number,
-  y: number,
-};
 
 const TokenAdapter = () => 
 {
