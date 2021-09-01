@@ -26,7 +26,7 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe("Connected ControlPanel", () =>
 {
-  it("Adds an actor to app store when 'Add Actor' is pressed.", async () =>
+  it.skip("Adds an actor to app store when 'Add Actor' is pressed.", async () =>
   {
     const { getByText, getAllByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
@@ -43,7 +43,7 @@ describe("Connected ControlPanel", () =>
     });
   });
 
-  it("Removes the actor associated with the clicked initiative entry.", async () =>
+  it.skip("Removes the actor associated with the clicked initiative entry.", async () =>
   {
     const { getByText, getByLabelText } = render(
       <SharedStoreProvider room={uuidv4()}>
