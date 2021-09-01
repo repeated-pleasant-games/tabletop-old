@@ -88,39 +88,19 @@ export const useThingAttributeSystem = () =>
       {
         const id = uuidv4();
 
-        if (thingAttributeMap[thingId])
-        {
-          const attributes = thingAttributeMap[thingId];
-
-          setThingAttributeMap(
-            (prevMap) =>
-            ({
-              ...prevMap,
-              [thingId]: [
-                ...attributes,
-                {
-                  id,
-                  ...attribute
-                }
-              ]
-            })
-          );
-        }
-        else
-        {
-          setThingAttributeMap(
-            (prevMap) =>
-            ({
-              ...prevMap,
-              [thingId]: [
-                {
-                  id,
-                  ...attribute
-                }
-              ]
-            })
-          );
-        }
+        setThingAttributeMap(
+          (prevMap) =>
+          ({
+            ...prevMap,
+            [thingId]: [
+              ...prevMap[thingId] ?? [],
+              {
+                id,
+                ...attribute
+              }
+            ]
+          })
+        );
 
         return id;
       },

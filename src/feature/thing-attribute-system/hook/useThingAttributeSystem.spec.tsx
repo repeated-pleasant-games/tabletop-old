@@ -200,6 +200,50 @@ describe("useThingAttributeSystem", () =>
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
       );
     });
+
+    it("Consecutive additions of attributes do not need rerender.", () =>
+    {
+      const { result } = renderHook(
+        () => useThingAttributeSystem(),
+        {
+          wrapper: ({ children }) => {
+            const [ thingAttributeMap, setThingAttributeMap ] =
+              React.useState<{ [s: string]: Attribute<string>[] }>({})
+
+            const [ systems, setSystems ] = React.useState<System<any>[]>([]);
+            
+            return (
+              <ThingAttributeSystemProvider value={{
+                thingAttributeMap,
+                setThingAttributeMap,
+                systems,
+                setSystems,
+              }}>
+                {children}
+              </ThingAttributeSystemProvider>
+            );
+          }
+        }
+      );
+
+
+      let thing;
+      act(() =>
+      {
+        thing = result.current.createThing();
+
+        result.current.addAttributeToThing<Attribute<"test1">>(
+          thing,
+          { type: "test1" }
+        );
+        result.current.addAttributeToThing<Attribute<"test2">>(
+          thing,
+          { type: "test2" }
+        );
+      })
+
+      expect(result.current.getThingAttributes(thing)).toHaveLength(2);
+    });
   });
 
   describe("getThingAttributes", () => 
