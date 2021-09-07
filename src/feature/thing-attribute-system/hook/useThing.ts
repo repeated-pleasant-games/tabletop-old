@@ -18,7 +18,7 @@ export const useThing = () =>
     attributes: React.useMemo(
       () =>
         getThingAttributes(thingId),
-      [ thingId ]
+      [ thingId, getThingAttributes ]
     ),
 
     getAttributeByType: React.useCallback(
@@ -27,7 +27,7 @@ export const useThing = () =>
           ({ type: t }) =>
             t === type
         ) as A,
-      [ thingId ]
+      [ thingId, getThingAttributes ]
     ),
 
     updateAttributeOfType: React.useCallback(
@@ -36,7 +36,7 @@ export const useThing = () =>
         protoAttribute: Partial<Omit<A, "id" | "type">>
       ) =>
         updateThingAttributeOfType(thingId, attributeType, protoAttribute),
-      [ thingId ]
+      [ thingId, updateThingAttributeOfType ]
     ),
   }
 };

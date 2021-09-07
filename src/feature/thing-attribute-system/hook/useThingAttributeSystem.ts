@@ -120,29 +120,21 @@ export const useThingAttributeSystem = () =>
         protoAttribute: Partial<Omit<A, "id" | "type">>
       ) =>
       {
-        const attributes = thingAttributeMap[thingId];
-
-        if (attributes !== undefined)
-        {
-          const attributeToUpdate =
-            attributes.find(({ type }) => type === attributeType);
-
-          setThingAttributeMap(
-            (prevMap) =>
-            ({
-              ...prevMap,
-              [thingId]: [
-                ...attributes.filter(({ type }) => type !== attributeType),
-                Object.assign(
-                  attributeToUpdate,
-                  protoAttribute
-                )
-              ],
-            })
-          );
-        }
+        setThingAttributeMap(
+          (prevMap) =>
+          ({
+            ...prevMap,
+            [thingId]: [
+              ...prevMap[thingId].filter(({ type }) => type !== attributeType),
+              Object.assign(
+                prevMap[thingId].find(({ type }) => type === attributeType),
+                protoAttribute
+              )
+            ],
+          })
+        );
       },
-      [ thingAttributeMap ]
+      []
     ),
 
     addSystem: React.useCallback(
