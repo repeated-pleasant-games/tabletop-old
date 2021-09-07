@@ -3,9 +3,12 @@ import yjs from "zustand-middleware-yjs";
 
 import * as Y from "yjs";
 
-import { ActorState, createActorState } from "@/feature/actor";
+import {
+  createThingAttributeSystemState,
+  ThingAttributeSystemState
+} from "@/feature/thing-attribute-system";
 
-export type SharedState = ActorState;
+export type SharedState = ThingAttributeSystemState;
 
 export const createSharedStore = (doc: Y.Doc) =>
   create<SharedState>(
@@ -14,7 +17,7 @@ export const createSharedStore = (doc: Y.Doc) =>
       "shared-state",
       (set) =>
       ({
-        ...createActorState(set),
+        ...createThingAttributeSystemState(set),
       })
     )
   );

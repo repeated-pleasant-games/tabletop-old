@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { useLocalStore } from "@/hook/useLocalStore";
-import { SharedStoreProvider } from "@/context/SharedStore";
+import { AppProvider } from "@/context/App";
 
 import { RectangularGrid, } from "@/feature/grid";
 import { Tabletop, } from "@/feature/tabletop";
@@ -33,11 +33,11 @@ export const App = () =>
           </Container>
         )
         : (
-          <SharedStoreProvider room={room}>
-            <UserCursorOverlay />
+          <AppProvider room={room}>
             <ControlPanel />
             <Tabletop grid={<RectangularGrid />} />
-          </SharedStoreProvider>
+            <UserCursorOverlay />
+          </AppProvider>
         )
       }
     </main>

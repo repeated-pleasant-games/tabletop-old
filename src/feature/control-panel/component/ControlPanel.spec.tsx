@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { v4 as uuidv4 } from "uuid";
@@ -8,7 +8,6 @@ import { useLocalStore } from "@/hook/useLocalStore";
 
 import ControlPanel from "./ControlPanel";
 import { SharedStoreProvider } from "@/context/SharedStore";
-import userEvent from "@testing-library/user-event";
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -26,41 +25,6 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe("Connected ControlPanel", () =>
 {
-  it("Adds an actor to app store when 'Add Actor' is pressed.", async () =>
-  {
-    const { getByText, getAllByText, getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    userEvent.type(getByLabelText(/actor name/i), "Actor");
-    fireEvent.click(getByText(/add actor/i));
-
-    await waitFor(() =>
-    {
-      expect(getAllByText(/^actor$/i).length).toBe(1);
-    });
-  });
-
-  it("Removes the actor associated with the clicked initiative entry.", async () =>
-  {
-    const { getByText, getByLabelText } = render(
-      <SharedStoreProvider room={uuidv4()}>
-        <ControlPanel />
-      </SharedStoreProvider>
-    );
-
-    userEvent.type(getByLabelText(/actor name/i), "Actor");
-    fireEvent.click(getByText(/add actor/i));
-
-    await waitFor(() =>
-    {
-      fireEvent.click(getByText(/^actor$/i));
-      expect(() => getByText(/^actor$/i)).toThrow();
-    });
-  });
-
   it("Enables snap-to-grid when 'Snap to Grid' checkbox is checked.", () =>
   {
     useLocalStore.setState(() => ({ snapToGrid: false }));
